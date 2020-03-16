@@ -1,66 +1,85 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
-import { FormattedMessage } from 'umi-plugin-react/locale';
-import { Card, Typography, Alert } from 'antd';
-import styles from './Welcome.less';
+import { Card, Descriptions, Empty, Row, Col } from 'antd';
 
-const CodePreview = ({ children }) => (
-  <pre className={styles.pre}>
-    <code>
-      <Typography.Text copyable>{children}</Typography.Text>
-    </code>
-  </pre>
-);
+const { Item } = Descriptions;
+export default class Welcome extends PureComponent {
+  state = {
+    data: {},
+  };
 
-export default () => (
-  <PageHeaderWrapper>
-    <Card>
-      <Alert
-        message="umi ui 现已发布，点击右下角 umi 图标即可使用"
-        type="success"
-        showIcon
-        banner
-        style={{
-          margin: -12,
-          marginBottom: 24,
-        }}
-      />
-      <Typography.Text strong>
-        <a target="_blank" rel="noopener noreferrer" href="https://pro.ant.design/docs/block">
-          <FormattedMessage
-            id="app.welcome.link.block-list"
-            defaultMessage="基于 block 开发，快速构建标准页面"
-          />
-        </a>
-      </Typography.Text>
-      <CodePreview> npm run ui</CodePreview>
-      <Typography.Text
-        strong
-        style={{
-          marginBottom: 12,
-        }}
-      >
-        <a
-          target="_blank"
-          rel="noopener noreferrer"
-          href="https://pro.ant.design/docs/available-script#npm-run-fetchblocks"
-        >
-          <FormattedMessage id="app.welcome.link.fetch-blocks" defaultMessage="获取全部区块" />
-        </a>
-      </Typography.Text>
-      <CodePreview> npm run fetch:blocks</CodePreview>
-    </Card>
-    <p
-      style={{
-        textAlign: 'center',
-        marginTop: 24,
-      }}
-    >
-      Want to add more pages? Please refer to{' '}
-      <a href="https://pro.ant.design/docs/block-cn" target="_blank" rel="noopener noreferrer">
-        use block
-      </a>
-      。
-    </p>
-  </PageHeaderWrapper>
-);
+  componentDidMount = () => {
+    const url = 'https://lab.isaaclin.cn/nCoV/api/overall';
+    fetch(url)
+      .then(res => res.json())
+      .then(data => {
+        this.setState({
+          data: data.results[0],
+        });
+      });
+  };
+
+  renderInfo = () => {
+    const { data } = this.state;
+    if (data === {}) {
+      return <Empty />;
+    }
+    const curDate = new Date();
+    curDate.setTime(data.updateTime);
+    const curTime = curDate.toLocaleString();
+    return (
+      <Row gutter={[16, 16]}>
+        <Col span={24}>
+          <Card hoverable>
+            <Descriptions title="最新消息" column="3">
+              <Item label="当前确诊">{data.currentConfirmedCount}</Item>
+              <Item label="累计确诊">{data.confirmedCount}</Item>
+              <Item label="疑似">{data.suspectedCount}</Item>
+              <Item label="治愈">{data.curedCount}</Item>
+              <Item label="死亡">{data.deadCount}</Item>
+              <Item label="危重">{data.seriousCount}</Item>
+            </Descriptions>
+            <p style={{ fontStyle: 'italic', paddingTop: 15 }}>
+              <b>截止时间：</b>
+              {curTime}
+            </p>
+          </Card>
+        </Col>
+        <Col span={8}>
+          <Card title="病毒" hoverable style={{ height: 150, borderRadius: '25px' }}>
+            {data.note1}
+          </Card>
+        </Col>
+        <Col span={8}>
+          <Card title="传染源" hoverable style={{ height: 150, borderRadius: '25px' }}>
+            {data.note2}
+          </Card>
+        </Col>
+        <Col span={8}>
+          <Card title="传播途径" hoverable style={{ height: 150, borderRadius: '25px' }}>
+            {data.note3}
+          </Card>
+        </Col>
+        <Col span={8}>
+          <Card title="易感人群" hoverable style={{ height: 150, borderRadius: '25px' }}>
+            {data.remark1}
+          </Card>
+        </Col>
+        <Col span={8}>
+          <Card title="潜伏期" hoverable style={{ height: 150, borderRadius: '25px' }}>
+            {data.remark2}
+          </Card>
+        </Col>
+        <Col span={8}>
+          <Card title="宿主" hoverable style={{ height: 150, borderRadius: '25px' }}>
+            {data.remark3}
+          </Card>
+        </Col>
+      </Row>
+    );
+  };
+
+  render() {
+    return <PageHeaderWrapper>{this.renderInfo()}</PageHeaderWrapper>;
+  }
+}

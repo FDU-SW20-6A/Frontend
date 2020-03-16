@@ -98,12 +98,11 @@ export default {
           routes: [
             {
               path: '/',
-              redirect: '/welcome',
+              redirect: '/home',
             },
             {
-              path: '/welcome',
-              name: 'welcome',
-              icon: 'home',
+              path: '/info',
+              name: 'info',
               component: './Welcome',
             },
             {

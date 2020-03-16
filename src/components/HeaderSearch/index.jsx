@@ -3,8 +3,10 @@ import React, { Component } from 'react';
 import classNames from 'classnames';
 import debounce from 'lodash/debounce';
 import styles from './index.less';
+
 export default class HeaderSearch extends Component {
   inputRef = null;
+
   static defaultProps = {
     defaultActiveFirstOption: false,
     onPressEnter: () => {},
@@ -44,6 +46,7 @@ export default class HeaderSearch extends Component {
       this.debouncePressEnter();
     }
   };
+
   onChange = value => {
     if (typeof value === 'string') {
       const { onSearch, onChange } = this.props;
@@ -60,6 +63,7 @@ export default class HeaderSearch extends Component {
       }
     }
   };
+
   enterSearchMode = () => {
     const { onVisibleChange } = this.props;
     onVisibleChange(true);
@@ -76,11 +80,13 @@ export default class HeaderSearch extends Component {
       },
     );
   };
+
   leaveSearchMode = () => {
     this.setState({
       searchMode: false,
     });
   };
+
   debouncePressEnter = () => {
     const { onPressEnter } = this.props;
     const { value } = this.state;
