@@ -1,7 +1,11 @@
 export default {
   'menu.more-blocks': '更多区块',
   'menu.home': '首页',
-  'menu.info': '疫情信息页',
+  'menu.china': '国内疫情',
+  'menu.china.province': '省市详情',
+  'menu.world': '国际疫情',
+  'menu.world.country': '各国详情',
+  'menu.nearby': '附近疫情查询',
   'menu.admin': '管理页',
   'menu.admin.sub-page': '二级管理页',
   'menu.login': '登录',

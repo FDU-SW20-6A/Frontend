@@ -98,12 +98,44 @@ export default {
           routes: [
             {
               path: '/',
-              redirect: '/home',
+              redirect: '/china',
             },
             {
-              path: '/info',
-              name: 'info',
-              component: './Welcome',
+              path: '/china',
+              name: 'china',
+              hideChildrenInMenu: true,
+              routes: [
+                {
+                  path: '/china',
+                  component: './Welcome',
+                },
+                {
+                  path: '/china/details/:name',
+                  name: 'province',
+                  component: './ProvinceDetails',
+                },
+              ],
+            },
+            {
+              path: '/world',
+              name: 'world',
+              hideChildrenInMenu: true,
+              routes: [
+                {
+                  path: '/world',
+                  component: './World',
+                },
+                {
+                  path: '/world/details/:name',
+                  name: 'country',
+                  component: './CountryDetails',
+                },
+              ],
+            },
+            {
+              path: '/nearby',
+              name: 'nearby',
+              component: './Nearby',
             },
             {
               path: '/admin',

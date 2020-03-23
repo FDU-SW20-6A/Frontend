@@ -1,7 +1,11 @@
 export default {
   'menu.more-blocks': 'More Blocks',
   'menu.home': 'Home',
-  'menu.info': 'Overall Info',
+  'menu.china': 'Domestic Info',
+  'menu.china.province': 'Provinces Details',
+  'menu.world': 'World Info',
+  'menu.world.country': 'Country Details',
+  'menu.nearby': 'Nearby Info',
   'menu.admin': 'Admin',
   'menu.admin.sub-page': 'Sub-Page',
   'menu.login': 'Login',
