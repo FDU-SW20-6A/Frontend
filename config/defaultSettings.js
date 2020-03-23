@@ -5,14 +5,14 @@ export default {
   autoHideHeader: 'true',
   layout: 'topmenu',
   contentWidth: 'Fluid',
-  fixedHeader: false,
+  fixedHeader: true,
   autoHideHeader: false,
-  fixSiderbar: false,
+  fixSiderbar: true,
   colorWeak: false,
   menu: {
     locale: true,
   },
-  title: 'FDUSW A6',
+  title: 'FDUA6',
   pwa: false,
   iconfontUrl: '',
 };

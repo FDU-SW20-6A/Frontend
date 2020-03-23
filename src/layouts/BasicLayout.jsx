@@ -38,7 +38,7 @@ const menuDataRender = menuList =>
 
 const defaultFooterDom = (
   <DefaultFooter
-    copyright={formatMessage({id: 'layout.footer'})}
+    copyright={formatMessage({ id: 'layout.footer' })}
     links={[
       {
         key: 'github',
