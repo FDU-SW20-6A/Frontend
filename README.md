@@ -3,7 +3,7 @@ Frontend Demo for Visualizing COVID19's Transmission
 ## Frame
 [Ant Design Pro](https://pro.ant.design/)
 ## Work In Process...
-* Init welcome page, set CHN/ENG language support
+* Init china/world page, set CHN/ENG language support
 * Init login page
 ## How to use
 ### Mac OS
