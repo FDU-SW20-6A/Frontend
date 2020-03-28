@@ -63,6 +63,7 @@
     "path-to-regexp": "2.4.0",
     "qs": "^6.9.0",
     "react": "^16.8.6",
+    "react-amap": "^1.2.8",
     "react-copy-to-clipboard": "^5.0.1",
     "react-dom": "^16.8.6",
     "react-helmet": "^5.2.1",
@@ -71,7 +72,8 @@
     "umi-plugin-antd-theme": "^1.0.1",
     "umi-plugin-pro-block": "^1.3.2",
     "umi-plugin-react": "^1.9.5",
-    "umi-request": "^1.0.8"
+    "umi-request": "^1.0.8",
+    "puppeteer": "^2.0.0"
   },
   "devDependencies": {
     "@ant-design/pro-cli": "^1.0.18",
@@ -117,5 +119,20 @@
     "src/**/*.less",
     "config/**/*.js*",
     "scripts/**/*.js"
-  ]
+  ],
+  "main": ".eslintrc.js",
+  "directories": {
+    "test": "tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FDU-SW20-6A/Frontend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/FDU-SW20-6A/Frontend/issues"
+  },
+  "homepage": "https://github.com/FDU-SW20-6A/Frontend#readme"
 }
