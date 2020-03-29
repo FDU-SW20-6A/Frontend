@@ -1,5 +1,4 @@
 import React from 'react';
-import styles from './index.less';
 import {Table} from 'antd';
 
 
@@ -17,7 +16,7 @@ const columns = [{
     dataIndex: 'currentConfirmedCount',
     align: 'center',
     width: 100,
-    render: (text, record) => <span style={{color:'red'}}>{text}</span>
+    render: (text ) => <span style={{color:'red'}}>{text}</span>
   },
   {
     title: '累计确诊',
@@ -25,7 +24,7 @@ const columns = [{
     dataIndex: 'confirmedCount',
     align: 'center',
     width: 100,
-    render: (text, record) => <span style={{color:'darkred'}}>{text}</span>
+    render: (text ) => <span style={{color:'darkred'}}>{text}</span>
   },
   {
     title: '死亡',
@@ -33,7 +32,7 @@ const columns = [{
     dataIndex: 'deadCount',
     align: 'center',
     width: 100,
-    render: (text, record) => <span style={{color:'grey'}}>{text}</span>
+    render: (text ) => <span style={{color:'grey'}}>{text}</span>
   },
   {
     title: '治愈',
@@ -41,36 +40,36 @@ const columns = [{
     dataIndex: 'curedCount',
     align: 'center',
     width: 100,
-    render: (text, record) => <span style={{color:'limegreen'}}>{text}</span>
+    render: (text ) => <span style={{color:'limegreen'}}>{text}</span>
   },
   {
     title: '',
     key: 'action',
     dataIndex: '',
     width:100,
-    render: (text, record) => {if(record.children) return <a href={record.region}>详情</a>},
+    render: (record ) => {if(record.children) return <a href={record.region}>详情</a>},
   }];
 
-const DataList = ({style, data}) => {
+const DataList = ({data}) => {
     let dataSource=[];
     data.map((element,index) => {
       var d={};
-      d['key']=element['locationId'];
-      d['region']=element['provinceName'];
-      d['confirmedCount']=element['confirmedCount'];
-      d['currentConfirmedCount']=element['currentConfirmedCount'];
-      d['deadCount']=element['deadCount'];
-      d['curedCount']=element['curedCount'];
-      d['children']=[];
-      element['cities'].map((city,i) => {
+      d.key=element.locationId;
+      d.region=element.provinceName;
+      d.confirmedCount=element.confirmedCount;
+      d.currentConfirmedCount =element.currentConfirmedCount;
+      d.deadCount =element.deadCount ;
+      d.curedCount =element.curedCount ;
+      d.children =[];
+      element.cities .map((city,i) => {
         var c={};
-        c['key']=city['locationId'];
-        c['region']=city['cityName'];
-        c['confirmedCount']=city['confirmedCount'];
-        c['currentConfirmedCount']=city['currentConfirmedCount'];
-        c['deadCount']=city['deadCount'];
-        c['curedCount']=city['curedCount'];
-        d['children'][i]=c;
+        c.key =city.locationId ;
+        c.region =city.cityName ;
+        c.confirmedCount =city.confirmedCount ;
+        c.currentConfirmedCount =city.currentConfirmedCount ;
+        c.deadCount =city.deadCount ;
+        c.curedCount =city.curedCount ;
+        d.children[i]=c;
       })
       dataSource[index]=d;
     });

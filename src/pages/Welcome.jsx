@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react';
-import { Card, Descriptions, Empty, Row, Col, Tabs, Table } from 'antd';
+import { Card, Descriptions, Empty, Row, Col, Tabs } from 'antd';
 import { LineChartOutlined, PieChartOutlined, TableOutlined } from '@ant-design/icons';
-import request from '../utils/request';
 import DataList from '@/components/DataList';
 
 const { Item } = Descriptions;
@@ -13,7 +12,7 @@ export default class Welcome extends PureComponent {
     list: [],
   };
   componentDidMount = () => {
-    var url = 'https://lab.isaaclin.cn/nCoV/api/overall';
+    let url = 'https://lab.isaaclin.cn/nCoV/api/overall';
     fetch(url)
       .then(res => res.json())
       .then(data => {
