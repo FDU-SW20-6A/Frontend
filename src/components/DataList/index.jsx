@@ -2,7 +2,7 @@ import React from 'react';
 import {Table} from 'antd';
 
 
-const columns = [{
+var columns = [{
     title: '地区',
     key: 'region',
     dataIndex: 'region',
@@ -41,38 +41,46 @@ const columns = [{
     align: 'center',
     width: 100,
     render: (text ) => <span style={{color:'limegreen'}}>{text}</span>
-  },
-  {
-    title: '',
-    key: 'action',
-    dataIndex: '',
-    width:100,
-    render: (record ) => {if(record.children) return <a href={record.region}>详情</a>},
   }];
+var actioncolumn=[
+{
+  title: '',
+  key: 'action',
+  dataIndex: '',
+  width:100,
+  render: (record ) => {if(record.children) return <a href={`/${record.country}/details/${record.key}`}>详情</a>},
+}];
 
-const DataList = ({data}) => {
+const DataList = ({data, additionalcolumns, country}) => {
     let dataSource=[];
+    let c = columns.concat(additionalcolumns? additionalcolumns.concat(actioncolumn): actioncolumn);
     data.map((element,index) => {
       var d={};
-      d.key=element.locationId;
-      d.region=element.provinceName;
-      d.confirmedCount=element.confirmedCount;
-      d.currentConfirmedCount =element.currentConfirmedCount;
-      d.deadCount =element.deadCount ;
-      d.curedCount =element.curedCount ;
+      d.key=element.ename;
+      d.region=element.name;
+      d.confirmedCount=element.value;
+      d.currentConfirmedCount =element.econNum;
+      d.deadCount =element.deathNum;
+      d.curedCount =element.cureNum;
+      d.country = country;
+      if(additionalcolumns){
+        additionalcolumns.forEach((ele, ind) => {
+            d[ele.key]=element[ele.key];
+        })
+      };
       d.children =[];
-      element.cities .map((city,i) => {
+      element.city.map((city,i) => {
         var c={};
-        c.key =city.locationId ;
-        c.region =city.cityName ;
-        c.confirmedCount =city.confirmedCount ;
-        c.currentConfirmedCount =city.currentConfirmedCount ;
-        c.deadCount =city.deadCount ;
-        c.curedCount =city.curedCount ;
+        c.key =city.ename;
+        c.region =city.name;
+        c.confirmedCount =city.conNum;
+        c.currentConfirmedCount =city.econNum;
+        c.deadCount =city.deathNum;
+        c.curedCount =city.cureNum;
         d.children[i]=c;
       })
       dataSource[index]=d;
     });
-    return <Table columns={columns} dataSource={dataSource} size='middle' expandRowByClick='true'/>
+    return <Table columns={c} dataSource={dataSource} size='small' expandRowByClick='true'/>
   };
 export default DataList;
