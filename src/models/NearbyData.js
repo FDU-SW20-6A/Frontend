@@ -24,7 +24,8 @@ export default {
     *search(params, sagaEffects) {
       const { call, put } = sagaEffects;
       let lnglat = params.address;
-      const url = "/data/nearby?lng=" + String(lnglat.lng) + "&lat=" + String(lnglat.lat);
+      let adcode = params.adcode;
+      const url = "/data/nearby?lng=" + String(lnglat.lng) + "&lat=" + String(lnglat.lat) + "&adcode=" + adcode;
       console.log(url);
       let data = yield call(request, url);
       yield put({
