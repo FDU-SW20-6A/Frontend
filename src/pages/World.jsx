@@ -1,11 +1,14 @@
 import React, { PureComponent } from 'react';
-import { Card, Descriptions, Empty, Row, Col, Tabs, Table, Carousel, Menu } from 'antd';
+import { Card, Descriptions, Empty, Row, Col, Tabs, Table, Carousel, Menu, Affix } from 'antd';
 import {
   LineChartOutlined,
   PieChartOutlined,
   TableOutlined,
   RiseOutlined,
+  DotChartOutlined
 } from '@ant-design/icons';
+import jsonp from 'jsonp'; // 接口jsonp实现跨域
+import CountriesConfirm from '@/components/Charts/CountriesConfirm';
 
 const { Item } = Descriptions;
 const { TabPane } = Tabs;
@@ -13,9 +16,35 @@ const { Meta } = Card;
 export default class World extends PureComponent {
   state = {
     data: {},
+    currData: {},
+    totalData: {}
   };
 
-  componentDidMount = () => {};
+  componentDidMount = () => {
+    this.fetchSinaData();
+  };
+
+  fetchSinaData = () => {
+    const self = this;
+    jsonp('https://interface.sina.cn/news/wap/fymap2020_data.d.json', (err, data) => {
+      const curr = data.data.otherlist.map(item => ({
+        name: item.name,
+        value: item.econNum,
+      }));
+      curr.push({ name: '中国', value: data.data.econNum });
+      self.setState({
+        currData: curr,
+      });
+      const total = data.data.otherlist.map(item => ({
+        name: item.name,
+        value: item.conNum,
+      }));
+      total.push({ name: '中国', value: data.data.gntotal });
+      self.setState({
+        totalData: total,
+      });
+    });
+  };
 
   renderInfo = () => {
     const { data } = this.state;
@@ -55,18 +84,22 @@ export default class World extends PureComponent {
     );
   };
 
+  currMap1 = currData => <CountriesConfirm data={currData} isCurr />;
+
+  sumMap1 = totalData => <CountriesConfirm data={totalData} isCurr={false} />;
+
   renderMap1 = () => {
-    console.log('世界地图');
+    const { currData, totalData } = this.state;
     return (
       <Card>
         <Meta title="世界地图" avatar={<PieChartOutlined />} />
         <p />
         <Tabs defaultActiveKey="1" onChange={this.callback()}>
           <TabPane tab="现存" key="1">
-            Content of Tab Pane 1
+            {this.currMap1(currData)}
           </TabPane>
           <TabPane tab="累计" key="2">
-            Content of Tab Pane 2
+            {this.sumMap1(totalData)}
           </TabPane>
         </Tabs>
       </Card>
@@ -74,11 +107,9 @@ export default class World extends PureComponent {
   };
 
   callback = () => {
-    console.log('tab change');
   };
 
   renderMap2 = () => {
-    console.log('世界曲线');
     return (
       <Card>
         <Meta title="世界曲线" avatar={<LineChartOutlined />} />
@@ -99,7 +130,6 @@ export default class World extends PureComponent {
   };
 
   renderTable = () => {
-    console.log('数据列表');
     return (
       <Card>
         <Meta title="数据列表" avatar={<TableOutlined />} />
@@ -110,7 +140,6 @@ export default class World extends PureComponent {
   };
 
   renderNewCovid = () => {
-    console.log('重点国家新增确诊');
     return (
       <Card>
         <Meta title="重点国家新增确诊" avatar={<RiseOutlined />} />
@@ -153,72 +182,87 @@ export default class World extends PureComponent {
     );
   };
 
-  renderCureDeath = () => {};
+  renderCureDeath = () => {
+    return (
+      <Card>
+        <Meta title="治愈率 / 死亡率散点图" avatar={<DotChartOutlined />} />
+      </Card>
+    )
+  }
 
   renderSider = () => {
-    console.log('侧边栏');
     return (
-      <Menu
-        style={{ width: 256 }}
-        defaultSelectedKeys={['0']}
-        defaultOpenKeys={['sub1']}
-        mode="inline"
-      >
-        <Menu.Item key="0">
-          <span role="img" aria-label="世界">
-            🌍
+      <Affix offsetTop={90}>
+        <Menu
+          style={{ width: 256, height: 700 }}
+          defaultSelectedKeys={['0']}
+          mode="inline"
+        >
+          <Menu.Item key="0">
+            <a href="/world">
+            <span role="img" aria-label="世界">
+              🌍 世界
           </span>
-          <span>世界</span>
-        </Menu.Item>
-        <Menu.Item key="1">
-          <span role="img" aria-label="意大利">
-            🇮🇹
+          </a>
+          </Menu.Item>
+          <Menu.Item key="1">
+          <a href="/world/details/意大利">
+            <span role="img" aria-label="意大利">
+              🇮🇹 意大利
           </span>
-          <span>意大利</span>
-        </Menu.Item>
-        <Menu.Item key="2">
-          <span role="img" aria-label="美国">
-            🇺🇸
+          </a>
+          </Menu.Item>
+          <Menu.Item key="2">
+          <a href="/world/details/美国">
+            <span role="img" aria-label="美国">
+              🇺🇸 美国
           </span>
-          <span>美国</span>
-        </Menu.Item>
-        <Menu.Item key="3">
-          <span role="img" aria-label="韩国">
-            🇰🇷
+          </a>
+          </Menu.Item>
+          <Menu.Item key="3">
+          <a href="/world/details/韩国">
+            <span role="img" aria-label="韩国">
+              🇰🇷 韩国
           </span>
-          <span>韩国</span>
-        </Menu.Item>
-        <Menu.Item key="4">
-          <span role="img" aria-label="伊朗">
-            🇮🇷
+          </a>
+          </Menu.Item>
+          <Menu.Item key="4">
+          <a href="/world/details/伊朗">
+            <span role="img" aria-label="伊朗">
+              🇮🇷 伊朗
           </span>
-          <span>伊朗</span>
-        </Menu.Item>
-        <Menu.Item key="5">
-          <span role="img" aria-label="日本">
-            🇯🇵
+          </a>
+          </Menu.Item>
+          <Menu.Item key="5">
+          <a href="/world/details/日本">
+            <span role="img" aria-label="日本">
+              🇯🇵 日本
           </span>
-          <span>日本</span>
-        </Menu.Item>
-        <Menu.Item key="6">
-          <span role="img" aria-label="法国">
-            🇫🇷
+          </a>
+          </Menu.Item>
+          <Menu.Item key="6">
+          <a href="/world/details/法国">
+            <span role="img" aria-label="法国">
+              🇫🇷 法国
           </span>
-          <span>法国</span>
-        </Menu.Item>
-        <Menu.Item key="7">
-          <span role="img" aria-label="德国">
-            🇩🇪
+          </a>
+          </Menu.Item>
+          <Menu.Item key="7">
+          <a href="/world/details/德国">
+            <span role="img" aria-label="德国">
+              🇩🇪 德国
           </span>
-          <span>德国</span>
-        </Menu.Item>
-        <Menu.Item key="8">
-          <span role="img" aria-label="西班牙">
-            🇪🇸
+          </a>
+          </Menu.Item>
+          <Menu.Item key="8">
+          <a href="/world/details/西班牙">
+            <span role="img" aria-label="西班牙">
+              🇪🇸 西班牙
           </span>
-          <span>西班牙</span>
-        </Menu.Item>
-      </Menu>
+          </a>
+          </Menu.Item>
+        </Menu>
+      </Affix>
     );
   };
 
@@ -238,6 +282,9 @@ export default class World extends PureComponent {
           </Col>
           <Col span={19} offset={5}>
             {this.renderTable()}
+          </Col>
+          <Col span={19} offset={5}>
+            {this.renderCureDeath()}
           </Col>
           <Col span={19} offset={5}>
             {this.renderNewCovid()}
