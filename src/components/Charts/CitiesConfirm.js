@@ -1,30 +1,24 @@
-/* eslint-disable import/no-unresolved */
+/* eslint-disable import/no-dynamic-require */
+/* eslint-disable global-require */
 import React, { Component } from 'react';
 import ReactEcharts from 'echarts-for-react';
-import router from 'umi/router';
-import 'echarts/map/js/china.js';
+import './province';
 
 export default class ProvincesConfirm extends Component {
   state = {};
 
-  onMapClick = e => {
-    console.log(e);
-    const {name} = e.data;
-    router.push(`/china/details/${name}`);
-  }
-  
-  onclick = {
-    'click': this.onMapClick
-  };
-
   getOption = () => {
+    const path = window.location.pathname.split('/');
+    const province = decodeURIComponent(path[path.length - 1]);
     const { data, isCurr } = this.props;
-    console.log(data)
     const myLabel = {
       show: true,
       color: isCurr ? 'black' : 'white',
       fontSize: '8',
     };
+    const myLabel1 = {
+        show: false
+    }
     const myLabel2 = {
       show: true,
       color: 'black',
@@ -37,7 +31,7 @@ export default class ProvincesConfirm extends Component {
       },
       areaColor: 'lightyellow',
     };
-    const formatString = isCurr ? '省份: {b} <br/> 现存确诊：{c}' : '省份: {b} <br/> 累计确诊：{c}';
+    const formatString = isCurr ? '地区: {b} <br/> 现存确诊：{c}' : '地区: {b} <br/> 累计确诊：{c}';
     return {
       tooltip: {
         // 提示框
@@ -47,15 +41,14 @@ export default class ProvincesConfirm extends Component {
       series: [
         {
           type: 'map',
-          map: 'china',
+          map: province,
           roam: true,
           data,
-          selectedMode: 'single',
           itemStyle: {
             borderColor: 'grey', // 区域边框线
           },
           label: {
-            normal: myLabel,
+            normal: myLabel1,
             emphasis: myLabel2,
           },
           emphasis: {
@@ -87,7 +80,7 @@ export default class ProvincesConfirm extends Component {
   render() {
     return (
       <div style={{ padding: 20 }}>
-        <ReactEcharts option={this.getOption()} onEvents={this.onclick}/>
+        <ReactEcharts option={this.getOption()}/>
       </div>
     );
   }
