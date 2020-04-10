@@ -11,6 +11,7 @@ Frontend Demo for Visualizing COVID19's Transmission
 - Init china/world page, set CHN/ENG language support
 - Init login page
 - Draw China confirm map and mock data for nearby circumstances
+- Add more maps
 
 ## How to use
 
