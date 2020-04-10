@@ -229,19 +229,12 @@ export default class Welcome extends PureComponent {
     let c;
     console.log(this.state.list)
     if(this.state.list){
-      c=[{
-        title: '含境外输入',
-        key: 'jwsrNum',
-        dataIndex: 'jwsrNum',
-        align: 'center',
-        width: 100,
-      }]
     }
     return (
       <Card>
         <Meta title="数据列表" avatar={<TableOutlined />} />
         <p />
-        <DataList data={this.state.list} additionalcolumns={c} country='china'/>
+        <DataList data={this.state.list} isjwsr='含境外输入' country='china' pagination={false}/>
       </Card>
     );
   };

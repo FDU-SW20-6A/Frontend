@@ -7,7 +7,7 @@ import {
 } from '@ant-design/icons';
 import jsonp from 'jsonp'; // 接口jsonp实现跨域
 import KeyCountries from '@/components/Charts/KeyCountries';
-
+import DataList from '@/components/DataList';
 const { Item } = Descriptions;
 const { TabPane } = Tabs;
 const { Meta } = Card;
@@ -37,7 +37,8 @@ export default class CountryDetails extends PureComponent {
         data: {},
         newAddData: {},
         totalData: {},
-        nameMapping: {}
+        nameMapping: {},
+        list: []
     };
 
     componentDidMount = () => {
@@ -76,12 +77,16 @@ export default class CountryDetails extends PureComponent {
                 this.setState({
                     nameMapping
                 });
+                this.setState({
+                    list: city
+                })
             })
         }
     };
 
     renderInfo = () => {
         const { data } = this.state;
+        console.log(this.state.totalData);
         if (data === {}) {
             return <Empty />;
         }
@@ -171,7 +176,7 @@ export default class CountryDetails extends PureComponent {
             <Card>
                 <Meta title="数据列表" avatar={<TableOutlined />} />
                 <p />
-                <Table />
+                <DataList data={this.state.list} isjwsr='' pagination={false} country={this.state.country}/>
             </Card>
         );
     };

@@ -31,6 +31,7 @@ export default class Welcome extends PureComponent {
     };
 
     fetchOverall = () => {
+        /*
         const url = `${ROOT}overall`;
         fetch(url)
             .then(res => res.json())
@@ -39,6 +40,7 @@ export default class Welcome extends PureComponent {
                     data: data.results[0],
                 });
             });
+        */
     };
 
     fetchSinaData = province => {
@@ -54,6 +56,17 @@ export default class Welcome extends PureComponent {
             }
             if (idx !== -1) provinceObj = curr[idx];
             if (provinceObj) {
+                this.setState({
+                    data: {currentConfirmedIncr:provinceObj.adddaily.conadd,
+                            currentConfirmedCount: provinceObj.value,
+                            deadCount: provinceObj.deathNum,
+                            curedCount: provinceObj.cureNum,
+                            deadIncr: provinceObj.adddaily.deathadd,
+                            curedIncr: provinceObj.adddaily.cureadd, 
+                            confirmedCount: provinceObj.econNum,
+                            confirmedIncr: provinceObj.adddaily.econadd                       
+                        }
+                })
                 const jwsr = provinceObj.jwsr ? provinceObj.jwsrNum : 0;
                 this.setState({
                     jwsr
@@ -72,6 +85,9 @@ export default class Welcome extends PureComponent {
                 this.setState({
                     totalData: totalCities
                 })
+                this.setState({
+                    list: [provinceObj]
+                })
             }
         });
     };
@@ -84,11 +100,11 @@ export default class Welcome extends PureComponent {
         const curDate = new Date();
         curDate.setTime(data.updateTime);
         return (
-            <Row gutter={[16, 16]}>
+            <Row gutter={[16,16]}>
                 <Col span={24}>
                     <Card>
-                        <Descriptions colon={false} layout="vertical" style={{ textAlign: 'center' }}>
-                            <Item label="现存确诊">
+                        <Descriptions column={4} colon={false} layout="vertical" style={{ textAlign: 'center' }}>
+                            <Item label="现存确诊" >
                                 <h4
                                     style={{
                                         color: 'red',
@@ -98,44 +114,14 @@ export default class Welcome extends PureComponent {
                                     }}
                                 >
                                     {data.currentConfirmedIncr > 0
-                                        ? `+${data.currentConfirmedIncr}`
+                                        ? `${data.currentConfirmedIncr}`
                                         : data.currentConfirmedIncr}
                                 </h4>
                                 <h3 style={{ color: 'red', fontWeight: 'bold', paddingRight: '10px' }}>
                                     {data.currentConfirmedCount}
                                 </h3>
                             </Item>
-                            <Item label="现存疑似">
-                                <h4
-                                    style={{
-                                        color: 'orange',
-                                        fontWeight: 'bold',
-                                        paddingRight: '10px',
-                                        marginBottom: '0',
-                                    }}
-                                >
-                                    {data.suspectedIncr > 0 ? `+${data.suspectedIncr}` : data.suspectedIncr}
-                                </h4>
-                                <h3 style={{ color: 'orange', fontWeight: 'bold', paddingRight: '10px' }}>
-                                    {data.suspectedCount}
-                                </h3>
-                            </Item>
-                            <Item label="现存重症">
-                                <h4
-                                    style={{
-                                        color: 'dodgerblue',
-                                        fontWeight: 'bold',
-                                        paddingRight: '10px',
-                                        marginBottom: '0',
-                                    }}
-                                >
-                                    {data.seriousIncr > 0 ? `+${data.seriousIncr}` : data.seriousIncr}
-                                </h4>
-                                <h3 style={{ color: 'dodgerblue', fontWeight: 'bold', paddingRight: '10px' }}>
-                                    {data.seriousCount}
-                                </h3>
-                            </Item>
-                            <Item label="累计确诊">
+                            <Item label="累计确诊" >
                                 <h4
                                     style={{
                                         color: 'red',
@@ -144,7 +130,7 @@ export default class Welcome extends PureComponent {
                                         marginBottom: '0',
                                     }}
                                 >
-                                    {data.confirmedIncr > 0 ? `+${data.confirmedIncr}` : data.confirmedIncr}
+                                    {data.confirmedIncr > 0 ? `${data.confirmedIncr}` : data.confirmedIncr}
                                 </h4>
                                 <h3 style={{ color: 'red', fontWeight: 'bold', paddingRight: '10px' }}>
                                     {data.confirmedCount}
@@ -159,13 +145,13 @@ export default class Welcome extends PureComponent {
                                         marginBottom: '0',
                                     }}
                                 >
-                                    {data.curedIncr > 0 ? `+${data.curedIncr}` : data.curedIncr}
+                                    {data.curedIncr > 0 ? `${data.curedIncr}` : data.curedIncr}
                                 </h4>
                                 <h3 style={{ color: 'limegreen', fontWeight: 'bold', paddingRight: '10px' }}>
                                     {data.curedCount}
                                 </h3>
                             </Item>
-                            <Item label="累计死亡">
+                            <Item label="累计死亡" >
                                 <h4
                                     style={{
                                         color: 'grey',
@@ -174,7 +160,7 @@ export default class Welcome extends PureComponent {
                                         marginBottom: '0',
                                     }}
                                 >
-                                    {data.deadIncr > 0 ? `+${data.deadIncr}` : data.deadIncr}
+                                    {data.deadIncr > 0 ? `${data.deadIncr}` : data.deadIncr}
                                 </h4>
                                 <h3 style={{ color: 'grey', fontWeight: 'bold', paddingRight: '10px' }}>
                                     {data.deadCount}
@@ -237,12 +223,11 @@ export default class Welcome extends PureComponent {
     );
 
     renderTable = () => {
-        console.log(this.state.list);
         return (
             <Card>
                 <Meta title="数据列表" avatar={<TableOutlined />} />
                 <p />
-                <DataList data={this.state.list} />
+                <DataList data={this.state.list} isjwsr='含境外输入' pagination={false} country='china'/>
             </Card>
         );
     };
