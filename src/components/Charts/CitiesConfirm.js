@@ -78,9 +78,13 @@ export default class ProvincesConfirm extends Component {
   };
 
   render() {
+    const { jwsr } = this.props;
     return (
       <div style={{ padding: 20 }}>
+        <p style={{ fontWeight: 'bold', color: '#CA2B2D' }}>境外输入人员：{jwsr}</p>
         <ReactEcharts option={this.getOption()}/>
+        <p/>
+        <p style={{ fontStyle: 'italic' }}>*部分地区信息可能未采集到，显示NaN</p>
       </div>
     );
   }

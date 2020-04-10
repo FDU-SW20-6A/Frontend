@@ -20,6 +20,7 @@ export default class Welcome extends PureComponent {
         currData: {}, // 省内各城市现存确诊
         totalData: {}, // 省内各城市累计确诊
         list: [],
+        jwsr: '', // 省内境外输入
     };
 
     componentDidMount = () => {
@@ -53,15 +54,19 @@ export default class Welcome extends PureComponent {
             }
             if (idx !== -1) provinceObj = curr[idx];
             if (provinceObj) {
+                const jwsr = provinceObj.jwsr ? provinceObj.jwsrNum : 0;
+                this.setState({
+                    jwsr
+                })
                 const currCities = provinceObj.city.map(item => ({
-                    name: item.name,
+                    name: item.mapName,
                     value: item.econNum
                 }));
                 this.setState({
                     currData: currCities
                 });
                 const totalCities = provinceObj.city.map(item => ({
-                    name: item.name,
+                    name: item.mapName,
                     value: item.conNum
                 }));
                 this.setState({
@@ -182,24 +187,23 @@ export default class Welcome extends PureComponent {
         );
     };
 
-    currMap1 = currData => <CitiesConfirm data={currData} isCurr />;
+    currMap1 = (currData, jwsr) => <CitiesConfirm data={currData} isCurr jwsr={jwsr}/>;
 
-    sumMap1 = totalData => <CitiesConfirm data={totalData} isCurr={false} />;
+    sumMap1 = (totalData, jwsr) => <CitiesConfirm data={totalData} isCurr={false} jwsr={jwsr}/>;
 
     renderMap1 = () => {
         // 疫情地图
-        const { currData } = this.state;
-        const { totalData } = this.state;
+        const { currData, totalData, jwsr } = this.state;
         return (
-            <Card>
+            <Card style={{ height: '550px' }}>
                 <Meta title="疫情地图" avatar={<PieChartOutlined />} />
                 <p />
                 <Tabs defaultActiveKey="1" onChange={this.callback()}>
                     <TabPane tab="现存" key="1">
-                        {this.currMap1(currData)}
+                        {this.currMap1(currData, jwsr)}
                     </TabPane>
                     <TabPane tab="累计" key="2">
-                        {this.sumMap1(totalData)}
+                        {this.sumMap1(totalData, jwsr)}
                     </TabPane>
                 </Tabs>
             </Card>
@@ -209,7 +213,7 @@ export default class Welcome extends PureComponent {
     callback = () => { };
 
     renderMap2 = () => (
-        <Card>
+        <Card style={{ height: '550px' }}>
             <Meta title="总体曲线" avatar={<LineChartOutlined />} />
             <p />
             <Tabs defaultActiveKey="1" onChange={this.callback()}>
