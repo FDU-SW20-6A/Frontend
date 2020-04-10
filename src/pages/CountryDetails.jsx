@@ -21,67 +21,63 @@ const countryKeyMap = {
     "德国": '7',
     "西班牙": '8'
 }
+const countryCode = {
+    "意大利": 'SCIT0039',
+    "美国": 'SCUS0001',
+    "韩国": 'SCKR0082',
+    "伊朗": 'SCIR0098',
+    "日本": 'SCJP0081',
+    "法国": 'SCFR0033',
+    "德国": 'SCDE0049',
+    "西班牙": 'SCES0034'
+}
 export default class CountryDetails extends PureComponent {
     state = {
         country: "",
         data: {},
         newAddData: {},
         totalData: {},
-        nameMapping : {}
+        nameMapping: {}
     };
 
     componentDidMount = () => {
         const path = window.location.pathname.split('/');
-        const country = countryKeyMap[decodeURIComponent(path[path.length - 1])];
+        const country = decodeURIComponent(path[path.length - 1]);
+        const countryKey = countryKeyMap[country];
         this.setState({
-            country
+            country: countryKey
         });
         this.fetchSinaData(country);
     };
 
     fetchSinaData = country => {
-        let cityCode = '';
-        jsonp('https://interface.sina.cn/news/wap/fymap2020_data.d.json', (err, data) => {
-            const curr = data.data.otherlist;
-            let idx = -1;
-            let countryObj = {};
-            for (let i = 0; i < curr.length; i += 1) {
-                if (curr[i].name === country) {
-                    idx = i;
-                    break;
-                }
-            }
-            if (idx !== -1) countryObj = curr[idx];
-            if (countryObj) {
-                cityCode = countryObj.citycode;
-            }
-            if (cityCode) {
-                jsonp(`https://gwpre.sina.cn/interface/news/wap/ncp_foreign.d.json?citycode=${cityCode}`, (newErr, newData) => {
-                    const {city} = newData.data;
-                    const totalData = city.map(item => ({
-                        name: item.name,
-                        value: item.conNum
-                    }));
-                    this.setState({
-                        totalData
-                    })
-                    const newAddData = city.map(item => ({
-                        name: item.name,
-                        value: item.conadd
-                    }));
-                    this.setState({
-                        newAddData
-                    });
-                    const nameMapping = {};
-                    for (let i = 0; i < city.length; i += 1) {
-                        nameMapping[city[i].mapName] = city[i].name;
-                    }
-                    this.setState({
-                        nameMapping
-                    });
+        const cityCode = countryCode[country];
+        if (cityCode) {
+            jsonp(`https://gwpre.sina.cn/interface/news/wap/ncp_foreign.d.json?citycode=${cityCode}`, (newErr, newData) => {
+                const { city } = newData.data;
+                const totalData = city.map(item => ({
+                    name: item.name,
+                    value: item.conNum
+                }));
+                this.setState({
+                    totalData
                 })
-            }
-        });
+                const newAddData = city.map(item => ({
+                    name: item.name,
+                    value: item.conadd
+                }));
+                this.setState({
+                    newAddData
+                });
+                const nameMapping = {};
+                for (let i = 0; i < city.length; i += 1) {
+                    nameMapping[(city[i].mapName).toString()] = city[i].name;
+                }
+                this.setState({
+                    nameMapping
+                });
+            })
+        }
     };
 
     renderInfo = () => {
@@ -122,9 +118,9 @@ export default class CountryDetails extends PureComponent {
         );
     };
 
-    newAddMap1 = (newAddData, nameMapping) => <KeyCountries data={newAddData} isCurr nameMapping={nameMapping}/>;
+    newAddMap1 = (newAddData, nameMapping) => <KeyCountries data={newAddData} isCurr nameMapping={nameMapping} />;
 
-    sumMap1 = (totalData, nameMapping) => <KeyCountries data={totalData} isCurr={false} nameMapping={nameMapping}/>;
+    sumMap1 = (totalData, nameMapping) => <KeyCountries data={totalData} isCurr={false} nameMapping={nameMapping} />;
 
     renderMap1 = () => {
         const { newAddData, totalData, nameMapping } = this.state;
@@ -133,7 +129,7 @@ export default class CountryDetails extends PureComponent {
                 <Meta title="国家地图" avatar={<PieChartOutlined />} />
                 <p />
                 <Tabs defaultActiveKey="1" onChange={this.callback()}>
-                    <TabPane tab="现存" key="1">
+                    <TabPane tab="新增" key="1">
                         {this.newAddMap1(newAddData, nameMapping)}
                     </TabPane>
                     <TabPane tab="累计" key="2">
