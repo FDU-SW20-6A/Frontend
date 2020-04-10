@@ -9,6 +9,7 @@ import {
 } from '@ant-design/icons';
 import jsonp from 'jsonp'; // 接口jsonp实现跨域
 import CountriesConfirm from '@/components/Charts/CountriesConfirm';
+import DataList from '@/components/DataList';
 
 const { Item } = Descriptions;
 const { TabPane } = Tabs;
@@ -17,7 +18,8 @@ export default class World extends PureComponent {
   state = {
     data: {},
     currData: {},
-    totalData: {}
+    totalData: {},
+    list: []
   };
 
   componentDidMount = () => {
@@ -31,6 +33,19 @@ export default class World extends PureComponent {
         name: item.name,
         value: item.econNum,
       }));
+      const othertotal = data.data.othertotal;
+      self.setState({
+        data:{currentConfirmedIncr:othertotal.ecertain_inc,
+          currentConfirmedCount: othertotal.ecertain,
+          deadCount: othertotal.die,
+          curedCount: othertotal.recure,
+          deadIncr: othertotal.die_inc,
+          curedIncr: othertotal.recure_inc, 
+          confirmedCount: othertotal.certain,
+          confirmedIncr: othertotal.certain_inc
+
+        }
+      })
       curr.push({ name: '中国', value: data.data.econNum });
       self.setState({
         currData: curr,
@@ -42,6 +57,7 @@ export default class World extends PureComponent {
       total.push({ name: '中国', value: data.data.gntotal });
       self.setState({
         totalData: total,
+        list: data.data.otherlist
       });
     });
   };
@@ -57,27 +73,70 @@ export default class World extends PureComponent {
       <Row gutter={[16, 16]}>
         <Col span={24}>
           <Card>
-            <Descriptions
-              column={4}
-              colon={false}
-              layout="vertical"
-              style={{ textAlign: 'center' }}
-            >
-              <Item label="现存确诊">
-                <h3 style={{ color: 'red', fontWeight: 'bold', paddingRight: '10px' }}>***</h3>
-              </Item>
-              <Item label="累计确诊">
-                <h3 style={{ color: 'red', fontWeight: 'bold', paddingRight: '10px' }}>***</h3>
-              </Item>
-              <Item label="累计治愈">
-                <h3 style={{ color: 'limegreen', fontWeight: 'bold', paddingRight: '10px' }}>
-                  ***
-                </h3>
-              </Item>
-              <Item label="累计死亡">
-                <h3 style={{ color: 'grey', fontWeight: 'bold', paddingRight: '10px' }}>***</h3>
-              </Item>
-            </Descriptions>
+          <Descriptions column={4} colon={false} layout="vertical" style={{ textAlign: 'center' }}>
+                            <Item label="现存确诊" >
+                                <h4
+                                    style={{
+                                        color: 'red',
+                                        fontWeight: 'bold',
+                                        paddingRight: '10px',
+                                        marginBottom: '0',
+                                    }}
+                                >
+                                    {data.currentConfirmedIncr > 0
+                                        ? `${data.currentConfirmedIncr}`
+                                        : data.currentConfirmedIncr}
+                                </h4>
+                                <h3 style={{ color: 'red', fontWeight: 'bold', paddingRight: '10px' }}>
+                                    {data.currentConfirmedCount}
+                                </h3>
+                            </Item>
+                            <Item label="累计确诊" >
+                                <h4
+                                    style={{
+                                        color: 'red',
+                                        fontWeight: 'bold',
+                                        paddingRight: '10px',
+                                        marginBottom: '0',
+                                    }}
+                                >
+                                    {data.confirmedIncr > 0 ? `${data.confirmedIncr}` : data.confirmedIncr}
+                                </h4>
+                                <h3 style={{ color: 'red', fontWeight: 'bold', paddingRight: '10px' }}>
+                                    {data.confirmedCount}
+                                </h3>
+                            </Item>
+                            <Item label="累计治愈">
+                                <h4
+                                    style={{
+                                        color: 'limegreen',
+                                        fontWeight: 'bold',
+                                        paddingRight: '10px',
+                                        marginBottom: '0',
+                                    }}
+                                >
+                                    {data.curedIncr > 0 ? `${data.curedIncr}` : data.curedIncr}
+                                </h4>
+                                <h3 style={{ color: 'limegreen', fontWeight: 'bold', paddingRight: '10px' }}>
+                                    {data.curedCount}
+                                </h3>
+                            </Item>
+                            <Item label="累计死亡" >
+                                <h4
+                                    style={{
+                                        color: 'grey',
+                                        fontWeight: 'bold',
+                                        paddingRight: '10px',
+                                        marginBottom: '0',
+                                    }}
+                                >
+                                    {data.deadIncr > 0 ? `${data.deadIncr}` : data.deadIncr}
+                                </h4>
+                                <h3 style={{ color: 'grey', fontWeight: 'bold', paddingRight: '10px' }}>
+                                    {data.deadCount}
+                                </h3>
+                            </Item>
+                        </Descriptions>
           </Card>
         </Col>
       </Row>
@@ -134,7 +193,7 @@ export default class World extends PureComponent {
       <Card>
         <Meta title="数据列表" avatar={<TableOutlined />} />
         <p />
-        <Table />
+        <DataList data={this.state.list} isjwsr='' pagination={true} country='world'/>
       </Card>
     );
   };
@@ -277,7 +336,7 @@ export default class World extends PureComponent {
           <Col span={19} offset={1}>
             {this.renderMap1()}
           </Col>
-          <Col span={19} offset={1}>
+          <Col span={19} offset={5}>
             {this.renderMap2()}
           </Col>
           <Col span={19} offset={5}>
