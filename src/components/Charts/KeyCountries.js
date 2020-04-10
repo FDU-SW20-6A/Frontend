@@ -31,7 +31,7 @@ export default class KeyCountries extends Component {
             },
             areaColor: 'lightyellow',
         };
-        const formatString = isCurr ? '地区: {b} <br/> 现存确诊：{c}' : '地区: {b} <br/> 累计确诊：{c}';
+        const formatString = isCurr ? '地区: {b} <br/> 今日新增确诊：{c}' : '地区: {b} <br/> 累计确诊：{c}';
         return {
             tooltip: {
                 // 提示框
