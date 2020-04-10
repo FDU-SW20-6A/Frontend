@@ -1,12 +1,13 @@
+/* eslint-disable import/no-unresolved */
 import React, { PureComponent } from 'react';
 import { Card, Descriptions, Empty, Row, Col, Tabs } from 'antd';
 import { LineChartOutlined, PieChartOutlined, TableOutlined } from '@ant-design/icons';
 import ProvincesConfirm from '@/components/Charts/ProvincesConfirm';
 import jsonp from 'jsonp'; // 接口jsonp实现跨域
 import DataList from '@/components/DataList';
-import Line_1 from'@/components/Charts/chart_1';
-import Line_2 from'@/components/Charts/chart_2'
-import Line_3 from "@/components/Charts/chart_3";
+import Line1 from'@/components/Charts/chart_1';
+import Line2 from'@/components/Charts/chart_2'
+import Line3 from "@/components/Charts/chart_3";
 
 const { Item } = Descriptions;
 const { TabPane } = Tabs;
@@ -44,6 +45,7 @@ export default class Welcome extends PureComponent {
         name: item.name,
         value: item.econNum,
       }));
+      console.log(data)
       self.setState({
         currData: curr,
       });
@@ -199,31 +201,29 @@ export default class Welcome extends PureComponent {
 
   callback = () => {};
 
-  renderMap2 = () => {
-    return(
+  renderMap2 = () => (
       <Card>
         <Meta title="总体曲线" avatar={<LineChartOutlined/>}/>
         <p/>
         <Tabs defaultActiveKey="1" onChange={this.callback()}>
           <TabPane tab="现存" key="1">
-            <Line_1 data={{
+            <Line1 data={{
               xdata: ['03-18','03-19','03-20','03-21','03-22', '03-23', '03-24', '03-25', '03-26', '03-27', '03-28'],
               ydata: [34,39,41,46,39,78,47,67,55,54]
             } }/>
           </TabPane>
           <TabPane tab="新增" key="2">
-            <Line_2 data={{
+            <Line2 data={{
               xdata: ['03-18','03-19','03-20','03-21','03-22', '03-23', '03-24', '03-25', '03-26', '03-27', '03-28'],
               ydata: [34,39,41,46,39,78,47,67,55,54]
             } }/>
           </TabPane>
           <TabPane tab="治愈 / 死亡" key="3">
-            <Line_3/>
+            <Line3/>
           </TabPane>
         </Tabs>
       </Card>
     );
-  };
 
   renderTable = () => {
     let c;

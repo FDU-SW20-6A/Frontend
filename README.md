@@ -11,6 +11,7 @@ Frontend Demo for Visualizing COVID19's Transmission
 - Init china/world page, set CHN/ENG language support
 - Init login page
 - Draw China confirm map and mock data for nearby circumstances
+- Add more maps
 
 ## How to use
 
@@ -24,3 +25,6 @@ npm start
 ```
 
 Then you can view it on [http://localhost:8000](http://localhost:8000)
+
+## To Work with Backend
+Go to [https://github.com/FDU-SW20-6A/covid19_be](https://github.com/FDU-SW20-6A/covid19_be) and refer to README.

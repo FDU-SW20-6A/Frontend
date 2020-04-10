@@ -58,10 +58,11 @@ const MapPlugins = [
         type: `${namespace}/initData`,
       });
     },
-    search(value) {
+    search(value, adcode) {
       dispatch({
         type: `${namespace}/search`,
         address: value,
+        adcode: adcode,
       });
     },
   }),
@@ -106,8 +107,10 @@ export default class Nearby extends PureComponent {
                 this.state.geocoder.getLocation(value, function(status, result) {
                   if (status === 'complete' && result.geocodes.length) {
                     const lnglat = result.geocodes[0].location;
+                    const adcode = result.geocodes[0].adcode; 
+                    console.log(adcode);
                     console.log(lnglat.lng, lnglat.lat);
-                    search(lnglat);
+                    search(lnglat, adcode);
                   } else {
                     alert('根据地址查询位置失败');
                   }
