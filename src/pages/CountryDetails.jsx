@@ -150,21 +150,21 @@ export default class CountryDetails extends PureComponent {
     renderMap2 = () => {
         return (
             <Card>
-                <Meta title="国家曲线" avatar={<LineChartOutlined />} />
-                <p />
+                <Meta title="国家曲线" avatar={<LineChartOutlined/>}/>
+                <p/>
                 <Tabs defaultActiveKey="1" onChange={this.callback()}>
                     <TabPane tab="累计确诊" key="1">
-                        Content of Tab Pane 1
-          </TabPane>
+                        blablabla
+                    </TabPane>
                     <TabPane tab="新增确诊" key="2">
                         Content of Tab Pane 2
-          </TabPane>
-                    <TabPane tab="新增死亡" key="3">
+                    </TabPane>
+                    <TabPane tab="累计确诊" key="3">
                         Content of Tab Pane 3
-          </TabPane>
-                    <TabPane tab="新增治愈" key="4">
+                    </TabPane>
+                    <TabPane tab="死亡/治愈" key="4">
                         Content of Tab Pane 4
-          </TabPane>
+                    </TabPane>
                 </Tabs>
             </Card>
         );

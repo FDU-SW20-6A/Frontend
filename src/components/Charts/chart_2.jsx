@@ -14,6 +14,7 @@ class Line_2 extends React.Component {
 
     componentDidMount() {
         // 初始化
+        // let myChart = echarts.init(document.getElementById('increase'));
         let myChart = echarts.init(document.getElementById('increase'));
 
         // 绘制图表

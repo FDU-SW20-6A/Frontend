@@ -409,7 +409,11 @@ export default class Welcome extends PureComponent {
             } }/>
           </TabPane>
           <TabPane tab="治愈 / 死亡" key="3">
-            <Line3/>
+            <Line3 data={{
+              xdata:['03-18','03-19','03-20','03-21','03-22', '03-23', '03-24', '03-25', '03-26', '03-27', '03-28'],
+              death:[8,3,7,6,9,7,4,6,5,3,5],
+              cure:[819,730,590,504,459,456,491,401,537,383,477]
+            }}/>
           </TabPane>
         </Tabs>
       </Card>
