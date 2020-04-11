@@ -10,6 +10,9 @@ import {
 import jsonp from 'jsonp'; // 接口jsonp实现跨域
 import CountriesConfirm from '@/components/Charts/CountriesConfirm';
 import DataList from '@/components/DataList';
+import Line_3 from "@/components/Charts/chart_3";
+import Conadd from "@/components/Charts/world/conadd"
+import ConNum from "@/components/Charts/world/conNum";
 
 const { Item } = Descriptions;
 const { TabPane } = Tabs;
