@@ -56,6 +56,18 @@ export default class CountryDetails extends PureComponent {
         if (cityCode) {
             jsonp(`https://gwpre.sina.cn/interface/news/wap/ncp_foreign.d.json?citycode=${cityCode}`, (newErr, newData) => {
                 const { city } = newData.data;
+                this.setState({
+                    data:{
+                        currentConfirmedCount: newData.data.contotal-newData.data.curetotal-newData.data.deathtotal,
+                        deadCount: newData.data.deathtotal,
+                        curedCount: newData.data.curetotal,
+                        deadIncr: newData.data.adddaily.deathadd,
+                        curedIncr: newData.data.adddaily.cureadd, 
+                        confirmedCount: newData.data.contotal,
+                        confirmedIncr: newData.data.adddaily.conadd,
+                        currentConfirmedIncr: newData.data.adddaily.conadd - newData.data.adddaily.deathadd - newData.data.adddaily.cureadd
+                    }
+                })
                 const totalData = city.map(item => ({
                     name: item.name,
                     value: item.conNum
@@ -96,25 +108,68 @@ export default class CountryDetails extends PureComponent {
             <Row gutter={[16, 16]}>
                 <Col span={24}>
                     <Card>
-                        <Descriptions
-                            column={4}
-                            colon={false}
-                            layout="vertical"
-                            style={{ textAlign: 'center' }}
-                        >
-                            <Item label="现存确诊">
-                                <h3 style={{ color: 'red', fontWeight: 'bold', paddingRight: '10px' }}>***</h3>
+                    <Descriptions column={4} colon={false} layout="vertical" style={{ textAlign: 'center' }}>
+                            <Item label="现存确诊" >
+                                <h4
+                                    style={{
+                                        color: 'red',
+                                        fontWeight: 'bold',
+                                        paddingRight: '10px',
+                                        marginBottom: '0',
+                                    }}
+                                >
+                                    {data.currentConfirmedIncr >= 0
+                                        ? `+${data.currentConfirmedIncr}`
+                                        : data.currentConfirmedIncr}
+                                </h4>
+                                <h3 style={{ color: 'red', fontWeight: 'bold', paddingRight: '10px' }}>
+                                    {data.currentConfirmedCount}
+                                </h3>
                             </Item>
-                            <Item label="累计确诊">
-                                <h3 style={{ color: 'red', fontWeight: 'bold', paddingRight: '10px' }}>***</h3>
+                            <Item label="累计确诊" >
+                                <h4
+                                    style={{
+                                        color: 'red',
+                                        fontWeight: 'bold',
+                                        paddingRight: '10px',
+                                        marginBottom: '0',
+                                    }}
+                                >
+                                    {data.confirmedIncr > 0 ? `${data.confirmedIncr}` : data.confirmedIncr}
+                                </h4>
+                                <h3 style={{ color: 'red', fontWeight: 'bold', paddingRight: '10px' }}>
+                                    {data.confirmedCount}
+                                </h3>
                             </Item>
                             <Item label="累计治愈">
+                                <h4
+                                    style={{
+                                        color: 'limegreen',
+                                        fontWeight: 'bold',
+                                        paddingRight: '10px',
+                                        marginBottom: '0',
+                                    }}
+                                >
+                                    {data.curedIncr > 0 ? `${data.curedIncr}` : data.curedIncr}
+                                </h4>
                                 <h3 style={{ color: 'limegreen', fontWeight: 'bold', paddingRight: '10px' }}>
-                                    ***
-                </h3>
+                                    {data.curedCount}
+                                </h3>
                             </Item>
-                            <Item label="累计死亡">
-                                <h3 style={{ color: 'grey', fontWeight: 'bold', paddingRight: '10px' }}>***</h3>
+                            <Item label="累计死亡" >
+                                <h4
+                                    style={{
+                                        color: 'grey',
+                                        fontWeight: 'bold',
+                                        paddingRight: '10px',
+                                        marginBottom: '0',
+                                    }}
+                                >
+                                    {data.deadIncr > 0 ? `${data.deadIncr}` : data.deadIncr}
+                                </h4>
+                                <h3 style={{ color: 'grey', fontWeight: 'bold', paddingRight: '10px' }}>
+                                    {data.deadCount}
+                                </h3>
                             </Item>
                         </Descriptions>
                     </Card>
@@ -271,7 +326,7 @@ export default class CountryDetails extends PureComponent {
                     <Col span={19} offset={1}>
                         {this.renderMap1()}
                     </Col>
-                    <Col span={19} offset={1}>
+                    <Col span={19} offset={5}>
                         {this.renderMap2()}
                     </Col>
                     <Col span={19} offset={5}>
