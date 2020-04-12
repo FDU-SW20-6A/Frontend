@@ -57,15 +57,16 @@ export default class Welcome extends PureComponent {
             if (idx !== -1) provinceObj = curr[idx];
             if (provinceObj) {
                 this.setState({
-                    data: {currentConfirmedIncr:provinceObj.adddaily.conadd,
-                            currentConfirmedCount: provinceObj.value,
-                            deadCount: provinceObj.deathNum,
-                            curedCount: provinceObj.cureNum,
-                            deadIncr: provinceObj.adddaily.deathadd,
-                            curedIncr: provinceObj.adddaily.cureadd, 
-                            confirmedCount: provinceObj.econNum,
-                            confirmedIncr: provinceObj.adddaily.econadd                       
-                        }
+                    data: {
+                        currentConfirmedIncr: provinceObj.adddaily.conadd,
+                        currentConfirmedCount: provinceObj.value,
+                        deadCount: provinceObj.deathNum,
+                        curedCount: provinceObj.cureNum,
+                        deadIncr: provinceObj.adddaily.deathadd,
+                        curedIncr: provinceObj.adddaily.cureadd,
+                        confirmedCount: provinceObj.econNum,
+                        confirmedIncr: provinceObj.adddaily.econadd
+                    }
                 })
                 const jwsr = provinceObj.jwsr ? provinceObj.jwsrNum : 0;
                 this.setState({
@@ -100,7 +101,7 @@ export default class Welcome extends PureComponent {
         const curDate = new Date();
         curDate.setTime(data.updateTime);
         return (
-            <Row gutter={[16,16]}>
+            <Row gutter={[16, 16]}>
                 <Col span={24}>
                     <Card>
                         <Descriptions column={4} colon={false} layout="vertical" style={{ textAlign: 'center' }}>
@@ -173,9 +174,9 @@ export default class Welcome extends PureComponent {
         );
     };
 
-    currMap1 = (currData, jwsr) => <CitiesConfirm data={currData} isCurr jwsr={jwsr}/>;
+    currMap1 = (currData, jwsr) => <CitiesConfirm data={currData} isCurr jwsr={jwsr} />;
 
-    sumMap1 = (totalData, jwsr) => <CitiesConfirm data={totalData} isCurr={false} jwsr={jwsr}/>;
+    sumMap1 = (totalData, jwsr) => <CitiesConfirm data={totalData} isCurr={false} jwsr={jwsr} />;
 
     renderMap1 = () => {
         // 疫情地图
@@ -216,7 +217,11 @@ export default class Welcome extends PureComponent {
                     }} />
                 </TabPane>
                 <TabPane tab="治愈 / 死亡" key="3">
-                    <Line3 />
+                    <Line3 data={{
+                        xdata: ['03-18', '03-19', '03-20', '03-21', '03-22', '03-23', '03-24', '03-25', '03-26', '03-27', '03-28'],
+                        death: [8, 3, 7, 6, 9, 7, 4, 6, 5, 3, 5],
+                        cure: [819, 730, 590, 504, 459, 456, 491, 401, 537, 383, 477]
+                    }} />
                 </TabPane>
             </Tabs>
         </Card>
@@ -227,7 +232,7 @@ export default class Welcome extends PureComponent {
             <Card>
                 <Meta title="数据列表" avatar={<TableOutlined />} />
                 <p />
-                <DataList data={this.state.list} isjwsr='含境外输入' pagination={false} country='china'/>
+                <DataList data={this.state.list} isjwsr='含境外输入' pagination={false} country='china' />
             </Card>
         );
     };
