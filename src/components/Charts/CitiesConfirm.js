@@ -1,7 +1,10 @@
 /* eslint-disable import/no-dynamic-require */
 /* eslint-disable global-require */
 import React, { Component } from 'react';
+import { Col, Row, Tooltip } from 'antd';
 import ReactEcharts from 'echarts-for-react';
+import { RollbackOutlined, LeftCircleFilled } from '@ant-design/icons';
+import { router } from 'umi';
 import './province';
 
 export default class ProvincesConfirm extends Component {
@@ -17,7 +20,7 @@ export default class ProvincesConfirm extends Component {
       fontSize: '8',
     };
     const myLabel1 = {
-        show: false
+      show: false
     }
     const myLabel2 = {
       show: true,
@@ -77,13 +80,27 @@ export default class ProvincesConfirm extends Component {
     };
   };
 
+  rollBack = e => {
+    e.stopPropagation();
+    router.push('/china');
+  }
+
   render() {
     const { jwsr } = this.props;
     return (
       <div style={{ padding: 20 }}>
-        <p style={{ fontWeight: 'bold', color: '#CA2B2D' }}>境外输入人员：{jwsr}</p>
-        <ReactEcharts option={this.getOption()}/>
-        <p/>
+        <Row gutter={[16, 16]}>
+          <Col span={6}>
+            <p style={{ fontWeight: 'bold', color: '#CA2B2D' }}>境外输入人员：{jwsr}</p>
+          </Col>
+          <Col span={1} offset={16}>
+            <Tooltip title="回到上一级">
+              <LeftCircleFilled style={{ fontSize: '20px' }} onClick={e => { this.rollBack(e) }} />
+            </Tooltip>
+          </Col>
+        </Row>
+        <ReactEcharts option={this.getOption()} />
+        <p />
         <p style={{ fontStyle: 'italic' }}>*部分地区信息可能未采集到，显示NaN</p>
       </div>
     );
