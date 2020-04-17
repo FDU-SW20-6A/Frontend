@@ -138,6 +138,11 @@ export default {
               component: './Nearby',
             },
             {
+              path: '/news',
+              name: 'news',
+              component: './News',
+            },
+            {
               path: '/admin',
               name: 'admin',
               icon: 'crown',

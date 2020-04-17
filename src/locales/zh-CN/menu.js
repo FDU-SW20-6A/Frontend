@@ -6,6 +6,7 @@ export default {
   'menu.world': '国际疫情',
   'menu.world.country': '各国详情',
   'menu.nearby': '附近疫情查询',
+  'menu.news': '新闻汇总',
   'menu.admin': '管理页',
   'menu.admin.sub-page': '二级管理页',
   'menu.login': '登录',
