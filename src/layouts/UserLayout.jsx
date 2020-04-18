@@ -57,7 +57,7 @@ const UserLayout = props => {
           {
             key: 'github',
             title: <Icon type="github" />,
-            href: 'https://github.com/FDU-SW20-6A/Covid-19',
+            href: 'https://github.com/FDU-SW20-6A',
             blankTarget: true,
           },
         ]}/>
