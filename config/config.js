@@ -170,7 +170,9 @@ export default {
   // Theme for antd: https://ant.design/docs/react/customize-theme-cn
   theme: {
     // ...darkTheme,
-    'primary-color': defaultSettings.primaryColor,
+    'primary-color': '#002FA7',
+    'card-radius': '5px',
+
   },
   define: {
     REACT_APP_ENV: REACT_APP_ENV || false,

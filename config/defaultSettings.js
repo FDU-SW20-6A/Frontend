@@ -1,5 +1,5 @@
 export default {
-  navTheme: 'dark',
+  navTheme: 'light',
   // 拂晓蓝
   primaryColor: '#1890ff',
   autoHideHeader: 'true',

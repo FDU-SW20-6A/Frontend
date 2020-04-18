@@ -13,6 +13,7 @@ import WorldList from '@/components/WorldList';
 import Line_3 from "@/components/Charts/chart_3";
 import Conadd from "@/components/Charts/world/conadd"
 import ConNum from "@/components/Charts/world/conNum";
+import styles from "./Welcome.less";
 
 const { Item } = Descriptions;
 const { TabPane } = Tabs;
@@ -263,6 +264,7 @@ export default class World extends PureComponent {
         return (
             <Affix offsetTop={90}>
                 <Menu
+                    className = {styles.countrydetailssidemenu}
                     style={{ width: 256, height: 700 }}
                     defaultSelectedKeys={['0']}
                     mode="inline"
