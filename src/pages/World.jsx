@@ -9,7 +9,7 @@ import {
 } from '@ant-design/icons';
 import jsonp from 'jsonp'; // 接口jsonp实现跨域
 import CountriesConfirm from '@/components/Charts/CountriesConfirm';
-import DataList from '@/components/DataList';
+import WorldList from '@/components/WorldList';
 import Line_3 from "@/components/Charts/chart_3";
 import Conadd from "@/components/Charts/world/conadd"
 import ConNum from "@/components/Charts/world/conNum";
@@ -203,7 +203,7 @@ export default class World extends PureComponent {
             <Card>
                 <Meta title="数据列表" avatar={<TableOutlined />} />
                 <p />
-                <DataList data={this.state.list} isjwsr='' pagination={true} country='world'/>
+                <WorldList data={this.state.list} pagination={true} />
             </Card>
         );
     };

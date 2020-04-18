@@ -1,5 +1,6 @@
 import React from 'react';
-import {Table} from 'antd';
+import {Table, Input, Button} from 'antd';
+import { SearchOutlined } from '@ant-design/icons';
 
 
 var columnswithjwsr = [{
@@ -60,67 +61,7 @@ var columnswithjwsr = [{
   }
 ];
 
-var columns = [{
-  title: '地区',
-  key: 'name',
-  dataIndex: 'name',
-  align: 'center',
-  width: 200,
-  
-},
-{
-  title: '病死率',
-  key: 'deathRate',
-  align: 'center',
-  width: 100,
-  render: (record) => <span> {Number(record.deathNum / record.value * 100).toFixed(2)}%</span>,
-  sorter: (a,b) => a.deathNum/a.value - b.deathNum/b.value,
-  defaultSortOrder: 'descend',
-},
-{
-  title: '现存确诊',
-  key: 'econNum',
-  dataIndex: 'econNum',
-  align: 'center',
-  width: 100,
-  render: (text ) => <span style={{color:'red'}}>{text}</span>,
-  sorter: (a,b) => a.econNum - b.econNum,
-},
-{
-  title: '累计确诊',
-  key: 'value',
-  dataIndex: 'value',
-  align: 'center',
-  width: 100,
-  render: (text ) => <span style={{color:'darkred'}}>{text}</span>,
-  sorter: (a,b) => a.value - b.value
-},
-{
-  title: '死亡',
-  key: 'deathNum',
-  dataIndex: 'deathNum',
-  align: 'center',
-  width: 100,
-  render: (text ) => <span style={{color:'grey'}}>{text}</span>,
-  sorter: (a,b) => a.deathNum - b.deathNum,
-  
-},
-{
-  title: '治愈',
-  key: 'cureNum',
-  dataIndex: 'cureNum',
-  align: 'center',
-  width: 100,
-  render: (text ) => <span style={{color:'limegreen'}}>{text}</span>
-},
-{
-  title: '',
-  key: 'action',
-  dataIndex: '',
-  width:100,
-  render: (record ) => {if(record.children) return <a href={`/${record.country}/details/${record.name}`}>详情</a>},
-}
-];
+
 
 
 var columnscountry = [{
@@ -195,6 +136,6 @@ const DataList = ({data, country, isjwsr, pagination}) => {
         })
       }
     });
-    return <Table columns={isjwsr!==''?columnswithjwsr:(country=='china'||country=='world'?columns:columnscountry)} pagination={pagination} dataSource={dataSource} size='small' expandRowByClick='true'/>
+    return <Table columns={isjwsr!==''?columnswithjwsr:columnscountry} pagination={pagination} dataSource={dataSource} size='small' expandRowByClick='true'/>
   };
 export default DataList;
