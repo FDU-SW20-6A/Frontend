@@ -4,7 +4,6 @@ import {Table} from 'antd';
 
 var columnswithjwsr = [{
     title: '地区',
-    key: 'name',
     dataIndex: 'name',
     align: 'center',
     width: 200,
@@ -12,39 +11,42 @@ var columnswithjwsr = [{
   },
   {
     title: '现存确诊',
-    key: 'econNum',
     dataIndex: 'econNum',
     align: 'center',
     width: 100,
-    render: (text ) => <span style={{color:'red'}}>{text}</span>
+    render: (text ) => <span style={{color:'red'}}>{text}</span>,
+    sorter: (a,b) => a.econNum - b.econNum,
+    defaultSortOrder: 'descend',
   },
   {
     title: '累计确诊',
-    key: 'value',
     dataIndex: 'value',
     align: 'center',
     width: 100,
-    render: (text ) => <span style={{color:'darkred'}}>{text}</span>
+    render: (text ) => <span style={{color:'darkred'}}>{text}</span>,
+    sorter: (a,b) => a.value - b.value,
+    sortDirections: ['descend', 'ascend'],
   },
   {
     title: '死亡',
-    key: 'deathNum',
     dataIndex: 'deathNum',
     align: 'center',
     width: 100,
-    render: (text ) => <span style={{color:'grey'}}>{text}</span>
+    render: (text ) => <span style={{color:'grey'}}>{text}</span>,
+    sorter: (a,b) => a.deathNum - b.deathNum,
+    sortDirections: ['descend', 'ascend'],
   },
   {
     title: '治愈',
-    key: 'cureNum',
     dataIndex: 'cureNum',
     align: 'center',
     width: 100,
-    render: (text ) => <span style={{color:'limegreen'}}>{text}</span>
+    render: (text ) => <span style={{color:'limegreen'}}>{text}</span>,
+    sorter: (a,b) => a.cureNum - b.cureNum,
+    sortDirections: ['descend', 'ascend'],
   },
   {
     title: '境外输入',
-    key: 'jwsrNum',
     dataIndex: 'jwsrNum',
     align: 'center',
     width: 100,
@@ -67,12 +69,22 @@ var columns = [{
   
 },
 {
+  title: '病死率',
+  key: 'deathRate',
+  align: 'center',
+  width: 100,
+  render: (record) => <span> {Number(record.deathNum / record.value * 100).toFixed(2)}%</span>,
+  sorter: (a,b) => a.deathNum/a.value - b.deathNum/b.value,
+  defaultSortOrder: 'descend',
+},
+{
   title: '现存确诊',
   key: 'econNum',
   dataIndex: 'econNum',
   align: 'center',
   width: 100,
-  render: (text ) => <span style={{color:'red'}}>{text}</span>
+  render: (text ) => <span style={{color:'red'}}>{text}</span>,
+  sorter: (a,b) => a.econNum - b.econNum,
 },
 {
   title: '累计确诊',
@@ -80,7 +92,8 @@ var columns = [{
   dataIndex: 'value',
   align: 'center',
   width: 100,
-  render: (text ) => <span style={{color:'darkred'}}>{text}</span>
+  render: (text ) => <span style={{color:'darkred'}}>{text}</span>,
+  sorter: (a,b) => a.value - b.value
 },
 {
   title: '死亡',
@@ -88,7 +101,9 @@ var columns = [{
   dataIndex: 'deathNum',
   align: 'center',
   width: 100,
-  render: (text ) => <span style={{color:'grey'}}>{text}</span>
+  render: (text ) => <span style={{color:'grey'}}>{text}</span>,
+  sorter: (a,b) => a.deathNum - b.deathNum,
+  
 },
 {
   title: '治愈',
@@ -118,11 +133,12 @@ var columnscountry = [{
 },
 {
   title: '现存确诊',
-  key: 'conNum',
   dataIndex: 'conNum',
   align: 'center',
   width: 100,
-  render: (text ) => <span style={{color:'red'}}>{text}</span>
+  render: (text ) => <span style={{color:'red'}}>{text}</span>,
+  sorter: (a,b)=> a.conNum-b.conNum,
+  defaultSortOrder: 'descend',
 },
 {
   title: '死亡',
@@ -141,9 +157,13 @@ var columnscountry = [{
   render: (text ) => <span style={{color:'limegreen'}}>{text}</span>
 }
 ];
+
 const DataList = ({data, country, isjwsr, pagination}) => {
     let dataSource=[];
     dataSource=data;
+    if(country==='world'){
+
+    }
     dataSource.map((element,index) => {
       /*
       var d={};
