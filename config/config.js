@@ -140,7 +140,23 @@ export default {
             {
               path: '/news',
               name: 'news',
-              component: './News',
+              routes: [
+                {
+                  path: '/news/official',
+                  name: 'official',
+                  component: './Official',
+                },
+                {
+                  path: '/news/rumor',
+                  name: 'rumor',
+                  component: './Rumor',
+                },
+                {
+                  path: '/news/donate',
+                  name: 'donate',
+                  component: './Donate',
+                },
+              ],
             },
             {
               path: '/admin',
@@ -175,7 +191,8 @@ export default {
   // Theme for antd: https://ant.design/docs/react/customize-theme-cn
   theme: {
     // ...darkTheme,
-    'primary-color': defaultSettings.primaryColor,
+    'primary-color': '#0050b3',
+    // 'layout-body-background': 'white',
   },
   define: {
     REACT_APP_ENV: REACT_APP_ENV || false,
