@@ -138,6 +138,27 @@ export default {
               component: './Nearby',
             },
             {
+              path: '/news',
+              name: 'news',
+              routes: [
+                {
+                  path: '/news/official',
+                  name: 'official',
+                  component: './Official',
+                },
+                {
+                  path: '/news/rumor',
+                  name: 'rumor',
+                  component: './Rumor',
+                },
+                {
+                  path: '/news/donate',
+                  name: 'donate',
+                  component: './Donate',
+                },
+              ],
+            },
+            {
               path: '/admin',
               name: 'admin',
               icon: 'crown',
@@ -172,6 +193,7 @@ export default {
     // ...darkTheme,
     'primary-color': '#0050b3',
     'card-radius': '5px',
+    'layout-body-background': 'white',
 
   },
   define: {
