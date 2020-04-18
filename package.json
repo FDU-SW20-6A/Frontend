@@ -69,6 +69,7 @@
     "react-copy-to-clipboard": "^5.0.1",
     "react-dom": "^16.8.6",
     "react-helmet": "^5.2.1",
+    "react-highlight-words": "^0.16.0",
     "redux": "^4.0.1",
     "require": "^2.4.20",
     "umi": "^2.13.0",

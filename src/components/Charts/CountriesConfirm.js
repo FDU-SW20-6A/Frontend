@@ -9,7 +9,7 @@ export default class CountriesConfirm extends Component {
 
     getOption = () => {
         const { data, isCurr } = this.props;
-        console.log(data)
+        //console.log(data)
         const myLabel = {
             show: true,
             color: isCurr ? 'black' : 'white',
