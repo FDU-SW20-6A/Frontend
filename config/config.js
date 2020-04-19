@@ -192,7 +192,9 @@ export default {
   theme: {
     // ...darkTheme,
     'primary-color': '#0050b3',
-    // 'layout-body-background': 'white',
+    'card-radius': '5px',
+    'layout-body-background': '#f7f7f7',
+
   },
   define: {
     REACT_APP_ENV: REACT_APP_ENV || false,

@@ -52,3 +52,46 @@ ol {
     min-height: 100vh;
   }
 }
+
+.ant-pro-top-nav-header-menu .ant-menu-item a:hover{
+  font-weight: bold;
+}
+.ant-pro-top-nav-header-menu .ant-menu-item a:after {
+  content: "";
+  left: 15px;
+  right: 15px;
+  bottom: .8em;
+  height: 1.2px;
+  background: #fff;
+  display: block;
+  opacity: 0;
+  position: absolute;
+  transition: all .4s ease 0s
+}
+.ant-pro-top-nav-header-menu .ant-menu-item a:hover:after {
+  opacity: 1;
+  left: 4.5px;
+  right: 4.5px
+}
+.ant-pro-top-nav-header-menu .ant-menu-item-selected{
+  background: #000 !important;
+  font-weight: bold !important;
+}
+.ant-pro-top-nav-header-menu  .ant-menu-submenu-selected{
+  color: #fff !important;
+  font-weight: bold !important;
+}
+.ant-pro-top-nav-header-menu .ant-menu-submenu-active .ant-menu-submenu-title{
+  color: #fff !important;
+  font-weight: bold !important;
+}
+.ant-menu-submenu .ant-menu-item-selected{
+  background: #000 !important;
+  font-weight: bold !important;
+}
+.ant-layout-header{
+  background: #000 !important;
+}
+.ant-menu-dark {
+  background: #000 !important;
+}

@@ -8,6 +8,7 @@ import {
 import jsonp from 'jsonp'; // 接口jsonp实现跨域
 import KeyCountries from '@/components/Charts/KeyCountries';
 import DataList from '@/components/DataList';
+import styles from './Welcome.less';
 const { Item } = Descriptions;
 const { TabPane } = Tabs;
 const { Meta } = Card;
@@ -243,6 +244,7 @@ export default class CountryDetails extends PureComponent {
         return (
             <Affix offsetTop={90}>
                 <Menu
+                    className = {styles.countrydetailssidemenu}
                     style={{ width: 256, height: 700 }}
                     selectedKeys={key}
                     mode="inline"
