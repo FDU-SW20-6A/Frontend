@@ -193,7 +193,7 @@ export default {
     // ...darkTheme,
     'primary-color': '#0050b3',
     'card-radius': '5px',
-    'layout-body-background': 'white',
+    'layout-body-background': '#f7f7f7',
 
   },
   define: {
