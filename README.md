@@ -11,6 +11,7 @@ Frontend Demo for Visualizing COVID19's Transmission
 - China/provinces & World/countries maps supported
 - Data tables supported
 - Search nearby confirmed cases supported
+- Official news supported
 
 ## How to use
 
