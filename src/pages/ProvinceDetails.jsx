@@ -44,7 +44,12 @@ export default class Welcome extends PureComponent {
     };
 
     fetchSinaData = province => {
-        jsonp('https://interface.sina.cn/news/wap/fymap2020_data.d.json', (err, data) => {
+        //jsonp('https://interface.sina.cn/news/wap/fymap2020_data.d.json', (err, data) => {
+        const url = "http://127.0.0.1:8001/api/province/?province=\'"+province+"\'";
+        fetch(url)
+        .then(res => res.json())
+        .then(data => {
+            /*
             const curr = data.data.list;
             let idx = -1;
             let provinceObj = {};
@@ -55,17 +60,19 @@ export default class Welcome extends PureComponent {
                 }
             }
             if (idx !== -1) provinceObj = curr[idx];
+            */
+            let provinceObj = data;
             if (provinceObj) {
                 this.setState({
                     data: {
-                        currentConfirmedIncr: provinceObj.adddaily.conadd,
-                        currentConfirmedCount: provinceObj.value,
+                        currentConfirmedIncr: provinceObj.adddaily.econadd,
+                        currentConfirmedCount: provinceObj.econNum,
                         deadCount: provinceObj.deathNum,
                         curedCount: provinceObj.cureNum,
                         deadIncr: provinceObj.adddaily.deathadd,
                         curedIncr: provinceObj.adddaily.cureadd,
-                        confirmedCount: provinceObj.econNum,
-                        confirmedIncr: provinceObj.adddaily.econadd
+                        confirmedCount: provinceObj.value,
+                        confirmedIncr: provinceObj.adddaily.conadd
                     }
                 })
                 const jwsr = provinceObj.jwsr ? provinceObj.jwsrNum : 0;

@@ -12,7 +12,28 @@ import 'echarts/lib/component/markLine';
 
 class Line_2 extends React.Component {
 
+    state = {
+        data : [],
+        date : [],
+    };
+    
     componentDidMount() {
+    
+        const url = 'http://127.0.0.1:8001/api/history/';
+        
+        fetch(url)
+        .then(res => res.json())
+        .then(data => {
+            this.setState({
+                data : data.conadd,
+                date : data.date,
+            }),
+            console.log(this.state),
+            this.charts()
+        });
+    }
+
+    charts() {
         // 初始化
         // let myChart = echarts.init(document.getElementById('increase'));
         let myChart = echarts.init(document.getElementById('increase'));
@@ -37,7 +58,7 @@ class Line_2 extends React.Component {
             },
             xAxis: {
                 type: 'category',
-                data:this.props.data.xdata,
+                data: this.state.date,
                 axisLabel: {
                     interval: 0,
                     rotate: 45
@@ -47,7 +68,7 @@ class Line_2 extends React.Component {
                 type: 'value'
             },
             series: [{
-                data: this.props.data.ydata,
+                data: this.state.data,
                 type: 'line'
             }
             ]

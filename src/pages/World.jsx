@@ -32,7 +32,11 @@ export default class World extends PureComponent {
 
     fetchSinaData = () => {
         const self = this;
-        jsonp('https://interface.sina.cn/news/wap/fymap2020_data.d.json', (err, data) => {
+        //jsonp('https://interface.sina.cn/news/wap/fymap2020_data.d.json', (err, data) => {
+        const url = 'http://127.0.0.1:8001/api/sina_api/';
+        fetch(url)
+        .then(res => res.json())
+        .then(data => {
             const curr = data.data.otherlist.map(item => ({
                 name: item.name,
                 value: item.econNum,
