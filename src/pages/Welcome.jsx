@@ -28,19 +28,25 @@ export default class Welcome extends PureComponent {
   };
 
   fetchOverall = () => {
-    const url = `${ROOT}overall`;
+    //const url = `${ROOT}overall`;
+    const url = 'http://127.0.0.1:8001/api/overall_China/';
     fetch(url)
       .then(res => res.json())
       .then(data => {
         this.setState({
-          data: data.results[0],
+          //data: data.results[0],
+          data: data,
         });
       });
   };
 
   fetchSinaData = () => {
     const self = this;
-    jsonp('https://interface.sina.cn/news/wap/fymap2020_data.d.json', (err, data) => {
+    //jsonp('https://interface.sina.cn/news/wap/fymap2020_data.d.json', (err, data) => {
+    const url = 'http://127.0.0.1:8001/api/sina_api/';
+    fetch(url)
+      .then(res => res.json())
+      .then(data => {  
       const curr = data.data.list.map(item => ({
         name: item.name,
         value: item.econNum,
@@ -85,12 +91,12 @@ export default class Welcome extends PureComponent {
                     marginBottom: '0',
                   }}
                 >
-                  {data.currentConfirmedIncr > 0
-                    ? `+${data.currentConfirmedIncr}`
-                    : data.currentConfirmedIncr}
+                  {data.addecon_new > 0
+                    ? `+${data.addecon_new}`
+                    : data.addecon_new}
                 </h4>
                 <h3 style={{ color: 'red', fontWeight: 'bold', paddingRight: '10px' }}>
-                  {data.currentConfirmedCount}
+                  {data.econNum}
                 </h3>
               </Item>
               <Item label="现存疑似">
@@ -102,10 +108,10 @@ export default class Welcome extends PureComponent {
                     marginBottom: '0',
                   }}
                 >
-                  {data.suspectedIncr > 0 ? `+${data.suspectedIncr}` : data.suspectedIncr}
+                  {data.addsus > 0 ? `+${data.addsus}` : data.addsus}
                 </h4>
                 <h3 style={{ color: 'orange', fontWeight: 'bold', paddingRight: '10px' }}>
-                  {data.suspectedCount}
+                  {data.sustotal}
                 </h3>
               </Item>
               <Item label="现存重症">
@@ -117,10 +123,10 @@ export default class Welcome extends PureComponent {
                     marginBottom: '0',
                   }}
                 >
-                  {data.seriousIncr > 0 ? `+${data.seriousIncr}` : data.seriousIncr}
+                  {data.addhecon_new > 0 ? `+${data.addhecon_new}` : data.addhecon_new}
                 </h4>
                 <h3 style={{ color: 'dodgerblue', fontWeight: 'bold', paddingRight: '10px' }}>
-                  {data.seriousCount}
+                  {data.heconNum}
                 </h3>
               </Item>
               <Item label="累计确诊">
@@ -132,10 +138,10 @@ export default class Welcome extends PureComponent {
                     marginBottom: '0',
                   }}
                 >
-                  {data.confirmedIncr > 0 ? `+${data.confirmedIncr}` : data.confirmedIncr}
+                  {data.addcon > 0 ? `+${data.addcon}` : data.addcon}
                 </h4>
                 <h3 style={{ color: 'red', fontWeight: 'bold', paddingRight: '10px' }}>
-                  {data.confirmedCount}
+                  {data.gntotal}
                 </h3>
               </Item>
               <Item label="累计治愈">
@@ -147,10 +153,10 @@ export default class Welcome extends PureComponent {
                     marginBottom: '0',
                   }}
                 >
-                  {data.curedIncr > 0 ? `+${data.curedIncr}` : data.curedIncr}
+                  {data.addcure > 0 ? `+${data.addcure}` : data.addcure}
                 </h4>
                 <h3 style={{ color: 'limegreen', fontWeight: 'bold', paddingRight: '10px' }}>
-                  {data.curedCount}
+                  {data.curetotal}
                 </h3>
               </Item>
               <Item label="累计死亡">
@@ -162,10 +168,10 @@ export default class Welcome extends PureComponent {
                     marginBottom: '0',
                   }}
                 >
-                  {data.deadIncr > 0 ? `+${data.deadIncr}` : data.deadIncr}
+                  {data.adddeath > 0 ? `+${data.adddeath}` : data.adddeath}
                 </h4>
                 <h3 style={{ color: 'grey', fontWeight: 'bold', paddingRight: '10px' }}>
-                  {data.deadCount}
+                  {data.deathtotal}
                 </h3>
               </Item>
             </Descriptions>

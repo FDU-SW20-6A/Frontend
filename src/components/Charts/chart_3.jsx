@@ -11,7 +11,30 @@ import 'echarts/lib/component/markLine';
 
 class Line_3 extends React.Component {
 
+    state = {
+        cure : [],
+        death : [],
+        data : [],
+    };
+
     componentDidMount() {
+    
+        const url = 'http://127.0.0.1:8001/api/history/';
+        
+        fetch(url)
+        .then(res => res.json())
+        .then(data => {
+            this.setState({
+                cure : data.cureNum,
+                death : data.deathNum,
+                date : data.date,
+            }),
+            console.log(this.state),
+            this.charts()
+        });
+    }
+    
+    charts() {
         // 初始化
         let myChart = echarts.init(document.getElementById('heal_dead'));
         let colors = ['#5793f3', '#d14a61', '#675bba'];
@@ -54,7 +77,7 @@ class Line_3 extends React.Component {
                         }
                     },
                     // data: ['03-18','03-19','03-20','03-21','03-22', '03-23', '03-24', '03-25', '03-26', '03-27', '03-28'],
-                    data:this.props.data.xdata,
+                    data:this.state.date,
                 },
                 {
                     type: 'category',
@@ -76,7 +99,7 @@ class Line_3 extends React.Component {
                         }
                     },
                     // data: ['03-18','03-19','03-20','03-21','03-22', '03-23', '03-24', '03-25', '03-26', '03-27', '03-28'],
-                    data:this.props.data.xdata,
+                    data:this.state.date,
                 }
             ],
             yAxis: [
@@ -91,14 +114,14 @@ class Line_3 extends React.Component {
                     xAxisIndex: 1,
                     smooth: true,
                     // data: [819,730,590,504,459,456,491,401,537,383,477]
-                    data:this.props.data.cure,
+                    data:this.state.cure,
                 },
                 {
                     name: '死亡',
                     type: 'line',
                     smooth: true,
                     // data: [8,3,7,6,9,7,4,6,5,3,5]
-                    data:this.props.data.death,
+                    data:this.state.death,
                 }
             ]
         });
