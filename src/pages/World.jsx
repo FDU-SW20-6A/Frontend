@@ -23,11 +23,13 @@ export default class World extends PureComponent {
         data: {},
         currData: {},
         totalData: {},
-        list: []
+        list: [],
+        history: {},
     };
 
     componentDidMount = () => {
         this.fetchSinaData();
+        this.fetchChartsData();
     };
 
     fetchSinaData = () => {
@@ -68,6 +70,17 @@ export default class World extends PureComponent {
                 list: data.data.otherlist
             });
         });
+    };
+    
+    fetchChartsData = () => {
+    const url = 'http://127.0.0.1:8001/api/history/';
+    fetch(url)
+      .then(res => res.json())
+      .then(data => {
+        this.setState({
+          history: data,
+        });
+      });
     };
 
     renderInfo = () => {
@@ -182,16 +195,24 @@ export default class World extends PureComponent {
                 <Meta title="世界曲线" avatar={<LineChartOutlined />} />
                 <p />
                 <Tabs defaultActiveKey="1" onChange={this.callback()}>
-                    <TabPane tab="新增确诊" key="1">
-                        <Conadd/>
+                    <TabPane tab="新增确诊" key="2">                    
+                        <Conadd data={{
+                            China : this.state.history.conadd,
+                            world : this.state.history.conaddw,
+                            date : this.state.history.date,
+                        }}/>                        
                     </TabPane>
-                    <TabPane tab="累计确诊" key="2">
-                        <ConNum/>
+                    <TabPane tab="累计确诊" key="3">
+                        <ConNum data={{
+                            China : this.state.history.conNum,
+                            world : this.state.history.conNumw,
+                            date : this.state.history.date,           
+                        }}/>
                     </TabPane>
-                    {/*<TabPane tab="现存确诊" key="3">*/}
+                    {/*<TabPane tab="现存确诊" key="5">*/}
                     {/*  Content of Tab Pane 3*/}
                     {/*</TabPane>*/}
-                    <TabPane tab="死亡/治愈" key="3">
+                    <TabPane tab="死亡/治愈" key="1">
                         <Line_3 data={{
                             xdata:["01.22", "01.23", "01.24", "01.25", "01.26", "01.27", "01.28", "01.29", "01.30", "01.31", "02.01", "02.02", "02.03", "02.04", "02.05", "02.06", "02.07", "02.08", "02.09", "02.10", "02.11", "02.12", "02.13", "02.14", "02.15", "02.16", "02.17", "02.18", "02.19", "02.20", "02.21", "02.22", "02.23", "02.24", "02.25", "02.26", "02.27", "02.28", "02.29", "03.01", "03.02", "03.03", "03.04", "03.05", "03.06", "03.07", "03.08", "03.09", "03.10", "03.11", "03.12", "03.13", "03.14", "03.15", "03.16", "03.17", "03.18", "03.19", "03.20", "03.21", "03.22", "03.23", "03.24", "03.25", "03.26", "03.27", "03.28", "03.29", "03.30", "03.31", "04.01", "04.02", "04.03", "04.04"],
                             death:[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 3, 3, 3, 3, 5, 5, 8, 12, 21, 41, 53, 64, 79, 95, 119, 154, 185, 221, 293, 364, 452, 560, 764, 947, 1227, 1582, 1928, 2357, 2870, 3457, 4214, 4878, 5942, 7152, 8576, 10229, 11960, 13848, 16242, 18764, 21827, 25083, 28741, 31764, 35972, 40664, 45634, 51227, 57138],

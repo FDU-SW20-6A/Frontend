@@ -55,7 +55,11 @@ export default class CountryDetails extends PureComponent {
     fetchSinaData = country => {
         const cityCode = countryCode[country];
         if (cityCode) {
-            jsonp(`https://gwpre.sina.cn/interface/news/wap/ncp_foreign.d.json?citycode=${cityCode}`, (newErr, newData) => {
+            //jsonp(`https://gwpre.sina.cn/interface/news/wap/ncp_foreign.d.json?citycode=${cityCode}`, (newErr, newData) => {
+            const url = "http://127.0.0.1:8001/api/country/?code=\'"+cityCode+"\'";
+            fetch(url)
+            .then(res => res.json())
+            .then(newData => {    
                 const { city } = newData.data;
                 this.setState({
                     data:{
