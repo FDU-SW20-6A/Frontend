@@ -51,8 +51,8 @@ class Line_1 extends React.Component {
             xAxis: {
                 type: 'category',
                 boundaryGap: false,
-                //data: this.props.data.xdata,
-                data: ['03-18','03-19','03-20','03-21','03-22', '03-23', '03-24', '03-25', '03-26', '03-27', '03-28']
+                data: this.props.data.xdata,
+                //data: ['03-18','03-19','03-20','03-21','03-22', '03-23', '03-24', '03-25', '03-26', '03-27', '03-28']
             },
             yAxis: {
                 type: 'value',
@@ -94,8 +94,8 @@ class Line_1 extends React.Component {
                             color: 'rgb(255, 70, 131)'
                         }])
                     },
-                    //data: this.props.data.ydata,
-                    data: [34,39,41,46,39,78,47,67,55,54]
+                    data: this.props.data.ydata,
+                    //data: [34,39,41,46,39,78,47,67,55,54]
                 }
             ]
         });

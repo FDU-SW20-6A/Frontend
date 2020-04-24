@@ -21,6 +21,7 @@ export default class Welcome extends PureComponent {
     totalData: {}, // 国内各省市累计确诊
     list: [],
     history: {},  //国内历史数据
+    index: '',
   };
 
   componentDidMount = () => {
@@ -79,6 +80,7 @@ export default class Welcome extends PureComponent {
       .then(data => {
         this.setState({
           history: data,
+          index: '1',
         });
       });
   };
@@ -226,7 +228,10 @@ export default class Welcome extends PureComponent {
       <Card>
         <Meta title="总体曲线" avatar={<LineChartOutlined/>}/>
         <p/>
-        <Tabs defaultActiveKey="1" onChange={this.callback()}>
+        <Tabs activeKey={this.state.index} onChange={(key)=>{
+            console.log(key);
+            this.setState({index:key});
+        }}>
           <TabPane tab="现存" key="1">
             <Line1 data={{
               //xdata: ['03-18','03-19','03-20','03-21','03-22', '03-23', '03-24', '03-25', '03-26', '03-27', '03-28'],
