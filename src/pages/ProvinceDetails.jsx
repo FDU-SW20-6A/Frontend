@@ -20,7 +20,8 @@ export default class Welcome extends PureComponent {
         currData: {}, // 省内各城市现存确诊
         totalData: {}, // 省内各城市累计确诊
         list: [],
-        jwsr: '', // 省内境外输入
+        jwsr_e: '', // 省内境外输入现存
+        jwsr: '', // 省内境外输入累计
     };
 
     componentDidMount = () => {
@@ -72,12 +73,13 @@ export default class Welcome extends PureComponent {
                         deadIncr: provinceObj.adddaily.deathadd,
                         curedIncr: provinceObj.adddaily.cureadd,
                         confirmedCount: provinceObj.value,
-                        confirmedIncr: provinceObj.adddaily.conadd
+                        confirmedIncr: provinceObj.adddaily.conadd,      
                     }
                 })
                 const jwsr = provinceObj.jwsr ? provinceObj.jwsrNum : 0;
                 this.setState({
-                    jwsr
+                    jwsr,
+                    jwsr_e: provinceObj.jwsr_econNum,
                 })
                 const currCities = provinceObj.city.map(item => ({
                     name: item.mapName,
@@ -187,14 +189,14 @@ export default class Welcome extends PureComponent {
 
     renderMap1 = () => {
         // 疫情地图
-        const { currData, totalData, jwsr } = this.state;
+        const { currData, totalData, jwsr, jwsr_e} = this.state;
         return (
             <Card style={{ height: '550px' }}>
                 <Meta title="疫情地图" avatar={<PieChartOutlined />} />
                 <p />
                 <Tabs defaultActiveKey="1" onChange={this.callback()}>
                     <TabPane tab="现存" key="1">
-                        {this.currMap1(currData, jwsr)}
+                        {this.currMap1(currData, jwsr_e)}
                     </TabPane>
                     <TabPane tab="累计" key="2">
                         {this.sumMap1(totalData, jwsr)}

@@ -10,7 +10,8 @@ export default class Rumor extends PureComponent {
     }
 
     componentDidMount() {
-        const url1 = `${ROOT}?num=1000&rumorType=0`
+        //const url1 = `${ROOT}?num=1000&rumorType=0`
+        const url1 = 'http://127.0.0.1:8001/api/rumor0/';
         fetch(url1)
             .then(res => res.json())
             .then(data => {
@@ -19,7 +20,7 @@ export default class Rumor extends PureComponent {
                     const { results } = data;
                     for (let i = 0; i < results.length; i += 10) {
                         const page = [];
-                        for (let j = i; j < i + 10; j += 1) {
+                        for (let j = i; j < i + 10 && j < results.length; j += 1) {
                             page.push(results[j]);
                         }
                         pages.push(page);
@@ -30,7 +31,8 @@ export default class Rumor extends PureComponent {
                 }
             });
 
-        const url2 = `${ROOT}?num=1000&rumorType=2` // 这次请求不能抓到信息
+        //const url2 = `${ROOT}?num=1000&rumorType=2` // 这次请求不能抓到信息
+        const url2 = 'http://127.0.0.1:8001/api/rumor2/';
         fetch(url2)
             .then(res => res.json())
             .then(data => {
@@ -39,7 +41,7 @@ export default class Rumor extends PureComponent {
                     const { results } = data;
                     for (let i = 0; i < results.length; i += 10) {
                         const page = [];
-                        for (let j = i; j < i + 10; j += 1) {
+                        for (let j = i; j < i + 10 && j < results.length; j += 1) {
                             page.push(results[j]);
                         }
                         pages.push(page);

@@ -10,7 +10,8 @@ export default class Official extends PureComponent {
     }
 
     componentDidMount() {
-        const url = `${ROOT}?num=1000`
+        //const url = `${ROOT}?num=1000`
+        const url = 'http://127.0.0.1:8001/api/news/';
         fetch(url)
             .then(res => res.json())
             .then(data => {
