@@ -15,7 +15,6 @@ class Line_2 extends React.Component {
     componentDidMount() {
     
         // 初始化
-        // let myChart = echarts.init(document.getElementById('increase'));
         let myChart = echarts.init(document.getElementById('increase'));
 
         // 绘制图表
@@ -40,7 +39,7 @@ class Line_2 extends React.Component {
                 type: 'category',
                 data: this.props.data.xdata,
                 axisLabel: {
-                    interval: 0,
+                    interval: 5,
                     rotate: 45
                 }
             },

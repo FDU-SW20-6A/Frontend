@@ -232,7 +232,7 @@ export default class Welcome extends PureComponent {
             console.log(key);
             this.setState({index:key});
         }}>
-          <TabPane tab="现存" key="1">
+          <TabPane tab="累计确诊" key="1">
             <Line1 data={{
               //xdata: ['03-18','03-19','03-20','03-21','03-22', '03-23', '03-24', '03-25', '03-26', '03-27', '03-28'],
               //ydata: [34,39,41,46,39,78,47,67,55,54]
@@ -240,7 +240,7 @@ export default class Welcome extends PureComponent {
               ydata: this.state.history.econNum,
             } }/>
           </TabPane>
-          <TabPane tab="新增" key="2">
+          <TabPane tab="新增确诊" key="2">
             <Line2 data={{
               //xdata: ['03-18','03-19','03-20','03-21','03-22', '03-23', '03-24', '03-25', '03-26', '03-27', '03-28'],
               //ydata: [34,39,41,46,39,78,47,67,55,54]
@@ -248,7 +248,7 @@ export default class Welcome extends PureComponent {
               ydata: this.state.history.conadd,
             } }/>
           </TabPane>
-          <TabPane tab="治愈 / 死亡" key="3">
+          <TabPane tab="治愈/死亡" key="3">
             <Line3 data={{
               //xdata:['03-18','03-19','03-20','03-21','03-22', '03-23', '03-24', '03-25', '03-26', '03-27', '03-28'],
               //death:[8,3,7,6,9,7,4,6,5,3,5],
