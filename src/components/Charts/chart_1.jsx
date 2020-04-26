@@ -37,7 +37,6 @@ class Line_1 extends React.Component {
             },
             title: {
                 left: 'center',
-                text: '现存确诊',
             },
             toolbox: {
                 feature: {

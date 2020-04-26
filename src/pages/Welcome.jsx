@@ -232,7 +232,7 @@ export default class Welcome extends PureComponent {
             console.log(key);
             this.setState({index:key});
         }}>
-          <TabPane tab="累计确诊" key="1">
+          <TabPane tab="现存确诊" key="1">
             <Line1 data={{
               //xdata: ['03-18','03-19','03-20','03-21','03-22', '03-23', '03-24', '03-25', '03-26', '03-27', '03-28'],
               //ydata: [34,39,41,46,39,78,47,67,55,54]
