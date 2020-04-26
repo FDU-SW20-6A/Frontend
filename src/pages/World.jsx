@@ -289,7 +289,7 @@ export default class World extends PureComponent {
     renderCureDeath = () => {
         return (
             <Card>
-                <Meta title="治愈率/死亡率 散点图" avatar={<DotChartOutlined />} />
+                <Meta title="治愈率/死亡率" avatar={<DotChartOutlined />} />
                 <Scatter/>
             </Card>
         )

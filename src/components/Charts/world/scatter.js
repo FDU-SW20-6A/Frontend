@@ -82,7 +82,7 @@ class Scatter extends React.Component {
 
         // 绘制图表oo
         myChart.setOption({
-            backgroundColor: '#404a59',
+            backgroundColor: '#fff',
             color: [
                 '#dd4444', '#fec42c', '#80F1BE','#53C6F1'
             ],
@@ -90,8 +90,8 @@ class Scatter extends React.Component {
                 top: 10,
                 data: ['当天', '一周前', '两周前','一月前'],
                 textStyle: {
-                    color: '#fff',
-                    fontSize: 16
+                    color: '#404a59',
+                    fontSize: 14
                 }
             },
             grid: {
@@ -123,10 +123,10 @@ class Scatter extends React.Component {
             xAxis: {
                 type: 'value',
                 name: '治愈率%',
-                nameGap: 10,
+                nameGap: 20,
                 nameTextStyle: {
-                    color: '#fff',
-                    fontSize: 14
+                    color: '#404a59',
+                    fontSize: 12
                 },
                 max: 80,
                 splitLine: {
@@ -134,7 +134,7 @@ class Scatter extends React.Component {
                 },
                 axisLine: {
                     lineStyle: {
-                        color: '#eee'
+                        color: '#404a59'
                     }
                 }
             },
@@ -142,16 +142,16 @@ class Scatter extends React.Component {
                 type: 'value',
                 name: '死亡率%',
                 nameLocation: 'end',
-                nameGap: 5,
+                nameGap: 20,
                 max: 20,
                 nameTextStyle: {
-                    color: '#fff',
-                    fontSize: 16
+                    color: '#404a59',
+                    fontSize: 12
                 },
 
                 axisLine: {
                     lineStyle: {
-                        color: '#eee'
+                        color: '#404a59'
                     }
                 },
                 splitLine: {
@@ -172,7 +172,7 @@ class Scatter extends React.Component {
                     text: ['圆形大小：新增确诊'],
                     textGap: 30,
                     textStyle: {
-                        color: '#fff'
+                        color: '#404a59'
                     },
                     inRange: {
                         symbolSize: [10, 70]
@@ -202,7 +202,7 @@ class Scatter extends React.Component {
                     text: ['明暗：累计确诊'],
                     textGap: 30,
                     textStyle: {
-                        color: '#fff'
+                        color: '#404a59'
                     },
                     inRange: {
                         colorLightness: [1, 0.5]
