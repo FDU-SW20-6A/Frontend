@@ -9,9 +9,15 @@ import jsonp from 'jsonp'; // 接口jsonp实现跨域
 import KeyCountries from '@/components/Charts/KeyCountries';
 import DataList from '@/components/DataList';
 import styles from './Welcome.less';
+
+import Line1 from "@/components/Charts/chart_1";//累计确诊
+import Line2 from "@/components/Charts/chart_2";//新增确诊
+import Line3 from "@/components/Charts/chart_3";//治愈/死亡
+
 const { Item } = Descriptions;
 const { TabPane } = Tabs;
 const { Meta } = Card;
+
 const countryKeyMap = {
     "意大利": '1',
     "美国": '2',
@@ -39,7 +45,8 @@ export default class CountryDetails extends PureComponent {
         newAddData: {},
         totalData: {},
         nameMapping: {},
-        list: []
+        list: [],
+        history:{}
     };
 
     componentDidMount = () => {
@@ -50,6 +57,8 @@ export default class CountryDetails extends PureComponent {
             country: countryKey
         });
         this.fetchSinaData(country);
+        this.fetchChartsData();
+
     };
 
     fetchSinaData = country => {
@@ -99,6 +108,18 @@ export default class CountryDetails extends PureComponent {
                 })
             })
         }
+    };
+
+    fetchChartsData = (country) => {
+        const url = "http://127.0.0.1:8001/api/country/?country="+country;
+        fetch(url)
+            .then(res => res.json())
+            .then(data => {
+                this.setState({
+                    history: data,
+                    // index: '1',
+                });
+            });
     };
 
     renderInfo = () => {
@@ -215,16 +236,25 @@ export default class CountryDetails extends PureComponent {
                 <p/>
                 <Tabs defaultActiveKey="1" onChange={this.callback()}>
                     <TabPane tab="累计确诊" key="1">
-                        blablabla
+                        <Line1 data={{
+                            xdata: ['03-18','03-19','03-20','03-21','03-22', '03-23', '03-24', '03-25', '03-26', '03-27', '03-28'],
+                            ydata: [34,39,41,46,39,78,47,67,55,54]
+                        }}
+                        />
                     </TabPane>
                     <TabPane tab="新增确诊" key="2">
-                        Content of Tab Pane 2
+                        <Line2 data={{
+                            xdata: ['03-18','03-19','03-20','03-21','03-22', '03-23', '03-24', '03-25', '03-26', '03-27', '03-28'],
+                            ydata: [34,39,41,46,39,78,47,67,55,54]}}
+                        />
+
                     </TabPane>
-                    <TabPane tab="累计确诊" key="3">
-                        Content of Tab Pane 3
-                    </TabPane>
-                    <TabPane tab="死亡/治愈" key="4">
-                        Content of Tab Pane 4
+                    <TabPane tab="死亡/治愈" key="3">
+                        <Line3 data={{
+                            xdata:['03-18','03-19','03-20','03-21','03-22', '03-23', '03-24', '03-25', '03-26', '03-27', '03-28'],
+                            death:[8,3,7,6,9,7,4,6,5,3,5],
+                            cure:[819,730,590,504,459,456,491,401,537,383,477]
+                        }}/>
                     </TabPane>
                 </Tabs>
             </Card>
