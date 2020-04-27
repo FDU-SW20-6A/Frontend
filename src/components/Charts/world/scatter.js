@@ -10,12 +10,30 @@ import 'echarts/lib/component/markPoint';
 import 'echarts/lib/component/markLine';
 
 class Scatter extends React.Component {
+    
+    state = {
+        data : [],
+    };
 
     componentDidMount() {
+        const url = 'http://127.0.0.1:8001/api/scatter_diagram/';
+
+        fetch(url)
+        .then(res => res.json())
+        .then(data => {
+            this.setState({
+                data : data,
+            }),
+            console.log(this.state),
+            this.charts()
+        });
+    }
+    
+    charts() {
 
         // 初始化
         let myChart = echarts.init(document.getElementById('main'));
-
+        /*
         var data_now=[
             [26.29, 13.22, 178972, 47055, 23660, 3047, 2128, 433, "意大利"],
             [76.02, 2.21, 10674, 8114, 236, 13, 72, 2,"韩国"],
@@ -58,7 +76,7 @@ class Scatter extends React.Component {
             [1.00, 0.35, 23921, 239, 84, 3340, 30, 12, "德国"],
             [5.56, 6.02, 28572, 1588, 1720, 3646, 0, 394, "西班牙"],
         ]
-
+        */
         var schema = [
             {name: '治愈率', index: 0, text: '治愈率'},
             {name: '死亡率', index: 1, text: '死亡率'},
@@ -70,7 +88,7 @@ class Scatter extends React.Component {
             {name: '新增死亡', index: 7, text: '新增死亡'},
             {name: '国家', index: 8, text: ''},
         ];
-
+        
 
         var itemStyle = {
             opacity: 0.8,
@@ -225,25 +243,29 @@ class Scatter extends React.Component {
                     name: '当天',
                     type: 'scatter',
                     itemStyle: itemStyle,
-                    data: data_now
+                    //data: this.state.data_now,
+                    data: this.state.data[0],
                 },
                 {
                     name: '一周前',
                     type: 'scatter',
                     itemStyle: itemStyle,
-                    data: data_week
+                    //data: data_week
+                    data: this.state.data[1],
                 },
                 {
                     name: '两周前',
                     type: 'scatter',
                     itemStyle: itemStyle,
-                    data: data_2_week
+                    //data: data_2_week,
+                    data: this.state.data[2],
                 },
                 {
                     name: '一月前',
                     type: 'scatter',
                     itemStyle: itemStyle,
-                    data: data_month
+                    //data: data_month,
+                    data: this.state.data[3],
                 }
             ]
         });
