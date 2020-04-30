@@ -54,7 +54,6 @@ export default class Welcome extends PureComponent {
         name: item.name,
         value: item.econNum,
       }));
-      console.log(data)
       self.setState({
         currData: curr,
       });
@@ -229,7 +228,6 @@ export default class Welcome extends PureComponent {
         <Meta title="总体曲线" avatar={<LineChartOutlined/>}/>
         <p/>
         <Tabs activeKey={this.state.index} onChange={(key)=>{
-            console.log(key);
             this.setState({index:key});
         }}>
           <TabPane tab="现存确诊" key="1">
@@ -241,12 +239,10 @@ export default class Welcome extends PureComponent {
             } }/>
           </TabPane>
           <TabPane tab="新增确诊" key="2">
-            <Line2 data={{
-              //xdata: ['03-18','03-19','03-20','03-21','03-22', '03-23', '03-24', '03-25', '03-26', '03-27', '03-28'],
-              //ydata: [34,39,41,46,39,78,47,67,55,54]
+            <Line2 id="increase" data={{
               xdata: this.state.history.date,
               ydata: this.state.history.conadd,
-            } }/>
+            }}/>
           </TabPane>
           <TabPane tab="治愈/死亡" key="3">
             <Line3 data={{
@@ -264,7 +260,6 @@ export default class Welcome extends PureComponent {
 
   renderTable = () => {
     let c;
-    console.log(this.state.list)
     if(this.state.list){
     }
     return (

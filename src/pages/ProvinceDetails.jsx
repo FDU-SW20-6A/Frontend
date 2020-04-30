@@ -220,7 +220,7 @@ export default class Welcome extends PureComponent {
                     }} />
                 </TabPane>
                 <TabPane tab="新增" key="2">
-                    <Line2 data={{
+                    <Line2 id="increase" data={{
                         xdata: ['03-18', '03-19', '03-20', '03-21', '03-22', '03-23', '03-24', '03-25', '03-26', '03-27', '03-28'],
                         ydata: [34, 39, 41, 46, 39, 78, 47, 67, 55, 54]
                     }} />

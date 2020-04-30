@@ -10,6 +10,7 @@ import {
 import jsonp from 'jsonp'; // 接口jsonp实现跨域
 import CountriesConfirm from '@/components/Charts/CountriesConfirm';
 import WorldList from '@/components/WorldList';
+import Line_2 from "@/components/Charts/chart_2";
 import Line_3 from "@/components/Charts/chart_3";
 import Conadd from "@/components/Charts/world/conadd"
 import ConNum from "@/components/Charts/world/conNum";
@@ -26,10 +27,19 @@ export default class World extends PureComponent {
         totalData: {},
         list: [],
         history: {},
+        Italy: {},
+        USA: {},
+        Spain: {},
+        France: {},
+        German: {},
+        Japan: {},
+        Korea: {},
+        Iran: {},
         index: '',
     };
 
     componentDidMount = () => {
+        this.fetchCountryHistoryData();
         this.fetchSinaData();
         this.fetchChartsData();
     };
@@ -55,7 +65,6 @@ export default class World extends PureComponent {
                     curedIncr: othertotal.recure_inc,
                     confirmedCount: othertotal.certain,
                     confirmedIncr: othertotal.certain_inc
-
                 }
             })
             curr.push({ name: '中国', value: data.data.econNum });
@@ -75,15 +84,34 @@ export default class World extends PureComponent {
     };
     
     fetchChartsData = () => {
-    const url = 'http://127.0.0.1:8001/api/history/';
-    fetch(url)
-      .then(res => res.json())
-      .then(data => {
-        this.setState({
-          history: data,
-          index: '1',
+        const url = 'http://127.0.0.1:8001/api/history/';
+        fetch(url)
+        .then(res => res.json())
+        .then(data => {
+            this.setState({
+                history: data,
+                index: '1',
+            });
         });
-      });
+    };
+
+    // Fetch country history data for rendering charts Line2
+    fetchCountryHistoryData = () => {
+        const url = "http://127.0.0.1:8001/api/countries_history/";
+        fetch(url)
+        .then(res => res.json())
+        .then(data => {
+            this.setState({
+                Italy: data.Italy,
+                USA: data.USA,
+                Spain: data.Spain,
+                France: data.France,
+                German: data.German,
+                Iran: data.Iran,
+                Korea: data.Korea,
+                Japan: data.Japan,
+            });
+        });
     };
 
     renderInfo = () => {
@@ -198,7 +226,6 @@ export default class World extends PureComponent {
                 <Meta title="世界曲线" avatar={<LineChartOutlined />} />
                 <p />
                 <Tabs activeKey={this.state.index} onChange={(key)=>{
-                    console.log(key);
                     this.setState({index:key});
                 }}>
                     <TabPane tab="新增确诊" key="1">                    
@@ -206,7 +233,7 @@ export default class World extends PureComponent {
                             China : this.state.history.conadd,
                             world : this.state.history.conaddw,
                             date : this.state.history.date,
-                        }}/>                        
+                        }}/>
                     </TabPane>
                     <TabPane tab="累计确诊" key="2">
                         <ConNum data={{
@@ -220,12 +247,9 @@ export default class World extends PureComponent {
                     {/*</TabPane>*/}
                     <TabPane tab="死亡/治愈" key="3">
                         <Line_3 data={{
-                            // xdata:["01.22", "01.23", "01.24", "01.25", "01.26", "01.27", "01.28", "01.29", "01.30", "01.31", "02.01", "02.02", "02.03", "02.04", "02.05", "02.06", "02.07", "02.08", "02.09", "02.10", "02.11", "02.12", "02.13", "02.14", "02.15", "02.16", "02.17", "02.18", "02.19", "02.20", "02.21", "02.22", "02.23", "02.24", "02.25", "02.26", "02.27", "02.28", "02.29", "03.01", "03.02", "03.03", "03.04", "03.05", "03.06", "03.07", "03.08", "03.09", "03.10", "03.11", "03.12", "03.13", "03.14", "03.15", "03.16", "03.17", "03.18", "03.19", "03.20", "03.21", "03.22", "03.23", "03.24", "03.25", "03.26", "03.27", "03.28", "03.29", "03.30", "03.31", "04.01", "04.02", "04.03", "04.04"],
-                            // death:[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 3, 3, 3, 3, 5, 5, 8, 12, 21, 41, 53, 64, 79, 95, 119, 154, 185, 221, 293, 364, 452, 560, 764, 947, 1227, 1582, 1928, 2357, 2870, 3457, 4214, 4878, 5942, 7152, 8576, 10229, 11960, 13848, 16242, 18764, 21827, 25083, 28741, 31764, 35972, 40664, 45634, 51227, 57138],
-                            // cure:[0, 0, 0, 0, 0, 0, 5, 5, 7, 10, 12, 12, 13, 16, 17, 19, 19, 22, 28, 33, 37, 46, 47, 53, 71, 80, 88, 117, 129, 133, 152, 172, 182, 191, 219, 230, 277, 295, 435, 442, 659, 879, 1079, 1565, 1812, 2881, 2960, 3774, 4300, 5010, 5511, 6247, 7507, 8828, 9533, 11158, 13291, 15213, 17295, 20820, 22451, 26059, 27762, 30726, 41139, 51157, 55450, 69620, 80686, 96440, 108275, 121902, 138487, 151439]
-                            xdata:this.state.history.date,
-                            death:this.state.history.deathNum,
-                            cure:this.state.history.cureNum,
+                            xdata: this.state.history.date,
+                            death: this.state.history.deathNum,
+                            cure: this.state.history.cureNum,
                         }}/>
                     </TabPane>
                 </Tabs>
@@ -248,41 +272,59 @@ export default class World extends PureComponent {
             <Card>
                 <Meta title="重点国家新增确诊" avatar={<RiseOutlined />} />
                 <p />
-                <Carousel autoplay>
-                    <Card bordered={false}>
-                        {' '}
-                        <Meta title="意大利" />
+                <Tabs activeKey={this.state.index} onChange={(key)=>{
+                    this.setState({index:key});
+                }}>
+                    <TabPane tab="意大利" key="1">                    
+                        <Line_2 id="Italy" data={{
+                            xdata: this.state.Italy.date,
+                            ydata: this.state.Italy.conadd,
+                        }}/>
+                    </TabPane>
+                    <TabPane tab="美国" key="2">
+                        <Line_2 id="USA" data={{
+                            xdata: this.state.USA.date,
+                            ydata: this.state.USA.conadd,
+                        }}/>
+                    </TabPane>
+                    <TabPane tab="韩国" key="3">
+                        <Line_2 id="Korea" data={{
+                            xdata: this.state.Korea.date,
+                            ydata: this.state.Korea.conadd,
+                        }}/>
+                    </TabPane>
+                    <TabPane tab="伊朗" key="4">
+                        <Line_2 id="Iran" data={{
+                            xdata: this.state.Iran.date,
+                            ydata: this.state.Iran.conadd,
+                        }}/>
+                    </TabPane>
+                    <TabPane tab="日本" key="5">
+                        <Line_2 id="Japan" data={{
+                            xdata: this.state.Japan.date,
+                            ydata: this.state.Japan.conadd,
+                        }}/>
+                    </TabPane>
+                    <TabPane tab="法国" key="6">
+                        <Line_2 id="France" data={{
+                            xdata: this.state.France.date,
+                            ydata: this.state.France.conadd,
+                        }}/>
+                    </TabPane>
+                    <TabPane tab="德国" key="7">
+                        <Line_2 id="German" data={{
+                            xdata: this.state.German.date,
+                            ydata: this.state.German.conadd,
+                        }}/>
+                    </TabPane>
+                    <TabPane tab="西班牙" key="8">
+                        <Line_2 id="Spain" data={{
+                            xdata: this.state.Spain.date,
+                            ydata: this.state.Spain.conadd,
+                        }}/>
+                    </TabPane>
+                </Tabs>
                     </Card>
-                    <Card bordered={false}>
-                        {' '}
-                        <Meta title="美国" />
-                    </Card>
-                    <Card bordered={false}>
-                        {' '}
-                        <Meta title="韩国" />
-                    </Card>
-                    <Card bordered={false}>
-                        {' '}
-                        <Meta title="伊朗" />
-                    </Card>
-                    <Card bordered={false}>
-                        {' '}
-                        <Meta title="日本" />
-                    </Card>
-                    <Card bordered={false}>
-                        {' '}
-                        <Meta title="法国" />
-                    </Card>
-                    <Card bordered={false}>
-                        {' '}
-                        <Meta title="德国" />
-                    </Card>
-                    <Card bordered={false}>
-                        {' '}
-                        <Meta title="西班牙" />
-                    </Card>
-                </Carousel>
-            </Card>
         );
     };
 

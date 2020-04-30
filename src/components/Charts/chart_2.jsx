@@ -13,9 +13,8 @@ import 'echarts/lib/component/markLine';
 class Line_2 extends React.Component {
 
     componentDidMount() {
-    
         // 初始化
-        let myChart = echarts.init(document.getElementById('increase'));
+        let myChart = echarts.init(document.getElementById(this.props.id));
 
         // 绘制图表
         myChart.setOption({
@@ -62,7 +61,7 @@ class Line_2 extends React.Component {
     }
     render() {
         return (
-            <div id="increase" style={{width: '100%', height: 340}}/>
+            <div id={this.props.id} style={{width: '100%', height: 340}}/>
         );
     }
 }
