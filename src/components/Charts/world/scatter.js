@@ -24,7 +24,6 @@ class Scatter extends React.Component {
             this.setState({
                 data : data,
             }),
-            console.log(this.state),
             this.charts()
         });
     }
