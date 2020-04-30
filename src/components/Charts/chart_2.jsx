@@ -46,6 +46,7 @@ class Line_2 extends React.Component {
                 type: 'value'
             },
             series: [{
+                name: '新增确诊',
                 data: this.props.data.ydata,
                 type: 'line'
             }

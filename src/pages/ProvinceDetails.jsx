@@ -22,6 +22,8 @@ export default class Welcome extends PureComponent {
         list: [],
         jwsr_e: '', // 省内境外输入现存
         jwsr: '', // 省内境外输入累计
+        history: {},
+        index: '',
     };
 
     componentDidMount = () => {
@@ -29,6 +31,7 @@ export default class Welcome extends PureComponent {
         const province = decodeURIComponent(path[path.length - 1]);
         this.fetchOverall();
         this.fetchSinaData(province);
+        this.fetchChartsData(province);
     };
 
     fetchOverall = () => {
@@ -100,6 +103,18 @@ export default class Welcome extends PureComponent {
                 })
             }
         });
+    };
+    
+    fetchChartsData = (province) => {
+        const url = "http://127.0.0.1:8001/api/province_history/?name=\'"+province+"\'";
+        fetch(url)
+            .then(res => res.json())
+            .then(data => {
+                this.setState({
+                    history: data,
+                    index: '1',
+                });
+            });
     };
 
     renderInfo = () => {
@@ -212,24 +227,34 @@ export default class Welcome extends PureComponent {
         <Card style={{ height: '550px' }}>
             <Meta title="总体曲线" avatar={<LineChartOutlined />} />
             <p />
-            <Tabs defaultActiveKey="1" onChange={this.callback()}>
-                <TabPane tab="现存" key="1">
+            <Tabs activeKey={this.state.index} onChange={(key)=>{
+                    console.log(key);
+                    this.setState({index:key});
+                }}>
+                <TabPane tab="累计确诊" key="1">
                     <Line1 data={{
-                        xdata: ['03-18', '03-19', '03-20', '03-21', '03-22', '03-23', '03-24', '03-25', '03-26', '03-27', '03-28'],
-                        ydata: [34, 39, 41, 46, 39, 78, 47, 67, 55, 54]
+                        //xdata: ['03-18', '03-19', '03-20', '03-21', '03-22', '03-23', '03-24', '03-25', '03-26', '03-27', '03-28'],
+                        //ydata: [34, 39, 41, 46, 39, 78, 47, 67, 55, 54]
+                        xdata: this.state.history.date,
+                        ydata: this.state.history.conNum,
                     }} />
                 </TabPane>
-                <TabPane tab="新增" key="2">
+                <TabPane tab="新增确诊" key="2">
                     <Line2 id="increase" data={{
-                        xdata: ['03-18', '03-19', '03-20', '03-21', '03-22', '03-23', '03-24', '03-25', '03-26', '03-27', '03-28'],
-                        ydata: [34, 39, 41, 46, 39, 78, 47, 67, 55, 54]
+                        //xdata: ['03-18', '03-19', '03-20', '03-21', '03-22', '03-23', '03-24', '03-25', '03-26', '03-27', '03-28'],
+                        //ydata: [34, 39, 41, 46, 39, 78, 47, 67, 55, 54]
+                        xdata: this.state.history.date,
+                        ydata: this.state.history.conadd,
                     }} />
                 </TabPane>
                 <TabPane tab="治愈 / 死亡" key="3">
                     <Line3 data={{
-                        xdata: ['03-18', '03-19', '03-20', '03-21', '03-22', '03-23', '03-24', '03-25', '03-26', '03-27', '03-28'],
-                        death: [8, 3, 7, 6, 9, 7, 4, 6, 5, 3, 5],
-                        cure: [819, 730, 590, 504, 459, 456, 491, 401, 537, 383, 477]
+                        //xdata: ['03-18', '03-19', '03-20', '03-21', '03-22', '03-23', '03-24', '03-25', '03-26', '03-27', '03-28'],
+                        //death: [8, 3, 7, 6, 9, 7, 4, 6, 5, 3, 5],
+                        //cure: [819, 730, 590, 504, 459, 456, 491, 401, 537, 383, 477]
+                        xdata: this.state.history.date,
+                        cure: this.state.history.cureNum,
+                        death: this.state.history.deathNum,
                     }} />
                 </TabPane>
             </Tabs>
