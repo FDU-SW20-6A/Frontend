@@ -84,7 +84,7 @@ export default class Rumor extends PureComponent {
                             paddingRight: '5px'}}>
                         {typeText}
                     </div>
-                    <p style={{ fontSize: '20px', color: 'black', fontWeight: 'bold', display: 'inline', marginLeft: '16px' }}>{title}</p>
+                    <p style={{ fontSize: '20px', color: 'black', fontWeight: 'bold', display: 'inline', marginLeft: '10px' }}>{title}</p>
                     <p/>
                     <p style={{ color: '#0050b3', fontWeight: 'bold', display: 'inline' }}>{`${src}：`}</p>
                     <p style={{ display: 'inline' }}>{`“${words}。”`}</p>
