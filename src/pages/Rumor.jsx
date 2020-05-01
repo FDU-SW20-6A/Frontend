@@ -80,7 +80,6 @@ export default class Rumor extends PureComponent {
                             width: '100%', 
                             fontWeight: 'bold', 
                             display: 'inline',
-                            borderRadius: '5px',
                             paddingLeft: '5px',
                             paddingRight: '5px'}}>
                         {typeText}
