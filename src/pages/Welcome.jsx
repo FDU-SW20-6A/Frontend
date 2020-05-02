@@ -8,6 +8,7 @@ import DataList from '@/components/DataList';
 import Line1 from'@/components/Charts/chart_1';
 import Line2 from'@/components/Charts/chart_2'
 import Line3 from "@/components/Charts/chart_3";
+import { SettingDrawer } from '@ant-design/pro-layout'
 
 const { Item } = Descriptions;
 const { TabPane } = Tabs;
@@ -280,6 +281,7 @@ export default class Welcome extends PureComponent {
           <Col span={12}>{this.renderMap2()}</Col>
           <Col span={24}>{this.renderTable()}</Col>
         </Row>
+        <SettingDrawer />
       </div>
     );
   }

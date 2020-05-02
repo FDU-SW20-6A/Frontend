@@ -194,8 +194,13 @@ export default {
     'primary-color': '#0050b3',
     'card-radius': '5px',
     'layout-body-background': '#f7f7f7',
-
   },
+  /*
+  antd: {
+    dark: true, // 开启暗色主题
+    compact: true, // 开启紧凑主题
+  },
+  */
   define: {
     REACT_APP_ENV: REACT_APP_ENV || false,
     ANT_DESIGN_PRO_ONLY_DO_NOT_USE_IN_YOUR_PRODUCTION:
