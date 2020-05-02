@@ -12,6 +12,7 @@ Frontend Demo for Visualizing COVID19's Transmission
 - Data tables supported
 - Search nearby confirmed cases supported
 - Official news supported
+- Breaking rumors supported
 
 ## How to use
 
