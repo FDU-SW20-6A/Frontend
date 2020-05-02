@@ -18,11 +18,14 @@ class AvatarDropdown extends React.Component {
           type: 'login/logout',
         });
       }
-
       return;
+    } 
+    if (key === 'weekly') {
+      router.push(`/${key}`);
     }
-
-    router.push(`/account/${key}`);
+    else {
+      router.push(`/account/${key}`);
+    }
   };
 
   render() {
@@ -52,6 +55,10 @@ class AvatarDropdown extends React.Component {
         <Menu.Item key="logout">
           <Icon type="logout" />
           <FormattedMessage id="menu.account.logout" defaultMessage="logout" />
+        </Menu.Item>
+        <Menu.Item key="weekly">
+          <Icon type="book" display="inline"/>
+          <p style={{display: "inline"}}>我的订阅</p>
         </Menu.Item>
       </Menu>
     );
