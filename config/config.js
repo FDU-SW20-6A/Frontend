@@ -159,6 +159,12 @@ export default {
               ],
             },
             {
+              name: 'weekly',
+              path: '/weekly',
+              hideInMenu: true,
+              component: './Weekly'
+            },
+            {
               path: '/admin',
               name: 'admin',
               icon: 'crown',

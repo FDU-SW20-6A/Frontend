@@ -1,18 +1,16 @@
+/* eslint-disable no-nested-ternary */
 import React, { PureComponent } from 'react';
-import { Card, Pagination, Col, Row } from 'antd';
+import { Card, Pagination } from 'antd';
 
-const ROOT = 'https://lab.isaaclin.cn//nCoV/api/rumors'
 export default class Rumor extends PureComponent {
     state = {
-        pages1: [],
-        pages2: [],
+        pages: [],
         pagination: 1
     }
 
     componentDidMount() {
-        //const url1 = `${ROOT}?num=1000&rumorType=0`
-        const url1 = 'http://127.0.0.1:8001/api/rumor0/';
-        fetch(url1)
+        const url = 'http://127.0.0.1:8001/api/rumor/';
+        fetch(url)
             .then(res => res.json())
             .then(data => {
                 if (data && data.results) {
@@ -26,28 +24,7 @@ export default class Rumor extends PureComponent {
                         pages.push(page);
                     }
                     this.setState({
-                        pages1: pages
-                    })
-                }
-            });
-
-        //const url2 = `${ROOT}?num=1000&rumorType=2` // 这次请求不能抓到信息
-        const url2 = 'http://127.0.0.1:8001/api/rumor2/';
-        fetch(url2)
-            .then(res => res.json())
-            .then(data => {
-                if (data && data.results) {
-                    const pages = [];
-                    const { results } = data;
-                    for (let i = 0; i < results.length; i += 10) {
-                        const page = [];
-                        for (let j = i; j < i + 10 && j < results.length; j += 1) {
-                            page.push(results[j]);
-                        }
-                        pages.push(page);
-                    }
-                    this.setState({
-                        pages2: pages
+                        pages
                     })
                 }
             });
@@ -80,7 +57,8 @@ export default class Rumor extends PureComponent {
     }
 
     renderSingleRumor = rumor => {
-        const { title } = rumor
+        const { title, type } = rumor
+        const typeText = type === 0 ? '谣言' : type === 1 ? '可信' : '未证实'
         const summary = rumor.mainSummary
         const src = summary.split('：')[0]
         const words = summary.split('：')[1]
@@ -92,9 +70,22 @@ export default class Rumor extends PureComponent {
                     bordered={false}
                     hoverable
                     onClick={() => srcUrl && window.open(srcUrl)}
-                    style={{ width: '100%' }}
+                    style={{ width: '75%', marginLeft: '12.5%' }}
                 >
-                    <p style={{ fontSize: '20px', color: 'black', fontWeight: 'bold' }}>{title}</p>
+                    <div 
+                        style={{ 
+                            backgroundColor: type === 0 ? '#f5222d' : (type === 1 ? '#52c41a' : '#fadb14'), 
+                            color: 'white', 
+                            fontSize: '20px',
+                            width: '100%', 
+                            fontWeight: 'bold', 
+                            display: 'inline',
+                            paddingLeft: '5px',
+                            paddingRight: '5px'}}>
+                        {typeText}
+                    </div>
+                    <p style={{ fontSize: '20px', color: 'black', fontWeight: 'bold', display: 'inline', marginLeft: '10px' }}>{title}</p>
+                    <p/>
                     <p style={{ color: '#0050b3', fontWeight: 'bold', display: 'inline' }}>{`${src}：`}</p>
                     <p style={{ display: 'inline' }}>{`“${words}。”`}</p>
                     <p />
@@ -106,45 +97,16 @@ export default class Rumor extends PureComponent {
         )
     }
 
-    renderAllRumors = key => {
-        const page = this.state.pagination;
-        const rumors = key === 1 ? this.state.pages1[page - 1] : this.state.pages2[page - 1];
-        const header = key === 1 ? "已辟谣信息" : "未证实信息";
+    renderAllRumors = () => {
+        const page = this.state.pagination
+        const rumors = this.state.pages[page - 1]
         const allRumors = rumors ? rumors.map((value) => {
             return (this.renderSingleRumor(value))
         }) : []
         return (
             <div>
-                <p style={{
-                    fontSize: '20px',
-                    fontWeight: 'bold',
-                    marginLeft: '35%',
-                    backgroundColor: '#0050b3',
-                    color: 'white',
-                    width: '100%',
-                    display: 'inline',
-                    borderRadius: '10px',
-                    paddingLeft: '10px',
-                    paddingRight: '10px',
-                }}>
-                    {header}
-                </p>
-                <p/>
                 {allRumors}
             </div>
-        )
-    }
-
-    renderTabs = () => {
-        return (
-            <Row gutter={[16, 16]}>
-                <Col span={8} offset={4}>
-                    {this.renderAllRumors(1)}
-                </Col>
-                <Col span={8} >
-                    {this.renderAllRumors(2)}
-                </Col>
-            </Row>
         )
     }
 
@@ -160,7 +122,7 @@ export default class Rumor extends PureComponent {
                 showQuickJumper
                 hideOnSinglePage
                 defaultCurrent={1}
-                total={1000}
+                total={182}
                 onChange={page => this.handleChange(page)}
                 style={{ float: 'right', paddingRight: '12.5%' }} />
         )
@@ -171,7 +133,7 @@ export default class Rumor extends PureComponent {
             <div>
                 {this.renderHeader()}
                 <p />
-                {this.renderTabs()}
+                {this.renderAllRumors()}
                 <p />
                 {this.renderPagination()}
             </div>
