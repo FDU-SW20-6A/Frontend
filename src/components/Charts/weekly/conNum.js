@@ -9,7 +9,7 @@ import 'echarts/lib/component/markLine';
 import React from "react";
 import echarts from "echarts/lib/echarts";
 
-class ConNum extends React.Component {
+class WeeklyConNum extends React.Component {
 
     componentDidMount() {
 
@@ -94,7 +94,7 @@ class ConNum extends React.Component {
                     smooth: true,
                     areaStyle: {},
                     //data: [5, 7, 11, 23, 30, 35, 46, 60, 75, 93, 102, 111, 116, 136, 145, 154, 159, 183, 191, 199, 204, 210, 223, 232, 242, 655, 766, 871, 962, 986, 1007, 1492, 1731, 2222, 2587, 3093, 3949, 4942, 6349, 7723, 9613, 11985, 13824, 16121, 19750, 23089, 26834, 30590, 35417, 40402, 48251, 57419, 67677, 80468, 92752, 104959, 122277, 142730, 171617, 202290, 233472, 265885, 309972, 353730, 403777, 466496, 534271, 600917, 660574, 724216, 800974, 880921, 954353, 1052789]
-                    data: this.props.data.world
+                    data: this.props.data.thisweek
                 },
                 {
                     name: '上周',
@@ -102,7 +102,7 @@ class ConNum extends React.Component {
                     smooth: true,
                     areaStyle: {},
                     //data: [830,1287, 1975, 2744, 4515, 5974, 7736, 9720, 11821, 14411, 17238, 20471, 24363, 28060, 31211, 34598, 37251, 40235, 42708, 44730, 59882, 63932, 66576, 68584, 70635, 72528, 74279, 74675, 75993, 76392, 76846, 77262, 77779, 78190, 78630, 78959, 79389, 79968, 80174, 80302, 80422, 80565, 80710, 80813, 80859, 80904, 80924, 80955, 80980, 81003, 81021, 81048, 81077, 81116, 81151, 81235, 81300, 81416, 81498, 81600, 81747, 81846, 81960, 82078, 82213, 82341, 82447, 82545, 82631, 82724, 82802, 82875, 82930]
-                    data: this.props.data.China
+                    data: this.props.data.lastweek
                 }
             ]
         });
@@ -121,4 +121,4 @@ class ConNum extends React.Component {
     }
 }
 
-export default ConNum;
+export default WeeklyConNum;
