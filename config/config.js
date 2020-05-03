@@ -83,7 +83,12 @@ export default {
         {
           name: 'login',
           path: '/user/login',
-          component: './user/login',
+          component: './user/Login',
+        },
+        {
+          name: '注册',
+          path: '/user/register',
+          component: './user/Register',
         },
       ],
     },
