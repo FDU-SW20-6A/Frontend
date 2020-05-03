@@ -159,7 +159,7 @@ export default {
               ],
             },
             {
-              name: 'weekly',
+              name: '周报',
               path: '/weekly',
               hideInMenu: true,
               component: './Weekly'
