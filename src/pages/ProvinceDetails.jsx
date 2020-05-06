@@ -125,12 +125,12 @@ export default class Welcome extends PureComponent {
         const curDate = new Date();
         curDate.setTime(data.updateTime);
         return (
-            <Row gutter={[16, 16]}>
-                <Col span={24}>
+            //<Row gutter={[16, 16]}>
+            //    <Col span={24}>
                     <Card>
                         <Descriptions column={4} colon={false} layout="vertical" style={{ textAlign: 'center' }}>
                             <Item label="现存确诊" >
-                                <h4
+                                <h3
                                     style={{
                                         color: 'red',
                                         fontWeight: 'bold',
@@ -141,13 +141,13 @@ export default class Welcome extends PureComponent {
                                     {data.currentConfirmedIncr > 0
                                         ? `${data.currentConfirmedIncr}`
                                         : data.currentConfirmedIncr}
-                                </h4>
-                                <h3 style={{ color: 'red', fontWeight: 'bold', paddingRight: '10px' }}>
-                                    {data.currentConfirmedCount}
                                 </h3>
+                                <h2 style={{ color: 'red', fontWeight: 'bold', paddingRight: '10px' }}>
+                                    {data.currentConfirmedCount}
+                                </h2>
                             </Item>
                             <Item label="累计确诊" >
-                                <h4
+                                <h3
                                     style={{
                                         color: 'red',
                                         fontWeight: 'bold',
@@ -156,13 +156,13 @@ export default class Welcome extends PureComponent {
                                     }}
                                 >
                                     {data.confirmedIncr > 0 ? `${data.confirmedIncr}` : data.confirmedIncr}
-                                </h4>
-                                <h3 style={{ color: 'red', fontWeight: 'bold', paddingRight: '10px' }}>
-                                    {data.confirmedCount}
                                 </h3>
+                                <h2 style={{ color: 'red', fontWeight: 'bold', paddingRight: '10px' }}>
+                                    {data.confirmedCount}
+                                </h2>
                             </Item>
                             <Item label="累计治愈">
-                                <h4
+                                <h3
                                     style={{
                                         color: 'limegreen',
                                         fontWeight: 'bold',
@@ -171,13 +171,13 @@ export default class Welcome extends PureComponent {
                                     }}
                                 >
                                     {data.curedIncr > 0 ? `${data.curedIncr}` : data.curedIncr}
-                                </h4>
-                                <h3 style={{ color: 'limegreen', fontWeight: 'bold', paddingRight: '10px' }}>
-                                    {data.curedCount}
                                 </h3>
+                                <h2 style={{ color: 'limegreen', fontWeight: 'bold', paddingRight: '10px' }}>
+                                    {data.curedCount}
+                                </h2>
                             </Item>
                             <Item label="累计死亡" >
-                                <h4
+                                <h3
                                     style={{
                                         color: 'grey',
                                         fontWeight: 'bold',
@@ -186,15 +186,15 @@ export default class Welcome extends PureComponent {
                                     }}
                                 >
                                     {data.deadIncr > 0 ? `${data.deadIncr}` : data.deadIncr}
-                                </h4>
-                                <h3 style={{ color: 'grey', fontWeight: 'bold', paddingRight: '10px' }}>
-                                    {data.deadCount}
                                 </h3>
+                                <h2 style={{ color: 'grey', fontWeight: 'bold', paddingRight: '10px' }}>
+                                    {data.deadCount}
+                                </h2>
                             </Item>
                         </Descriptions>
                     </Card>
-                </Col>
-            </Row>
+            //    </Col>
+            //</Row>
         );
     };
 
@@ -274,11 +274,11 @@ export default class Welcome extends PureComponent {
     render() {
         return (
             <div>
-                {this.renderInfo()}
                 <Row gutter={[16, 16]}>
-                    <Col span={12}>{this.renderMap1()}</Col>
-                    <Col span={12}>{this.renderMap2()}</Col>
-                    <Col span={24}>{this.renderTable()}</Col>
+                        <Col span={20} offset={2}>{this.renderInfo()}</Col>
+                        <Col span={10} offset={2}>{this.renderMap1()}</Col>
+                        <Col span={10}>{this.renderMap2()}</Col>
+                        <Col span={14} offset={5}>{this.renderTable()}</Col>
                 </Row>
             </div>
         );

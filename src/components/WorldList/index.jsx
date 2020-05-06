@@ -144,6 +144,7 @@ class WorldList extends React.Component{
         width: 100,
         render: (text ) => <span style={{color:'limegreen'}}>{text}</span>
       },
+      /*
       {
         title: '',
         key: 'action',
@@ -151,6 +152,7 @@ class WorldList extends React.Component{
         width:100,
         render: (record ) => {if(record.children) return <a href={`/${record.country}/details/${record.name}`}>详情</a>},
       }
+      */
     ];
     return <Table columns={columns} dataSource={this.getData()} pagination={this.props.pagination} size='small'/>;
     }
