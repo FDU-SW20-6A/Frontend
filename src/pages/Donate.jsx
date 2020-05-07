@@ -1,69 +1,70 @@
 import React, { PureComponent } from 'react';
-import { Card, Pagination, Col, Row } from 'antd';
-
-const ROOT = 'https://lab.isaaclin.cn//nCoV/api/rumors'
+import { Card, Col, Row, Empty } from 'antd';
+import { SelectOutlined } from '@ant-design/icons';
+import papa from 'papaparse';
 
 class GridCell extends PureComponent {
     renderSingleDonate = donate => {
-        const { title } = donate
-        const summary = donate.mainSummary
-        const src = summary.split('：')[0]
-        const words = summary.split('：')[1]
-        const content = donate.body
-        const srcUrl = donate.sourceUrl
+        console.log(donate)
+        const title = donate.From
+        const srcUrl = donate.Resource
+        const person = donate.Proposer ? donate.Proposer : "不明"
+        const volunteer = donate['Input volunteer'] ? donate['Input volunteer'] : "不明"
         return (
             <Col span={8}>
                 <Card
                     bordered={false}
                     hoverable
                     onClick={() => srcUrl && window.open(srcUrl)}
-                    style={{ width: '95%', height: '300px' }}
+                    style={{ width: '95%', height: '230px' }}
                 >
-                    <p style={{ fontSize: '20px', color: 'black', fontWeight: 'bold' }}>{title}</p>
-                    <p style={{ color: '#0050b3', fontWeight: 'bold', display: 'inline' }}>{`${src}：`}</p>
-                    <p style={{ display: 'inline' }}>{`“${words}。”`}</p>
-                    <p />
-                    <p>{content}</p>
+                    <p style={{ fontSize: '20px', color: 'black', fontWeight: 'bold', display: 'inline', marginRight: '5px' }}>{title}</p>
+                    <SelectOutlined style={{ fontSize: '150%' }}/>
+                    <p/>
+                    <div 
+                        style={{ 'color': '#0050b3', display: 'inline', fontWeight: 'bold' }}>
+                        发起人
+                    </div>
+                    <p style={{ display: 'inline', marginLeft: '10px' }}>{person}</p>
+                    <p/>
+                    <div 
+                        style={{ 'color': '#0050b3', display: 'inline', fontWeight: 'bold' }}>
+                        信息录入志愿者
+                    </div>
+                    <p style={{ display: 'inline', marginLeft: '10px' }}>{volunteer}</p>
                 </Card>
-                <p style={{ height: '10px' }}/>
+                <p style={{ height: '10px' }} />
             </Col>
         )
     }
 
     render() {
-        const { data } = this.props;
         return (
-            this.renderSingleDonate(data)
+            this.renderSingleDonate(this.props.data)
         )
     }
 }
 
 export default class Donate extends PureComponent {
     state = {
-        pages: [],
-        pagination: 1
+        donate: [],
     }
 
     componentDidMount() {
-        const url1 = `${ROOT}?num=1000&rumorType=0`
-        fetch(url1)
-            .then(res => res.json())
-            .then(data => {
-                if (data && data.results) {
-                    const pages = [];
-                    const { results } = data;
-                    for (let i = 0; i < results.length; i += 9) {
-                        const page = [];
-                        for (let j = i; j < i + 9; j += 1) {
-                            page.push(results[j]);
-                        }
-                        pages.push(page);
-                    }
-                    this.setState({
-                        pages
-                    })
-                }
-            });
+        this.fetchCsv()
+    }
+
+    fetchCsv = () => {
+        const parFile = require('../components/OtherData/wuhan2020.csv')
+        papa.parse(parFile, {
+            download: true,
+            header: true,
+            complete: results => {
+                this.setState({
+                    donate: results.data
+                })
+            }
+        })
     }
 
     renderHeader = () => {
@@ -93,34 +94,14 @@ export default class Donate extends PureComponent {
     }
 
     renderAllDonate = () => {
-        const page = this.state.pagination;
-        const donates = this.state.pages[page - 1];
-        const cols = (donates && donates.map(value => {
+        const {donate} = this.state
+        const cols = (donate && donate.map(value => {
             return <GridCell data={value} />
-        })
-        );
+        }));
         return (
             <Row>
                 {cols}
             </Row>
-        )
-    }
-
-    handleChange = page => {
-        this.setState({
-            pagination: page
-        })
-    }
-
-    renderPagination = () => {
-        return (
-            <Pagination
-                showQuickJumper
-                hideOnSinglePage
-                defaultCurrent={1}
-                total={1000}
-                onChange={page => this.handleChange(page)}
-                style={{ float: 'right', paddingRight: '2%' }} />
         )
     }
 
@@ -130,8 +111,6 @@ export default class Donate extends PureComponent {
                 {this.renderHeader()}
                 <p />
                 {this.renderAllDonate()}
-                <p />
-                {this.renderPagination()}
             </div>
         )
     }
