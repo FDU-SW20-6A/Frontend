@@ -8,6 +8,7 @@ import DataList from '@/components/DataList';
 import Line1 from'@/components/Charts/chart_1';
 import Line2 from'@/components/Charts/chart_2'
 import Line3 from "@/components/Charts/chart_3";
+import { SettingDrawer } from '@ant-design/pro-layout'
 
 const { Item } = Descriptions;
 const { TabPane } = Tabs;
@@ -95,9 +96,9 @@ export default class Welcome extends PureComponent {
       <Row gutter={[16, 16]}>
         <Col span={24}>
           <Card>
-            <Descriptions colon={false} layout="vertical" style={{ textAlign: 'center' }}>
+            <Descriptions colon={false} column={6} layout="vertical" style={{ textAlign: 'center' }}>
               <Item label="现存确诊">
-                <h4
+                <h3
                   style={{
                     color: 'red',
                     fontWeight: 'bold',
@@ -108,13 +109,13 @@ export default class Welcome extends PureComponent {
                   {data.addecon_new > 0
                     ? `+${data.addecon_new}`
                     : data.addecon_new}
-                </h4>
-                <h3 style={{ color: 'red', fontWeight: 'bold', paddingRight: '10px' }}>
-                  {data.econNum}
                 </h3>
+                <h2 style={{ color: 'red', fontWeight: 'bold', paddingRight: '10px' }}>
+                  {data.econNum}
+                </h2>
               </Item>
               <Item label="现存疑似">
-                <h4
+                <h3
                   style={{
                     color: 'orange',
                     fontWeight: 'bold',
@@ -123,13 +124,13 @@ export default class Welcome extends PureComponent {
                   }}
                 >
                   {data.addsus > 0 ? `+${data.addsus}` : data.addsus}
-                </h4>
-                <h3 style={{ color: 'orange', fontWeight: 'bold', paddingRight: '10px' }}>
-                  {data.sustotal}
                 </h3>
+                <h2 style={{ color: 'orange', fontWeight: 'bold', paddingRight: '10px' }}>
+                  {data.sustotal}
+                </h2>
               </Item>
               <Item label="现存重症">
-                <h4
+                <h3
                   style={{
                     color: 'dodgerblue',
                     fontWeight: 'bold',
@@ -138,13 +139,13 @@ export default class Welcome extends PureComponent {
                   }}
                 >
                   {data.addhecon_new > 0 ? `+${data.addhecon_new}` : data.addhecon_new}
-                </h4>
-                <h3 style={{ color: 'dodgerblue', fontWeight: 'bold', paddingRight: '10px' }}>
-                  {data.heconNum}
                 </h3>
+                <h2 style={{ color: 'dodgerblue', fontWeight: 'bold', paddingRight: '10px' }}>
+                  {data.heconNum}
+                </h2>
               </Item>
               <Item label="累计确诊">
-                <h4
+                <h3
                   style={{
                     color: 'red',
                     fontWeight: 'bold',
@@ -153,13 +154,13 @@ export default class Welcome extends PureComponent {
                   }}
                 >
                   {data.addcon > 0 ? `+${data.addcon}` : data.addcon}
-                </h4>
-                <h3 style={{ color: 'red', fontWeight: 'bold', paddingRight: '10px' }}>
-                  {data.gntotal}
                 </h3>
+                <h2 style={{ color: 'red', fontWeight: 'bold', paddingRight: '10px' }}>
+                  {data.gntotal}
+                </h2>
               </Item>
               <Item label="累计治愈">
-                <h4
+                <h3
                   style={{
                     color: 'limegreen',
                     fontWeight: 'bold',
@@ -168,13 +169,13 @@ export default class Welcome extends PureComponent {
                   }}
                 >
                   {data.addcure > 0 ? `+${data.addcure}` : data.addcure}
-                </h4>
-                <h3 style={{ color: 'limegreen', fontWeight: 'bold', paddingRight: '10px' }}>
-                  {data.curetotal}
                 </h3>
+                <h2 style={{ color: 'limegreen', fontWeight: 'bold', paddingRight: '10px' }}>
+                  {data.curetotal}
+                </h2>
               </Item>
-              <Item label="累计死亡">
-                <h4
+              <Item label="累计死亡" style={{fontSize:'large', }}>
+                <h3
                   style={{
                     color: 'grey',
                     fontWeight: 'bold',
@@ -183,10 +184,10 @@ export default class Welcome extends PureComponent {
                   }}
                 >
                   {data.adddeath > 0 ? `+${data.adddeath}` : data.adddeath}
-                </h4>
-                <h3 style={{ color: 'grey', fontWeight: 'bold', paddingRight: '10px' }}>
-                  {data.deathtotal}
                 </h3>
+                <h2 style={{ color: 'grey', fontWeight: 'bold', paddingRight: '10px' }}>
+                  {data.deathtotal}
+                </h2>
               </Item>
             </Descriptions>
           </Card>
@@ -274,11 +275,11 @@ export default class Welcome extends PureComponent {
   render() {
     return (
       <div>
-        {this.renderInfo()}
         <Row gutter={[16, 16]}>
-          <Col span={12}>{this.renderMap1()}</Col>
-          <Col span={12}>{this.renderMap2()}</Col>
-          <Col span={24}>{this.renderTable()}</Col>
+            <Col span={20} offset={2}>{this.renderInfo()}</Col>
+            <Col span={10} offset={2}>{this.renderMap1()}</Col>
+            <Col span={10}>{this.renderMap2()}</Col>
+            <Col span={14} offset={5}>{this.renderTable()}</Col>
         </Row>
       </div>
     );

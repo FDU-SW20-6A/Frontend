@@ -13,6 +13,7 @@ import Authorized from '@/utils/Authorized';
 import RightContent from '@/components/GlobalHeader/RightContent';
 import { isAntDesignPro, getAuthorityFromRouter } from '@/utils/utils';
 import A6 from '../assets/A6.png';
+import logo from '../assets/logo.png';
 
 const noMatch = (
   <Result
@@ -114,11 +115,10 @@ const BasicLayout = props => {
   };
   return (
     <ProLayout
-      logo={A6}
+      logo={logo}
       menuHeaderRender={(logoDom, titleDom) => (
         <Link to="/">
           {logoDom}
-          {titleDom}
         </Link>
       )}
       onCollapse={handleMenuCollapse}

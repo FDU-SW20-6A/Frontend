@@ -132,12 +132,13 @@ export default class CountryDetails extends PureComponent {
         const curDate = new Date();
         curDate.setTime(data.updateTime);
         return (
-            <Row gutter={[16, 16]}>
-                <Col span={24}>
+            //<Row gutter={[16, 16]}>
+            //    <Col span={24}>
+            <Affix offsetTop={90}>
                     <Card>
-                    <Descriptions column={4} colon={false} layout="vertical" style={{ textAlign: 'center' }}>
+                    <Descriptions column={1} colon={false} layout="vertical" style={{ textAlign: 'center' }}>
                             <Item label="现存确诊" >
-                                <h4
+                                <h3
                                     style={{
                                         color: 'red',
                                         fontWeight: 'bold',
@@ -148,13 +149,13 @@ export default class CountryDetails extends PureComponent {
                                     {data.currentConfirmedIncr >= 0
                                         ? `+${data.currentConfirmedIncr}`
                                         : data.currentConfirmedIncr}
-                                </h4>
-                                <h3 style={{ color: 'red', fontWeight: 'bold', paddingRight: '10px' }}>
-                                    {data.currentConfirmedCount}
                                 </h3>
+                                <h2 style={{ color: 'red', fontWeight: 'bold', paddingRight: '10px' }}>
+                                    {data.currentConfirmedCount}
+                                </h2>
                             </Item>
                             <Item label="累计确诊" >
-                                <h4
+                                <h3
                                     style={{
                                         color: 'red',
                                         fontWeight: 'bold',
@@ -163,13 +164,13 @@ export default class CountryDetails extends PureComponent {
                                     }}
                                 >
                                     {data.confirmedIncr > 0 ? `${data.confirmedIncr}` : data.confirmedIncr}
-                                </h4>
-                                <h3 style={{ color: 'red', fontWeight: 'bold', paddingRight: '10px' }}>
-                                    {data.confirmedCount}
                                 </h3>
+                                <h2 style={{ color: 'red', fontWeight: 'bold', paddingRight: '10px' }}>
+                                    {data.confirmedCount}
+                                </h2>
                             </Item>
                             <Item label="累计治愈">
-                                <h4
+                                <h3
                                     style={{
                                         color: 'limegreen',
                                         fontWeight: 'bold',
@@ -178,13 +179,13 @@ export default class CountryDetails extends PureComponent {
                                     }}
                                 >
                                     {data.curedIncr > 0 ? `${data.curedIncr}` : data.curedIncr}
-                                </h4>
-                                <h3 style={{ color: 'limegreen', fontWeight: 'bold', paddingRight: '10px' }}>
-                                    {data.curedCount}
                                 </h3>
+                                <h2 style={{ color: 'limegreen', fontWeight: 'bold', paddingRight: '10px' }}>
+                                    {data.curedCount}
+                                </h2>
                             </Item>
                             <Item label="累计死亡" >
-                                <h4
+                                <h3
                                     style={{
                                         color: 'grey',
                                         fontWeight: 'bold',
@@ -193,15 +194,16 @@ export default class CountryDetails extends PureComponent {
                                     }}
                                 >
                                     {data.deadIncr > 0 ? `${data.deadIncr}` : data.deadIncr}
-                                </h4>
-                                <h3 style={{ color: 'grey', fontWeight: 'bold', paddingRight: '10px' }}>
-                                    {data.deadCount}
                                 </h3>
+                                <h2 style={{ color: 'grey', fontWeight: 'bold', paddingRight: '10px' }}>
+                                    {data.deadCount}
+                                </h2>
                             </Item>
                         </Descriptions>
                     </Card>
-                </Col>
-            </Row>
+                </Affix>
+                //</Col>
+            //</Row>
         );
     };
 
@@ -291,7 +293,6 @@ export default class CountryDetails extends PureComponent {
             <Affix offsetTop={90}>
                 <Menu
                     className = {styles.countrydetailssidemenu}
-                    style={{ width: 256, height: 700 }}
                     selectedKeys={key}
                     mode="inline"
                 >
@@ -366,19 +367,21 @@ export default class CountryDetails extends PureComponent {
     render() {
         return (
             <div>
-                <Row gutter={[16, 16]}>
+                <Row gutter={[24, 8]}>
                     <Col span={4}>{this.renderSider()}</Col>
-                    <Col span={19} offset={1}>
+                    <Col span={16}>
+                        <Col span={24}>
+                            {this.renderMap1()}
+                        </Col>
+                        <Col span={24}>
+                            {this.renderMap2()}
+                        </Col>
+                        <Col span={24}>
+                            {this.renderTable()}
+                        </Col>
+                    </Col>
+                    <Col span={4}>
                         {this.renderInfo()}
-                    </Col>
-                    <Col span={19} offset={1}>
-                        {this.renderMap1()}
-                    </Col>
-                    <Col span={19} offset={5}>
-                        {this.renderMap2()}
-                    </Col>
-                    <Col span={19} offset={5}>
-                        {this.renderTable()}
                     </Col>
                 </Row>
             </div>

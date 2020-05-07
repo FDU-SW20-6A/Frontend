@@ -53,7 +53,7 @@ export default {
       modifyVars: {
         '@primary-color': '#722ED1',
       },
-    },
+    },/*
     {
       key: 'dust',
       theme: 'dark',
@@ -109,6 +109,6 @@ export default {
       modifyVars: {
         '@primary-color': '#722ED1',
       },
-    },
+    },*/
   ],
 };

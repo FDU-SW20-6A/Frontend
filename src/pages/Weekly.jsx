@@ -100,22 +100,6 @@ const TreeTransfer = ({ dataSource, targetKeys, ...restProps }) => {
     );
 };
 
-const treeData = [
-    {
-        key: '北京',
-        title: '北京',
-    },
-    {
-        key: '上海',
-        title: '上海',
-    },
-    {
-        key: '广东',
-        title: '广东',
-        children: [{ key: '广州', title: '广州' }, { key: '深圳', title: '深圳' }, { key: '珠海', title: '珠海' }],
-    },
-];
-
 class Subscribe extends React.Component {
     state = {
         targetKeys: [],
@@ -145,7 +129,7 @@ class SubscribeButton extends React.Component {
         });
     };
 
-    handleOk = e => {
+    handleOk = (e) => {
         console.log(e);
         this.setState({
             visible: false,
@@ -186,25 +170,75 @@ class SubscribeButton extends React.Component {
 export default class Weekly extends PureComponent {
     state = {
         city: "",
-        data: {
-            "name": "北京",
-            "conNum": 593,//累计确诊
-            "econNum": 37,//现存确诊
-            "cureNum": 547,//累计治愈
-            "deathNum": 9,//累计死亡
-            "conNumadd": 2,//新增确诊
-            "econNumAdd": -3,//新增现存确诊
-            "cureNumAdd": 1,//新增治愈
-            "deathNumAdd": 0,//新增死亡
+        // Reference for API data format
+        treeData: {
+            '广东': {
+                title: '广东',
+                "conNum": 593,//累计确诊
+                "econNum": 35,//现存确诊
+                "cureNum": 547,//累计治愈
+                "deathNum": 9,//累计死亡
+                "conNumadd": 2,//新增确诊
+                "econNumAdd": -3,//新增现存确诊
+                "cureNumAdd": 1,//新增治愈
+                "deathNumAdd": 0,//新增死亡
 
-            "conNumRank": 2,//累计确诊
-            "econNumRank": 3,//现存确诊
-            "cureNumRank": 1,//累计治愈
-            "deathNumRank": 3,//累计死亡
-            "conNumRankAdd": 0,//累计确诊
-            "econNumRankAdd": -1,//现存确诊
-            "cureNumRankAdd": 1,//累计治愈
-            "deathNumRankAdd": -2,//累计死亡
+                "conNumRank": 2,//累计确诊
+                "econNumRank": 3,//现存确诊
+                "cureNumRank": 1,//累计治愈
+                "deathNumRank": 3,//累计死亡
+                "conNumRankAdd": 0,//累计确诊
+                "econNumRankAdd": -1,//现存确诊
+                "cureNumRankAdd": 1,//累计治愈
+                "deathNumRankAdd": -2,//累计死亡
+
+                Conadd: {
+                    thisweek: [5, 3, 4, 12, 7, 5, 11],
+                    lastweek: [457, 688, 769, 1771, 1459, 1762, 1984],
+                    lastdate: ["03.29", "03.30", "03.31", "04.01", "04.02", "04.03", "04.04"],
+                    thisdate: ["03.29", "03.30", "03.31", "04.01", "04.02", "04.03", "04.04"],
+                },
+
+                ConNum: {
+                    thisweek: [5, 3, 4, 12, 7, 5, 11],
+                    lastweek: [457, 688, 769, 1771, 1459, 1762, 1984],
+                    lastdate: ["03.29", "03.30", "03.31", "04.01", "04.02", "04.03", "04.04"],
+                    thisdate: ["03.29", "03.30", "03.31", "04.01", "04.02", "04.03", "04.04"],
+                },
+
+                CureNum: {
+                    thisweek: [5, 3, 4, 12, 7, 5, 11],
+                    lastweek: [457, 688, 769, 1771, 1459, 1762, 1984],
+                    lastdate: ["03.29", "03.30", "03.31", "04.01", "04.02", "04.03", "04.04"],
+                    thisdate: ["03.29", "03.30", "03.31", "04.01", "04.02", "04.03", "04.04"],
+                },
+
+                DeathNum: {
+                    thisweek: [5, 3, 4, 12, 7, 5, 11],
+                    lastweek: [457, 688, 769, 1771, 1459, 1762, 1984],
+                    lastdate: ["03.29", "03.30", "03.31", "04.01", "04.02", "04.03", "04.04"],
+                    thisdate: ["03.29", "03.30", "03.31", "04.01", "04.02", "04.03", "04.04"],
+                },
+
+                news: [
+                    {
+                        infoSource: "",
+                        title: "",
+                        sourceURL: "",
+                        summary: "",
+                        pubDate: "",
+                    },
+                    {
+                        infoSource: "",
+                        title: "",
+                        sourceURL: "",
+                        summary: "",
+                        pubDate: "",
+                    },
+                ],
+
+                children: [{ key: '广州', title: '广州' }, { key: '深圳', title: '深圳' }, { key: '珠海', title: '珠海' }],
+            },
         },
         history: {},
         index: '',
@@ -214,28 +248,19 @@ export default class Weekly extends PureComponent {
     };
 
     componentDidMount = () => {
-        // this.fetchSinaData();
-        this.fetchChartsData();
-        // this.fetchCityData();
-
         const url = 'http://127.0.0.1:8001/api/news/';
         fetch(url)
             .then(res => res.json())
             .then(data => {
                 const pages = [];
                 const { results } = data;
-                // for (let i = 0; i < results.length; i += 10) {
-                //     const page = [];
-                //     for (let j = i; j < i + 10; j += 1) {
-                //         page.push(results[j]);
-                //     }
-                //     pages.push(page);
-                // }
-                const page = [];
-                for (let j = 0; j < 3; j += 1) {
-                    page.push(results[j]);
+                for (let i = 0; i < results.length; i += 3) {
+                    const page = [];
+                    for (let j = i; j < Math.min(i + 3, results.length); j += 1) {
+                        page.push(results[j]);
+                    }
+                    pages.push(page);
                 }
-                pages.push(page);
                 this.setState({
                     pages
                 })
@@ -271,199 +296,83 @@ export default class Weekly extends PureComponent {
         )
     };
 
-    fetchChartsData = () => {
-        const url = 'http://127.0.0.1:8001/api/history/';
-        fetch(url)
-            .then(res => res.json())
-            .then(data => {
-                this.setState({
-                    history: data,
-                    index: '1',
-                });
-            });
-    };
-
-    renderInfo = () => {
+    renderInfo = (city) => {
         if (this.state.data === {}) {
             return <Empty />;
         }
-        console.log(this.state.data.name)
-        // const curDate = new Date();
-        // curDate.setTime(data.updateTime);
+        let Items = [];
+        const labels = ["现存确诊", "累计确诊", "累计治愈", "累计死亡",
+            "现存确诊排名", "累计确诊排名", "治愈率排名", "死亡率排名"];
+        const colors = ["red", "red", "limegreen", "grey", "red", "red", "limegreen", "grey"];
+        const data1 = ["econNumAdd", "conNumadd", "cureNumAdd", "deathNumAdd",
+            "econNumRankAdd", "conNumRankAdd", "cureNumRankAdd", "deathNumRankAdd"];
+        const data2 = ["econNum", "conNum", "cureNum", "deathNum",
+            "econNumRank", "conNumRank", "cureNumRank", "deathNumRank"];
+        let f = (x) => (x > 0 ? `+${x}` : x);
+        for (let i = 0; i < 8; i++) {
+            let Item = (
+                <Item label={labels[i]} >
+                    <h3
+                        style={{
+                            color: colors[i],
+                            fontWeight: 'bold',
+                            paddingRight: '10px',
+                            marginBottom: '0',
+                        }}
+                    >
+                        {f(this.state.treeData[city][data1[i]])}
+                    </h3>
+                    <h2 style={{ color: colors[i], fontWeight: 'bold', paddingRight: '10px' }}>
+                        {this.state.treeData[city][data2[i]]}
+                    </h2>
+                </Item>
+            )
+            Items.push(Item);
+        }
         return (
             <Card bordered={false}>
                 <p style={titleStyle}>地方统计数据</p>
                 <p />
-                <Descriptions column={8} colon={false} layout="vertical" style={{ textAlign: 'center' }}>
-                    <Item label="现存确诊" >
-                        <h4
-                            style={{
-                                color: 'red',
-                                fontWeight: 'bold',
-                                paddingRight: '10px',
-                                marginBottom: '0',
-                            }}
-                        >
-                            {this.state.data.econNumAdd > 0 ? `${this.state.data.econNumAdd}` : this.state.data.econNumAdd}
-                        </h4>
-                        <h3 style={{ color: 'red', fontWeight: 'bold', paddingRight: '10px' }}>
-                            {this.state.data.econNum}
-                        </h3>
-                    </Item>
-                    <Item label="累计确诊" >
-                        <h4
-                            style={{
-                                color: 'red',
-                                fontWeight: 'bold',
-                                paddingRight: '10px',
-                                marginBottom: '0',
-                            }}
-                        >
-                            {this.state.data.conNumadd > 0 ? `${this.state.data.conNumadd}` : this.state.data.conNumadd}
-                        </h4>
-                        <h3 style={{ color: 'red', fontWeight: 'bold', paddingRight: '10px' }}>
-                            {this.state.data.conNum}
-                        </h3>
-                    </Item>
-                    <Item label="累计治愈">
-                        <h4
-                            style={{
-                                color: 'limegreen',
-                                fontWeight: 'bold',
-                                paddingRight: '10px',
-                                marginBottom: '0',
-                            }}
-                        >
-                            {this.state.data.cureNumAdd > 0 ? `${this.state.data.cureNumAdd}` : this.state.data.cureNumAdd}
-                        </h4>
-                        <h3 style={{ color: 'limegreen', fontWeight: 'bold', paddingRight: '10px' }}>
-                            {this.state.data.cureNum}
-                        </h3>
-                    </Item>
-                    <Item label="累计死亡" >
-                        <h4
-                            style={{
-                                color: 'grey',
-                                fontWeight: 'bold',
-                                paddingRight: '10px',
-                                marginBottom: '0',
-                            }}
-                        >
-                            {this.state.data.deathNumAdd > 0 ? `${this.state.data.deathNumAdd}` : this.state.data.deathNumAdd}
-                        </h4>
-                        <h3 style={{ color: 'grey', fontWeight: 'bold', paddingRight: '10px' }}>
-                            {this.state.data.deathNum}
-                        </h3>
-                    </Item>
-                    <Item label="现存确诊排名" >
-                        <h4
-                            style={{
-                                color: 'red',
-                                fontWeight: 'bold',
-                                paddingRight: '10px',
-                                marginBottom: '0',
-                            }}
-                        >
-                            {this.state.data.econNumRankAdd > 0 ? `${this.state.data.econNumRankAdd}` : this.state.data.econNumRankAdd}
-                        </h4>
-                        <h3 style={{ color: 'red', fontWeight: 'bold', paddingRight: '10px' }}>
-                            {this.state.data.econNumRank}
-                        </h3>
-                    </Item>
-                    <Item label="累计确诊排名" >
-                        <h4
-                            style={{
-                                color: 'red',
-                                fontWeight: 'bold',
-                                paddingRight: '10px',
-                                marginBottom: '0',
-                            }}
-                        >
-                            {this.state.data.conNumRankAdd > 0 ? `${this.state.data.conNumRankAdd}` : this.state.data.conNumRankAdd}
-                        </h4>
-                        <h3 style={{ color: 'red', fontWeight: 'bold', paddingRight: '10px' }}>
-                            {this.state.data.conNumRank}
-                        </h3>
-                    </Item>
-                    <Item label="治愈率排名" >
-                        <h4
-                            style={{
-                                color: 'limegreen',
-                                fontWeight: 'bold',
-                                paddingRight: '10px',
-                                marginBottom: '0',
-                            }}
-                        >
-                            {this.state.data.cureNumRankAdd > 0 ? `${this.state.data.cureNumRankAdd}` : this.state.data.cureNumRankAdd}
-                        </h4>
-                        <h3 style={{ color: 'limegreen', fontWeight: 'bold', paddingRight: '10px' }}>
-                            {this.state.data.cureNumRank}
-                        </h3>
-                    </Item>
-                    <Item label="死亡率排名" >
-                        <h4
-                            style={{
-                                color: 'grey',
-                                fontWeight: 'bold',
-                                paddingRight: '10px',
-                                marginBottom: '0',
-                            }}
-                        >
-                            {this.state.data.deathNumRankAdd > 0 ? `${this.state.data.deathNumRankAdd}` : this.state.data.deathNumRankAdd}
-                        </h4>
-                        <h3 style={{ color: 'grey', fontWeight: 'bold', paddingRight: '10px' }}>
-                            {this.state.data.deathNumRank}
-                        </h3>
-                    </Item>
+                <Descriptions column={4} colon={false} layout="vertical" style={{ textAlign: 'center' }}>
+                    {Items}
                 </Descriptions>
             </Card>
         );
     };
 
-    renderMap = () => (
-        <Card bordered={false}>
-            <p style={titleStyle}>地方疫情曲线</p>
-            <p />
-            <Tabs activeKey={this.state.index} onChange={(key) => {
-                this.setState({ index: key });
-            }}>
-                <TabPane tab="新增确诊" key="1">
-                    <WeeklyConadd data={{ //fake data
-                        lastweek: this.state.history.conadd,
-                        thisweek: this.state.history.conaddw,
-                        date: this.state.history.date,
-                    }} />
+    renderMap = (city) => {
+        let TabPanes = [];
+        let chartType = ["Conadd", "ConNum", "CureNum", "DeathNum"];
+        let Chart = [WeeklyConadd, WeeklyConNum, WeeklyCureNum, WeeklyDeathNum];
+        let title = ["新增确诊", "累计确诊", "累计治愈", "累计死亡"];
+        for (let i = 0; i < 4; i++) {
+            const Tag = Chart[i];
+            let Tab = (
+                <TabPane tab={title[i]} key={i + 1}>
+                    <Tag id={city + chartType[i]} data={ //fake data
+                        this.state.treeData[city][chartType[i]]
+                    } />
                 </TabPane>
-                <TabPane tab="累计确诊" key="2">
-                    <WeeklyConNum data={{
-                        lastweek: this.state.history.conNum,
-                        thisweek: this.state.history.conNumw,
-                        date: this.state.history.date,
-                    }} />
-                </TabPane>
-                <TabPane tab="累计治愈" key="3">
-                    <WeeklyCureNum data={{
-                        thisweek: [5, 3, 4, 12, 7, 5, 11],
-                        lastweek: [457, 688, 769, 1771, 1459, 1762, 1984],
-                        date: ["03.29", "03.30", "03.31", "04.01", "04.02", "04.03", "04.04"],
-                    }} />
-                </TabPane>
-                <TabPane tab="累计死亡" key="4">
-                    <WeeklyDeathNum data={{
-                        thisweek: [457, 688, 769, 1771, 1459, 1762, 1984],
-                        lastweek: [5, 3, 4, 12, 7, 5, 11],
-                        date: ["03.29", "03.30", "03.31", "04.01", "04.02", "04.03", "04.04"],
-                    }} />
-                </TabPane>
-            </Tabs>
-        </Card>
-    )
+            )
+            TabPanes.push(Tab);
+        }
+        return (
+            <Card bordered={false}>
+                <p style={titleStyle}>地方疫情曲线</p>
+                <p />
+                <Tabs activeKey={this.state.index} onChange={(key) => {
+                    this.setState({ index: key });
+                }}>
+                    {TabPanes}
+                </Tabs>
+            </Card>
+        )
+    }
 
     renderSingleNews = news => {
         const date = new Date(parseInt(news.pubDate, 10) + 8 * 3600 * 1000)
         const dateDisplay = date.toJSON().substr(0, 19).replace('T', ' ')
-        const { title } = news
-        const { summary } = news
+        const { title, summary } = news
         const source = news.infoSource
         const srcUrl = news.sourceUrl
         return (
@@ -502,73 +411,48 @@ export default class Weekly extends PureComponent {
         return allNews
     }
 
-    renderCollapse = () => (
-        <div style={{ width: '75%', marginLeft: '12.5%' }}>
-            <Card title="北京">
-                {this.renderInfo()}
-                <p />
-                {this.renderMap()}
-                <p />
-                <Card bordered={false}>
-                    <p style={titleStyle}>地方新闻汇总</p>
+    renderCollapse = () => {
+        let Panels = [];
+        for (let city in this.state.treeData) {
+            let data = this.state.treeData[city];
+            let panel = (
+                <Panel header={city} key={city}>
+                    {this.renderInfo(city)}
                     <p />
-                    {this.renderAllNews()}
-                </Card>
-                <p />
-                <Pagination
-                    style={{ float: 'right', marginRight: '2%' }}
-                    showQuickJumper
-                    defaultCurrent={1}
-                    total={100}
-                />
-            </Card>
-            <p />
-            <Card title="上海">
-                {this.renderInfo()}
-                <p />
-                {this.renderMap()}
-                <p />
-                <Card bordered={false}>
-                    <p style={titleStyle}>地方新闻汇总</p>
+                    {this.renderMap(city)}
                     <p />
-                    {this.renderAllNews()}
-                </Card>
-                <p />
-                <Pagination
-                    style={{ float: 'right', marginRight: '2%' }}
-                    showQuickJumper
-                    defaultCurrent={1}
-                    total={100}
-                />
-            </Card>
-            <p />
-            <Card title="广州">
-                {this.renderInfo()}
-                <p />
-                {this.renderMap()}
-                <p />
-                <Card bordered={false}>
-                    <p style={titleStyle}>地方新闻汇总</p>
+                    <Card bordered={false}>
+                        <p style={titleStyle}>地方新闻汇总</p>
+                        <p />
+                        {this.renderAllNews(city)}
+                    </Card>
                     <p />
-                    {this.renderAllNews()}
-                </Card>
-                <p />
-                <Pagination
-                    style={{ float: 'right', marginRight: '2%' }}
-                    showQuickJumper
-                    defaultCurrent={1}
-                    total={100}
-                />
-            </Card>
-        </div>
-    );
+                    <Pagination
+                        style={{ float: 'right', marginRight: '2%' }}
+                        showQuickJumper
+                        defaultCurrent={1}
+                        total={100}
+                    />
+                    <p />
+                </Panel>
+            );
+            Panels.push(panel);
+        }
+        return (
+            <Collapse>
+                {Panels}
+            </Collapse>
+        )
+    };
 
     render() {
         return (
             <div>
                 {this.renderHeader()}
                 <p />
-                {this.renderCollapse()}
+                <Col span={20} offset={2}>
+                    {this.renderCollapse()}
+                </Col>
                 <SubscribeButton />
             </div>
         );
