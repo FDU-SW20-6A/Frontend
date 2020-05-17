@@ -42,6 +42,19 @@ export default class World extends PureComponent {
         this.fetchCountryHistoryData();
         this.fetchSinaData();
         this.fetchChartsData();
+        this.fetchContinentData();
+    };
+
+    fetchContinentData = () => {
+        const url = 'http://127.0.0.1:8001/api/continent';
+        fetch(url)
+        .then(res => res.json())
+        .then(data =>{
+            console.log(data);
+            this.setState({
+                list: data
+            })
+        })
     };
 
     fetchSinaData = () => {
@@ -78,7 +91,6 @@ export default class World extends PureComponent {
             total.push({ name: '中国', value: data.data.gntotal });
             self.setState({
                 totalData: total,
-                list: data.data.otherlist
             });
         });
     };
