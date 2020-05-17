@@ -19,7 +19,6 @@ export default class ProvincesConfirm extends Component {
 
   getOption = () => {
     const { data, isCurr } = this.props;
-    console.log(data)
     const myLabel = {
       show: true,
       color: isCurr ? 'black' : 'white',
