@@ -65,7 +65,6 @@ export default class Welcome extends PureComponent {
             }
             if (idx !== -1) provinceObj = curr[idx];
             */
-           console.log(data.city);
             let provinceObj = data;
             if (provinceObj) {
                 this.setState({
@@ -229,7 +228,6 @@ export default class Welcome extends PureComponent {
             <Meta title="总体曲线" avatar={<LineChartOutlined />} />
             <p />
             <Tabs activeKey={this.state.index} onChange={(key)=>{
-                    console.log(key);
                     this.setState({index:key});
                 }}>
                 <TabPane tab="累计确诊" key="1">

@@ -50,7 +50,6 @@ export default class World extends PureComponent {
         fetch(url)
         .then(res => res.json())
         .then(data =>{
-            console.log(data);
             this.setState({
                 list: data
             })
