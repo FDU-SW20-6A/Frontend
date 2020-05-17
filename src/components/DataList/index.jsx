@@ -163,7 +163,7 @@ const DataList = ({data, country, isjwsr, pagination}) => {
       d.deadCount =element.deathNum;
       d.curedCount =element.cureNum;
       */
-      element.key = element.name+element.ename;
+      element.key = element.name+element.ename+index;
       element.value = element.value===undefined? element.conNum: element.value;
       element.country = country;
       element.children = element.city;
@@ -180,7 +180,7 @@ const DataList = ({data, country, isjwsr, pagination}) => {
           d.children[i]=c;
           */
           city.value=city.conNum;
-          city.key=city.name+city.ename;
+          city.key=city.name+city.ename+i+index;
 
         })
       }
