@@ -279,7 +279,7 @@ export default class Welcome extends PureComponent {
             <Col span={20} offset={2}>{this.renderInfo()}</Col>
             <Col span={10} offset={2}>{this.renderMap1()}</Col>
             <Col span={10}>{this.renderMap2()}</Col>
-            <Col span={14} offset={5}>{this.renderTable()}</Col>
+            <Col span={20} offset={2}>{this.renderTable()}</Col>
         </Row>
       </div>
     );
