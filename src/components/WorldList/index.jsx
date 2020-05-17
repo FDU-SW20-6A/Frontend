@@ -13,13 +13,13 @@ class WorldList extends React.Component{
     getData = () => {
       let dataSource = this.props.data;
       dataSource.map((element,index) => {
-        element.key = element.name+element.ename;
-        element.country = this.state.country;
-        element.children = element.city;
+        element.key = element.name;
+        //element.country = this.state.country;
+        element.children = element.country;
         if(element.children){
           element.children.map((city,i) => {
-            city.value=city.conNum;
-            city.key=city.name+city.ename;
+ //           city.value=city.conNum;
+            city.key=city.name;
           })
         }
       });
@@ -104,8 +104,8 @@ class WorldList extends React.Component{
         key: 'deathRate',
         align: 'center',
         width: 100,
-        render: (record) => <span> {Number(record.deathNum / record.value * 100).toFixed(2)}%</span>,
-        sorter: (a,b) => a.deathNum/a.value - b.deathNum/b.value,
+        render: (record) => <span> {Number(record.deathNum / record.conNum * 100).toFixed(2)}%</span>,
+        sorter: (a,b) => a.deathNum/a.conNum - b.deathNum/b.conNum,
         defaultSortOrder: 'descend',
       },
       {
@@ -119,8 +119,8 @@ class WorldList extends React.Component{
       },
       {
         title: '累计确诊',
-        key: 'value',
-        dataIndex: 'value',
+        key: 'conNum',
+        dataIndex: 'conNum',
         align: 'center',
         width: 100,
         render: (text ) => <span style={{color:'darkred'}}>{text}</span>,
@@ -154,7 +154,7 @@ class WorldList extends React.Component{
       }
       */
     ];
-    return <Table columns={columns} dataSource={this.getData()} pagination={this.props.pagination} size='small'/>;
+    return <Table columns={columns} dataSource={this.getData()} pagination={this.props.pagination} size='small' defaultExpandedRowKeys='欧洲'/>;
     }
 }
 export default WorldList;

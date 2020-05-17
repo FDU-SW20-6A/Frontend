@@ -125,7 +125,7 @@ export default class CountryDetails extends PureComponent {
 
     renderInfo = () => {
         const { data } = this.state;
-        console.log(this.state.totalData);
+
         if (data === {}) {
             return <Empty />;
         }
