@@ -23,6 +23,9 @@ class AvatarDropdown extends React.Component {
     if (key === 'weekly') {
       router.push(`/${key}`);
     }
+    else if (key === 'change') {
+      router.push('/user/change')
+    }
     else {
       router.push(`/account/${key}`);
     }
@@ -52,6 +55,10 @@ class AvatarDropdown extends React.Component {
         )}
         {menu && <Menu.Divider />}
 
+        <Menu.Item key="change">
+          <Icon type="edit" display="inline"/>
+          <p style={{display: "inline"}}>修改密码</p>
+        </Menu.Item>
         <Menu.Item key="logout">
           <Icon type="logout" />
           <FormattedMessage id="menu.account.logout" defaultMessage="logout" />

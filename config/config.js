@@ -90,6 +90,16 @@ export default {
           path: '/user/register',
           component: './user/Register',
         },
+        {
+          name: '重置密码',
+          path: '/user/reset',
+          component: './user/Reset'
+        },
+        {
+          name: '修改密码',
+          path: '/user/change',
+          component: './user/Change'
+        }
       ],
     },
     {

@@ -19,7 +19,7 @@ export default class Register extends Component {
                     .then(res => res.json())
                     .then(data => {
                         if (data && data.status && data.status === 'ok') {
-                            message.success('注册成功')
+                            message.success('请登入邮箱完成注册')
                             router.push('/user/login')
                         }
                         else {
