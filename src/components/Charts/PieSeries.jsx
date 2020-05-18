@@ -33,9 +33,10 @@ function getVirtulData(history) {
                 Math.floor(Math.random() * 10000)
             ],
             data: [
-                {name: '治愈', value: history.cureNum[i]},
+                //{name: '治愈', value: history.cureNum[i]},
                 {name: '死亡', value: history.deathNum[i]},
-                //{name: '现存确诊', value: history.econNum[i]},
+                {name: '现存确诊', value: history.econNum[i]},
+                //{name: '新增确诊', value: history.conadd[i]},
             ]});
     }
     console.log('Pie ', data);
@@ -82,8 +83,10 @@ class PieSeries extends React.Component {
                 y: 'top',
             },
             tooltip : {},
+            //color: ['#002fa7', '#faad14', '#d14a61'],
+            color: ['#2f54eb', '#ffc53d', '#5793f3'],
             legend: {
-                data: ['治愈', '死亡', '现存确诊'],
+                data: ['现存确诊', '新增确诊', '死亡'],
                 bottom: 20
             },
             calendar: {
