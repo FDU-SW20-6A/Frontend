@@ -9,7 +9,6 @@ export default class Login extends Component {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                cookies.set('username', values.userName)
                 fetch('http://localhost:8001/user/login/', {
                     method: 'POST',
                     headers: {
