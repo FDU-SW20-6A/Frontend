@@ -16,7 +16,7 @@ class Line_3 extends React.Component {
         // 初始化
         let myChart = echarts.init(document.getElementById('heal_dead'));
         let colors = ['#5793f3', '#d14a61', '#675bba'];
-
+       
         // 绘制图表
         myChart.setOption({
             color: colors,

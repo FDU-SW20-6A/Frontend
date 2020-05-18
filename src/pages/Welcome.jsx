@@ -8,6 +8,7 @@ import DataList from '@/components/DataList';
 import Line1 from'@/components/Charts/chart_1';
 import Line2 from'@/components/Charts/chart_2'
 import Line3 from "@/components/Charts/chart_3";
+import PieSeries from'@/components/Charts/PieSeries'
 import { SettingDrawer } from '@ant-design/pro-layout'
 
 const { Item } = Descriptions;
@@ -21,14 +22,21 @@ export default class Welcome extends PureComponent {
     currData: {}, // 国内各省市现存确诊
     totalData: {}, // 国内各省市累计确诊
     list: [],
-    history: {},  //国内历史数据
+    history: {
+      date: ['04.01'],
+      cureNum: [100],
+      deathNum: [100],
+      econNum: [1],
+      conadd: [0],
+    },  //国内历史数据
     index: '',
   };
 
   componentDidMount = () => {
+    this.fetchChartsData();
     this.fetchOverall();
     this.fetchSinaData();
-    this.fetchChartsData();
+    
   };
 
   fetchOverall = () => {
@@ -223,8 +231,6 @@ export default class Welcome extends PureComponent {
   callback = () => {};
 
   renderMap2 = () => (
-        console.log(this.state.history.date),
-        console.log(this.state.history.econNum),
       <Card>
         <Meta title="总体曲线" avatar={<LineChartOutlined/>}/>
         <p/>
@@ -272,14 +278,25 @@ export default class Welcome extends PureComponent {
     );
   };
 
+  renderPieSeries = () => {
+    return (
+      <Card>
+        <Meta title="感染日历" avatar={<TableOutlined />} />
+        <p />
+        <PieSeries month='2020-04' data={this.state.history}/>
+      </Card>
+    );
+  };
+
   render() {
     return (
       <div>
         <Row gutter={[16, 16]}>
-            <Col span={20} offset={2}>{this.renderInfo()}</Col>
-            <Col span={10} offset={2}>{this.renderMap1()}</Col>
-            <Col span={10}>{this.renderMap2()}</Col>
-            <Col span={20} offset={2}>{this.renderTable()}</Col>
+            <Col span={22} offset={1}>{this.renderInfo()}</Col>
+            <Col span={11} offset={1}>{this.renderMap1()}</Col>
+            <Col span={11}>{this.renderMap2()}</Col>
+            <Col span={11} offset={1}> {this.renderPieSeries()} </Col>
+            <Col span={11}>{this.renderTable()}</Col>
         </Row>
       </div>
     );
