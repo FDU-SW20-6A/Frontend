@@ -25,7 +25,15 @@ class WorldList extends React.Component{
       });
       return dataSource
     };
-
+    getDescendantValues =  (record, dataIndex) => {
+      const values = [];
+      (function recurse(record) {
+          values.push(record[dataIndex].toString().toLowerCase());
+          if(record.children)
+            record.children.forEach(recurse);
+      })(record);
+      return values;
+    };
     getColumnSearchProps = dataIndex => ({
       filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
         <div style={{ padding: 8 }}>
@@ -54,11 +62,13 @@ class WorldList extends React.Component{
         </div>
       ),
       filterIcon: filtered => <SearchOutlined style={{ color: filtered ? '#1890ff' : undefined }} />,
-      onFilter: (value, record) =>
-        record[dataIndex]
+
+      onFilter: (value, record) =>{
+        return record[dataIndex]
           .toString()
           .toLowerCase()
-          .includes(value.toLowerCase()),
+          .includes(value.toLowerCase())||
+          this.getDescendantValues(record, dataIndex).some(descValue => descValue.includes(value.toLowerCase()));},
       onFilterDropdownVisibleChange: visible => {
         if (visible) {
           setTimeout(() => this.searchInput.select());
