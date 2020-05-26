@@ -11,6 +11,7 @@ export default class Login extends Component {
             if (!err) {
                 fetch('http://localhost:8001/user/login/', {
                     method: 'POST',
+                    credentials: 'include',
                     headers: {
                         'Content-Type': 'application/json'
                     },

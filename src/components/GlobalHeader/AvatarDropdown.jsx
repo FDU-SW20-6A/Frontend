@@ -1,4 +1,4 @@
-import { Avatar, Icon, Menu, Spin } from 'antd';
+import { Avatar, Icon, Menu, Spin, message } from 'antd';
 import { FormattedMessage } from 'umi-plugin-react/locale';
 import React from 'react';
 import { connect } from 'dva';
@@ -11,13 +11,20 @@ class AvatarDropdown extends React.Component {
     const { key } = event;
 
     if (key === 'logout') {
-      const { dispatch } = this.props;
-
-      if (dispatch) {
-        dispatch({
-          type: 'login/logout',
-        });
-      }
+      fetch('http://localhost:8001/user/logout/', {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data && data.status && data.status === 'ok') {
+          message.success('成功注销登录！')
+          location.reload()
+        }
+      })
       return;
     } 
     if (key === 'weekly') {

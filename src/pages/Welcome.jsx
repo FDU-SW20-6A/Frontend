@@ -231,7 +231,7 @@ export default class Welcome extends PureComponent {
   callback = () => {};
 
   renderMap2 = () => (
-      <Card>
+      <Card style={{ height: '550px' }}>
         <Meta title="总体曲线" avatar={<LineChartOutlined/>}/>
         <p/>
         <Tabs activeKey={this.state.index} onChange={(key)=>{
@@ -280,7 +280,7 @@ export default class Welcome extends PureComponent {
 
   renderPieSeries = () => {
     return (
-      <Card>
+      <Card style={{ height: '550px' }}>
         <Meta title="感染日历" avatar={<TableOutlined />} />
         <p />
         <PieSeries month='2020-04' data={this.state.history}/>
