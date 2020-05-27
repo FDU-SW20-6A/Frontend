@@ -15,25 +15,23 @@ class AvatarDropdown extends React.Component {
         method: 'POST',
         credentials: 'include',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
       })
-      .then(res => res.json())
-      .then(data => {
-        if (data && data.status && data.status === 'ok') {
-          message.success('成功注销登录！')
-          location.reload()
-        }
-      })
+        .then(res => res.json())
+        .then(data => {
+          if (data && data.status && data.status === 'ok') {
+            message.success('成功注销登录！');
+            router.push('/user/login');
+          }
+        });
       return;
-    } 
+    }
     if (key === 'weekly') {
       router.push(`/${key}`);
-    }
-    else if (key === 'change') {
-      router.push('/user/change')
-    }
-    else {
+    } else if (key === 'change') {
+      router.push('/user/change');
+    } else {
       router.push(`/account/${key}`);
     }
   };
@@ -63,16 +61,16 @@ class AvatarDropdown extends React.Component {
         {menu && <Menu.Divider />}
 
         <Menu.Item key="change">
-          <Icon type="edit" display="inline"/>
-          <p style={{display: "inline"}}>修改密码</p>
+          <Icon type="edit" display="inline" />
+          <p style={{ display: 'inline' }}>修改密码</p>
         </Menu.Item>
         <Menu.Item key="logout">
           <Icon type="logout" />
           <FormattedMessage id="menu.account.logout" defaultMessage="logout" />
         </Menu.Item>
         <Menu.Item key="weekly">
-          <Icon type="book" display="inline"/>
-          <p style={{display: "inline"}}>我的订阅</p>
+          <Icon type="book" display="inline" />
+          <p style={{ display: 'inline' }}>我的订阅</p>
         </Menu.Item>
       </Menu>
     );
