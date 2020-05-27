@@ -11,6 +11,7 @@ export default class Reset extends Component {
             if (!err) {
                 fetch('http://localhost:8001/user/reset/', {
                     method: 'POST',
+                    credentials: 'include',
                     headers: {
                         'Content-Type': 'application/json'
                     },
