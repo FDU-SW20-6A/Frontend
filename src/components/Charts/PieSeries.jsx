@@ -12,7 +12,7 @@ let cellSize = [68, 68];
 let pieRadius = 30;
 
 function getVirtulData(history) {
-    console.log('Pie ', history);
+    //console.log('Pie ', history);
     var date = +echarts.number.parseDate('2020-'+history.date[0].replace('.', '-'));
     /*
     let year = parseInt(month.substring(0, 4)), mon = parseInt(month.substring(5, 7));
@@ -39,7 +39,7 @@ function getVirtulData(history) {
                 //{name: '新增确诊', value: history.conadd[i]},
             ]});
     }
-    console.log('Pie ', data);
+    //console.log('Pie ', data);
     return data;
 }
 
