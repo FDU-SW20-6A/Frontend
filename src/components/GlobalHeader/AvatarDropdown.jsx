@@ -23,6 +23,11 @@ class AvatarDropdown extends React.Component {
           if (data && data.status && data.status === 'ok') {
             message.success('成功注销登录！');
             router.push('/user/login');
+          } else if (data && data.status && data.status === 'error') {
+            message.info('本来就没登录！');
+            router.push('/user/login');
+          } else {
+            message.error('登出失败！');
           }
         });
       return;
