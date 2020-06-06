@@ -12,9 +12,14 @@ import 'echarts/lib/component/markLine';
 
 class Line_2 extends React.Component {
 
+    constructor(props) {
+        super(props);
+        this.myRef = React.createRef();
+    }
+
     componentDidMount() {
         // 初始化
-        let myChart = echarts.init(document.getElementById(this.props.id));
+        let myChart = echarts.init(this.myRef.current);
 
         // 绘制图表
         myChart.setOption({
@@ -62,7 +67,7 @@ class Line_2 extends React.Component {
     }
     render() {
         return (
-            <div id={this.props.id} style={{width: '100%', height: 340}}/>
+            <div ref={this.myRef} style={{width: '100%', height: 340}}/>
         );
     }
 }

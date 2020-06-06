@@ -11,10 +11,15 @@ import 'echarts/lib/component/markLine';
 
 class Line_3 extends React.Component {
 
+    constructor(props) {
+        super(props);
+        this.myRef = React.createRef();
+    }
+
     componentDidMount() {
 
         // 初始化
-        let myChart = echarts.init(document.getElementById('heal_dead'));
+        let myChart = echarts.init(this.myRef.current);
         let colors = ['#5793f3', '#d14a61', '#675bba'];
        
         // 绘制图表
@@ -112,7 +117,7 @@ class Line_3 extends React.Component {
     }
     render() {
         return (
-            <div id="heal_dead" style={{width: '100%', height: 340}}/>
+            <div ref={this.myRef} style={{width: '100%', height: 340}}/>
         );
     }
 }

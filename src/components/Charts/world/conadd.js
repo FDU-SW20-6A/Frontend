@@ -11,11 +11,16 @@ import echarts from "echarts/lib/echarts";
 
 class Conadd extends React.Component {
     
+    constructor(props) {
+        super(props);
+        this.myRef = React.createRef();
+    }
+
     componentDidMount() {
     
         var id;
         // 初始化
-        let myChart = echarts.init(document.getElementById('Conadd'));
+        let myChart = echarts.init(this.myRef.current);
         var colors = ['#5793f3', '#d14a61', '#675bba'];
 
         // 绘制图表
@@ -114,7 +119,7 @@ class Conadd extends React.Component {
 
     render() {
         return (
-            <div id="Conadd" style={{width: '100%', height: 340}}/>
+            <div ref={this.myRef} style={{width: '100%', height: 340}}/>
         );
     }
 }

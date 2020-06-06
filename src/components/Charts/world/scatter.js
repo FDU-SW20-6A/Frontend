@@ -15,6 +15,11 @@ class Scatter extends React.Component {
         data : [],
     };
 
+    constructor(props) {
+        super(props);
+        this.myRef = React.createRef();
+    }
+
     componentDidMount() {
         const url = 'http://127.0.0.1:8001/api/scatter_diagram/';
 
@@ -31,7 +36,7 @@ class Scatter extends React.Component {
     charts() {
 
         // 初始化
-        let myChart = echarts.init(document.getElementById('main'));
+        let myChart = echarts.init(this.myRef.current);
         /*
         var data_now=[
             [26.29, 13.22, 178972, 47055, 23660, 3047, 2128, 433, "意大利"],
@@ -278,7 +283,7 @@ class Scatter extends React.Component {
 
     render() {
         return (
-            <div id="main" style={{width: '100%', height: 340}}/>
+            <div ref={this.myRef} style={{width: '100%', height: 340}}/>
         );
     }
 }
