@@ -10,12 +10,17 @@ import React from "react";
 import echarts from "echarts/lib/echarts";
 
 class ConNum extends React.Component {
+    
+    constructor(props) {
+        super(props);
+        this.myRef = React.createRef();
+    }
 
     componentDidMount() {
 
         var id;
         // 初始化
-        let myChart = echarts.init(document.getElementById('ConNum'));
+        let myChart = echarts.init(this.myRef.current);
         var colors = ['#5793f3', '#d14a61', '#675bba'];
 
         // 绘制图表
@@ -116,7 +121,7 @@ class ConNum extends React.Component {
 
     render() {
         return (
-            <div id="ConNum" style={{width: '100%', height: 340}}/>
+            <div ref={this.myRef} style={{width: '100%', height: 340}}/>
         );
     }
 }

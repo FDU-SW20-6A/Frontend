@@ -1,14 +1,14 @@
 /* eslint-disable import/no-unresolved */
 import React, { Component } from 'react';
 import ReactEcharts from 'echarts-for-react';
-import router from 'umi/router';
+//import router from 'umi/router';
+import router from '@/utils/router';
 import 'echarts/map/js/china.js';
 
 export default class ProvincesConfirm extends Component {
   state = {};
 
   onMapClick = e => {
-    console.log(e);
     const {name} = e.data;
     router.push(`/china/details/${name}`);
   }

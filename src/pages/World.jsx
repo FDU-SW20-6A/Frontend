@@ -12,10 +12,10 @@ import CountriesConfirm from '@/components/Charts/CountriesConfirm';
 import WorldList from '@/components/WorldList';
 import Line_2 from "@/components/Charts/chart_2";
 import Line_3 from "@/components/Charts/chart_3";
-import Conadd from "@/components/Charts/world/conadd"
+import Conadd from "@/components/Charts/world/conadd";
 import ConNum from "@/components/Charts/world/conNum";
 import styles from "./Welcome.less";
-import Scatter from "@/components/Charts/world/scatter"
+import Scatter from "@/components/Charts/world/scatter";
 
 const { Item } = Descriptions;
 const { TabPane } = Tabs;

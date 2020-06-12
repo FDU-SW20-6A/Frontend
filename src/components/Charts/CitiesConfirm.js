@@ -4,7 +4,8 @@ import React, { Component } from 'react';
 import { Col, Row, Tooltip } from 'antd';
 import ReactEcharts from 'echarts-for-react';
 import { RollbackOutlined, LeftCircleFilled } from '@ant-design/icons';
-import { router } from 'umi';
+//import { router } from 'umi';
+import router from '@/utils/router';
 import './province';
 
 export default class ProvincesConfirm extends Component {

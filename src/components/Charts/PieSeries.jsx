@@ -64,6 +64,10 @@ function getPieSeries(scatterData, chart) {
 
 class PieSeries extends React.Component {
       
+    constructor(props) {
+        super(props);
+        this.myRef = React.createRef();
+    }
 
     componentDidMount() {  
         /*    
@@ -73,7 +77,7 @@ class PieSeries extends React.Component {
         }
         */
         // 初始化
-        let myChart = echarts.init(document.getElementById('pie'));
+        let myChart = echarts.init(this.myRef.current);
 
         // 绘制图表
         myChart.setOption({
@@ -125,8 +129,7 @@ class PieSeries extends React.Component {
     }
 
     componentWillUpdate(newProps, newState) {
-        console.log("Update Pie Series!");
-        let myChart = echarts.init(document.getElementById('pie'));
+        let myChart = echarts.init(this.myRef.current);
         let scatterData = getVirtulData(newProps.data);
         myChart.setOption({
             series: getPieSeries(scatterData, myChart)
@@ -135,7 +138,7 @@ class PieSeries extends React.Component {
 
     render() {
         return (
-            <div id="pie" style={{width: '100%', height: 470}}/>
+            <div ref={this.myRef} style={{width: '100%', height: 470}}/>
         );
     }
 }
